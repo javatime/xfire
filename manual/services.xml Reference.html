@@ -1,0 +1,313 @@
+<html>
+    <head>
+        <title>Codehaus XFire : services.xml Reference</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>The basic structure of a configuration is like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+  <span class="code-tag">&lt;xfire&gt;</span>
+    <span class="code-tag">&lt;inHandlers&gt;</span>
+      <span class="code-tag">&lt;handler handlerClass=""&gt;</span>
+      <span class="code-tag">&lt;/handler&gt;</span>
+    <span class="code-tag">&lt;/inHandlers&gt;</span>
+  <span class="code-tag">&lt;/xfire&gt;</span>
+
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;name/&gt;</span>
+    <span class="code-tag">&lt;namespace/&gt;</span>
+    <span class="code-tag">&lt;serviceClass/&gt;</span>
+    <span class="code-tag">&lt;implementationClass/&gt;</span>
+    <span class="code-tag">&lt;serviceFactory/&gt;</span>
+    <span class="code-tag">&lt;bindingProvider/&gt;</span>
+    <span class="code-tag">&lt;style&gt;</span>document|rpc|message|wrapped<span class="code-tag">&lt;/style&gt;</span>
+    <span class="code-tag">&lt;use&gt;</span>literal|encoded<span class="code-tag">&lt;/use&gt;</span>
+    <span class="code-tag">&lt;scope&gt;</span>request|session|application<span class="code-tag">&lt;/scope&gt;</span>
+    <span class="code-tag">&lt;invoker/&gt;</span>
+    <span class="code-tag">&lt;executor/&gt;</span>
+    <span class="code-tag">&lt;inHandlers&gt;</span>
+      <span class="code-tag">&lt;handler handlerClass=""/&gt;</span>
+    <span class="code-tag">&lt;/inHandlers&gt;</span>
+    <span class="code-tag">&lt;outHandlers&gt;</span>
+      <span class="code-tag">&lt;handler handlerClass=""/&gt;</span>
+    <span class="code-tag">&lt;/outHandlers&gt;</span>
+    <span class="code-tag">&lt;faultHandlers&gt;</span>
+      <span class="code-tag">&lt;handler handlerClass=""/&gt;</span>
+    <span class="code-tag">&lt;/faultHandlers&gt;</span>
+
+    <span class="code-tag">&lt;createDefaultBindings&gt;</span>true|false<span class="code-tag">&lt;/createDefaultBindings&gt;</span>
+    <span class="code-tag">&lt;bindings&gt;</span>
+      <span class="code-tag">&lt;soap11Binding name=<span class="code-quote">"qname"</span> transport=<span class="code-quote">"" allowUndefinedEndpoints="</span>"&gt;</span>
+        <span class="code-tag">&lt;endpoints&gt;</span>
+          <span class="code-tag">&lt;endpoint name=<span class="code-quote">"qname"</span> url="" /&gt;</span>
+        <span class="code-tag">&lt;/endpoints&gt;</span>
+      <span class="code-tag">&lt;/soap11Binding&gt;</span>
+      <span class="code-tag">&lt;soap12Binding name=<span class="code-quote">"qname"</span> transport=<span class="code-quote">"" allowUndefinedEndpoints="</span>"&gt;</span>
+        <span class="code-tag">&lt;endpoints&gt;</span>
+          <span class="code-tag">&lt;endpoint name=<span class="code-quote">"qname"</span> url="" /&gt;</span>
+        <span class="code-tag">&lt;/endpoints&gt;</span>
+      <span class="code-tag">&lt;/soap12Binding&gt;</span>
+    <span class="code-tag">&lt;/bindings&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+
+<h2><a name="services.xmlReference-ServiceOptions"></a>Service Options</h2>
+
+<p>Here are options common to all bindings.  The sections following outline options for specific bindings.</p>
+
+<p>The name element is required.  This will be the name of the service as exposed to the world.  You will also use this name to access the Service class from the ServiceRegistry.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;name&gt;</span>MyService<span class="code-tag">&lt;/name&gt;</span></pre>
+</div></div>
+<p>The namespace element is optional, it specifies the target namespace for the service.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/Echo<span class="code-tag">&lt;/namespace&gt;</span></pre>
+</div></div>
+<p>The style element is optional and defaults to "wrapped". Services can be of style wrapped, message, document, or rpc. Keep in mind that "document and "wrapped" both specify a document-style service but with different parameter styles, bare (unwrapped) and wrapped, respectively. The "message" option is also document style.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;style&gt;</span>wrapped<span class="code-tag">&lt;/style&gt;</span></pre>
+</div></div>
+<p>The "use" element is optional and defaults to "literal". This determines the encoding type and can be either encoded or literal.  Only literal services are supported currently.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;use&gt;</span>literal<span class="code-tag">&lt;/use&gt;</span></pre>
+</div></div>
+<p>The class name of the object you wish to make into a service. Required.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.HelloService<span class="code-tag">&lt;/serviceClass&gt;</span></pre>
+</div></div>
+<p>The class name of the implementation which you wish to use when the service is invoked. Optional.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;implementationClass&gt;</span>org.codehaus.xfire.HelloServiceImpl<span class="code-tag">&lt;/implementationClass&gt;</span></pre>
+</div></div>
+<p>The ServiceFactory controls how the Service is built and configured. Optional.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;serviceFactory&gt;</span>your.service.builder.class<span class="code-tag">&lt;/serviceFactory&gt;</span></pre>
+</div></div>
+<p>To use the Java 5 JSR 181 Service factory</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;serviceFactory&gt;</span>jsr181<span class="code-tag">&lt;/serviceFactory&gt;</span></pre>
+</div></div>
+<p>To use the Commons-Attributes JSR 181 Service factory</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;serviceFactory&gt;</span>commons-attributes<span class="code-tag">&lt;/serviceFactory&gt;</span></pre>
+</div></div>
+<p>If you are using XMLBeans, you will want to specify "&lt;serviceFactory&gt;org.codehaus.xfire.xmlbeans.XmlBeansServiceFactory&lt;/serviceFactory&gt;".</p>
+
+<p>The path to the WSDL file for your service. Optional.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;wsdlURL&gt;</span>file:///location/of/wsdl<span class="code-tag">&lt;/wsdlURL&gt;</span></pre>
+</div></div>
+<p>The scope element is optional. Specify "application" to have your service object persist indefinitely, "session" to have one service object per session, and "request" to create a new service object for every request. The default is "application".</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;scope&gt;</span>session<span class="code-tag">&lt;/scope&gt;</span></pre>
+</div></div>
+<p>The invoker element is optional. It can be used to set a non-default <a href="Invokers.html" title="Invokers">Invoker</a> for a service. Available since XFire 1.1-beta1</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;invoker&gt;</span>#invokerBean<span class="code-tag">&lt;/invoker&gt;</span></pre>
+</div></div>
+<p>The executor element is optional. It can be used to set a non-default Executor (i.e. scheduler) for a service. Available since XFire 1.1-beta1</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;executor&gt;</span>#executorBean<span class="code-tag">&lt;/executor&gt;</span></pre>
+</div></div>
+<p>To configure a #bean using a constructor parameter you can use the following syntax.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;bean name=<span class="code-quote">"invokerBean"</span> class=<span class="code-quote">"some.<span class="code-keyword">package</span>.MyInvoker"</span>&gt;
+    &lt;constructor-arg value=<span class="code-quote">"myConstructorParam"</span>/&gt;
+ &lt;/bean&gt;</pre>
+</div></div>
+
+<h3><a name="services.xmlReference-Handlers"></a>Handlers</h3>
+
+<p>You may want to add request, response or fault handlers to your service. To do this use the &lt;requestHandlers&gt;, &lt;responseHandlers&gt; or &lt;faultHandlers&gt; sections:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;service&gt;</span>
+  <span class="code-tag">&lt;inHandlers&gt;</span>
+    <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"your.custom.handler.Class"</span>/&gt;</span>
+  <span class="code-tag">&lt;/inHandlers&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div>
+
+<h3><a name="services.xmlReference-Bindings"></a>Bindings</h3>
+
+<p>You may want to configure bindings for your service to allow it to talk on other transports. By default, the ObjectServiceFactory (and AnnotationServiceFactory) create a SOAP 1.1 HTTP binding. &lt;createDefaultBindings&gt; will suppress the creation of the default bindings if set to "false", and is "true" by default.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;createDefaultBindings&gt;</span>false<span class="code-tag">&lt;/createDefaultBindings&gt;</span></pre>
+</div></div>
+<p>On a binding you specify a transport. This is the ID of the transport you want to reference. For instance:</p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Transport </th>
+<th class='confluenceTh'> Transport ID </th>
+</tr>
+<tr>
+<td class='confluenceTd'> HTTP + SOAP 1.1 </td>
+<td class='confluenceTd'> <a href="http://schemas.xmlsoap.org/soap/http" title="Visit page outside Confluence">http://schemas.xmlsoap.org/soap/http</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> HTTP + SOAP 1.2 </td>
+<td class='confluenceTd'> <a href="http://www.w3.org/2003/05/soap/bindings/HTTP/" title="Visit page outside Confluence">http://www.w3.org/2003/05/soap/bindings/HTTP/</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> XMPP </td>
+<td class='confluenceTd'> <a href="http://jabber.org/protocol/soap" title="Visit page outside Confluence">http://jabber.org/protocol/soap</a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JMS </td>
+<td class='confluenceTd'> urn:xfire:transport:jms </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Local </td>
+<td class='confluenceTd'> urn:xfire:transport:local </td>
+</tr>
+</tbody></table>
+<p>On bindings you can also specify endpoints which you listen on. XFire will then look at the incoming message's URI then map the service to that request if it matches.</p>
+
+<p>So lets combine everything and create a JMS transport for SOAP 1.1:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bindings <span class="code-keyword">xmlns:e</span>=<span class="code-quote">"urn:echo"</span>&gt;</span>
+  <span class="code-tag">&lt;soap11Binding name=<span class="code-quote">"e:EchoJMSBinding"</span> transport=<span class="code-quote">"urn:xfire:transport:jms"</span>&gt;</span>
+    <span class="code-tag">&lt;endpoints&gt;</span>
+      <span class="code-tag">&lt;endpoint name=<span class="code-quote">"e:EchoJMSEndpoint"</span> url=<span class="code-quote">"jms://Echo"</span> /&gt;</span>
+    <span class="code-tag">&lt;/endpoints&gt;</span>
+  <span class="code-tag">&lt;/soap11Binding&gt;</span>
+<span class="code-tag">&lt;/bindings&gt;</span></pre>
+</div></div>
+<p>Using the endpoint syntax allows us to override the default URL resolution. However only certain transports like HTTP have their own service resolution method, whereby services names are extracted in a URL Transports like JMS however do not have that capability.</p>
+
+<p>Here is a SOAP 1.2 endpoint for http which just uses the default service resolution:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bindings <span class="code-keyword">xmlns:e</span>=<span class="code-quote">"urn:echo"</span>&gt;</span>
+  &lt;soap12Binding name=<span class="code-quote">"e:EchoSoap12Binding"</span>
+ 	transport=<span class="code-quote">"http://www.w3.org/2003/05/soap/bindings/HTTP/"</span> allowUndefinedEndpoints=<span class="code-quote">"true"</span>/&gt;
+<span class="code-tag">&lt;/bindings&gt;</span></pre>
+</div></div>
+
+<h3><a name="services.xmlReference-ServiceProperties"></a>Service Properties</h3>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Name </th>
+<th class='confluenceTh'> Type </th>
+<th class='confluenceTh'> Default </th>
+<th class='confluenceTh'> Description </th>
+</tr>
+<tr>
+<td class='confluenceTd'> wsdlBuilder.generateImports </td>
+<td class='confluenceTd'> String </td>
+<td class='confluenceTd'> false </td>
+<td class='confluenceTd'> Specifies whether or not the WSDLBuilder should generate imports for all the schemas in your WSDL. Necessary with some tools. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> wsdlBuilder.cleanImports </td>
+<td class='confluenceTd'> String </td>
+<td class='confluenceTd'> true </td>
+<td class='confluenceTd'> Specifies whether or not the WSDLBuilder should remove the schemaLocations from schemas which are added to the WSDLBuilder. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> wsdlBuilder.removeAllImports </td>
+<td class='confluenceTd'> String </td>
+<td class='confluenceTd'> false </td>
+<td class='confluenceTd'> Specifies whether or not the WSDLBuilder should remove all the imports from the schemas. This turns both the import generation and cleaning off. </td>
+</tr>
+</tbody></table>
+
+<h3><a name="services.xmlReference-Usingspringbeans"></a>Using spring beans</h3>
+
+<p>&nbsp;Because all XFire configuration tags uses "http://xfire.codehaus.org/config/1.0" namespace, to use "plain" spring tag you must set its namespace to empty value&nbsp; xmlns="". For example :</p>
+
+<p>&nbsp;&lt;inHandlers&gt;&nbsp; &lt;&#33;&#45;-Xfire configuration tag --&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;handler handlerClass="org.codehaus.xfire.util.dom.DOMInHandler" /&gt; &lt;&#33;-&#45; Xfire configuration tag --&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;bean class="org.codehaus.xfire.security.wss4j.WSS4JInHandler" xmlns=""&gt; &lt;&#33;-&#45; spring tag --&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp; ...<br/>
+&nbsp; &lt;/bean&gt;<br/>
+&lt;/inHandlers&gt;<br/>
+&nbsp;</p>
+
+<h3><a name="services.xmlReference-Spring2.xsupport"></a>Spring 2.x support</h3>
+
+<p>&nbsp;Because of Spring 2.x new feature, services.xml default namespace must not be declared on the root element of configuration ( beans ) and need to be moved to &lt;service&gt; tag level.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans&gt;</span>
+<span class="code-tag">&lt;service xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+ <span class="code-tag">&lt;name/&gt;</span>
+<span class="code-tag">&lt;namespace/&gt;</span>
+...
+...
+<span class="code-tag">&lt;/service&gt;</span>
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

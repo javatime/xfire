@@ -1,0 +1,300 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Mapping collections</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>There is often a need to either return collections as a result of a web service call, or to take in collection parameters. SOAP supports this natively.</p>
+
+<p>The problem with this mechanism however arises from the fact that collections in java are untyped. Thus, to support collections on Java 1.4, a little bit of extra work is required.</p>
+
+<h2><a name="Mappingcollections-Java5%26Generics"></a>Java 5 &amp; Generics</h2>
+<p>The first, and recommended approach is to use JDK5 and use generics. Generics enable you to specify type information for your collections in the source code, thus allowing xfire to automatically deduce the collection type and generate the correct wsdl and so on.</p>
+
+<p>A brief example of how such a method would look is:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> Collection&lt;<span class="code-object">String</span>&gt; getValuesForIds(Collection&lt;<span class="code-object">Integer</span>&gt;);</pre>
+</div></div>
+
+<h2><a name="Mappingcollections-Java1.4%26Collections"></a>Java 1.4 &amp; Collections</h2>
+<p>There times where it is not possible to use generics. For example, if your deployment environment uses JDK 1.4, or if you want to expose legacy services without modifying any of their source code or migrating it.</p>
+
+<p>For such cases, you are required to create an xml mappings file which specifies the methods and collection types for them.</p>
+
+<p>The file's name must be <b>&lt;className&gt;.aegis.xml</b>, where className is the unqualified class name of your service.</p>
+
+<p>The format of this file is best illustrated through examples. The service we would like to expose has the following interface:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> MyService1
+{
+    <span class="code-object">String</span> getFoo();
+    Collection getCollection();
+    void setList(<span class="code-object">int</span> id, java.util.List);
+}</pre>
+</div></div>
+
+<p>Since the collections in the source code are not typed, we are required to create an xml file to specify the required types. The file's location must be the same package as MyService1.class, and it must be called <b>MyService1.aegis.xml</b></p>
+
+<p>A minimal mapping file for this interface would be:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;mappings&gt;</span>
+    <span class="code-tag">&lt;mapping&gt;</span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"getCollection"</span>&gt;</span>
+            <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"java.lang.String"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"setList"</span>&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"1"</span> componentType=<span class="code-quote">"java.lang.String"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+    <span class="code-tag">&lt;/mapping&gt;</span>
+<span class="code-tag">&lt;/mappings&gt;</span></pre>
+</div></div>
+
+<p>Note that the mapping file specifies exactly the information required and does not contain any redundancy. For example, the getFoo method is not specified, since it does not contain any collections and thus can be exposed without any additional mapping information.</p>
+
+<p>Secondly, the setCollection method does not specify the parameter at index 0. Again, this is because that parameter is an int and thus does not require any additional mapping.</p>
+
+<p>What if we had multiple methods that match the specified mapping? In that case, the mapping applies to all of the specified methods that match.</p>
+
+<p>So if we added the following method to our interface:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">void setList(<span class="code-object">int</span> id, java.util.List, <span class="code-object">boolean</span> persist);</pre>
+</div></div>
+
+<p>Our mapping definition now for setList matches both setList methods. So in this case, we would not need to specify it twice for the additional parameter. The mapping file specifies 'all setList methods that have a List as the second parameter should assume that that list contains strings', in effect.</p>
+
+<p>What if we wanted to specify that the list in the 3 argument method does not contain Strings, but actually contains Dates? In that case, a more specific mapping is required to override the more general one, so our mapping file would require this definition added:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;method name=<span class="code-quote">"setList"</span>&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"1"</span> componentType=<span class="code-quote">"java.lang.String"</span>/&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"2"</span> class=<span class="code-quote">"boolean"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span></pre>
+</div></div>
+
+<p>Note the type attribute. The specified mapping will now apply to all methods that have a List as the second parameter, and a boolean for the third. In our interface, this uniquely identifies the method, and so the List parameter for that method will be resolved using this specific mapping.</p>
+
+<p>In terms of precedence, the most specific mapping applicable always takes precedence over a more generic one.</p>
+
+<p>Let us consider a more complex example:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> MyService2
+{
+    Collection getCollection(); <span class="code-comment">//method 1
+</span>    Collection getCollection(<span class="code-object">int</span> id); <span class="code-comment">//method 2
+</span>    Collection getCollection(<span class="code-object">String</span> id); <span class="code-comment">//method 3
+</span>    Collection getCollectionForValues(<span class="code-object">int</span> value, Collection c); <span class="code-comment">//method 4
+</span>    Collection getCollectionForValues(<span class="code-object">String</span> id, Collection c); <span class="code-comment">//method 5
+</span>}</pre>
+</div></div>
+
+<p>The contents of the file are:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;mappings&gt;</span>
+    <span class="code-tag">&lt;mapping&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- mapping 1 --&gt;</span></span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"getCollection"</span>&gt;</span>
+            <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"java.lang.Double"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- mapping 2 --&gt;</span></span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"getCollection"</span>&gt;</span>
+            <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"java.lang.Float"</span>/&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"0"</span> class=<span class="code-quote">"int"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- mapping 3 --&gt;</span></span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"getCollectionForValues"</span>&gt;</span>
+            <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"java.math.BigDecimal"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- mapping 4 --&gt;</span></span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"getCollectionForValues"</span>&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"0"</span> class=<span class="code-quote">"java.lang.String"</span>/&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"1"</span> componentType=<span class="code-quote">"java.util.Date"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- mapping 5 --&gt;</span></span>
+        <span class="code-tag">&lt;method name=<span class="code-quote">"getCollectionForValues"</span>&gt;</span>
+            <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"java.util.Calendar"</span>/&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"0"</span> class=<span class="code-quote">"int"</span>/&gt;</span>
+            <span class="code-tag">&lt;parameter index=<span class="code-quote">"1"</span> componentType=<span class="code-quote">"java.lang.Bit"</span>/&gt;</span>
+        <span class="code-tag">&lt;/method&gt;</span>
+    <span class="code-tag">&lt;/mapping&gt;</span>
+<span class="code-tag">&lt;/mappings&gt;</span></pre>
+</div></div>
+
+<p>The format of the file should hopefully be self-explanatory. There are a number of things to note about it though.</p>
+
+<p>Let us consider the first mapping (mapping 1). This mapping specifies that the collections returned for all getCollection methods contain java.lang.Doubles. If no other getCollection mappings were specified, this this mapping would apply to methods 1, 2, and 3.</p>
+
+<p>However, the second mapping is more explicit about what it applies to. It specifies that the collection returned by getCollection contains a Float if the first parameter of the method is an int. Since this rule is more explicit, it will override the first mapping for method 2, which satisfies its mapping constraint criteria.</p>
+
+<p>Using the rules above, it should be possible to deduce what the component types for each of the collections specified in methods 4 and 5 are.</p>
+
+<h2><a name="Mappingcollections-CollectionsonJavabeans"></a>Collections on Javabeans</h2>
+<p>The syntax is similar if you have java beans with collections. For instance, lets say we have a Company bean with a List of employees:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class Company
+{
+    <span class="code-keyword">private</span> Collection employees;
+    Collection getEmployees() { <span class="code-keyword">return</span> employees; }
+    <span class="code-keyword">public</span> void setEmployees(Collection employees) { <span class="code-keyword">this</span>.employees = employees };
+}</pre>
+</div></div>
+
+<p>Instead of using the &lt;method&gt; &amp; &lt;parameter&gt; elements, you would use the &lt;property&gt; element:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;mappings&gt;</span>
+  <span class="code-tag">&lt;mapping&gt;</span>
+     <span class="code-tag">&lt;property componentType=<span class="code-quote">"org.codehaus.xfire.Employee"</span> /&gt;</span>
+  <span class="code-tag">&lt;/mapping&gt;</span>
+<span class="code-tag">&lt;/mappings&gt;</span></pre>
+</div></div>
+
+<h2><a name="Mappingcollections-HandlingMaps"></a>Handling Maps</h2>
+
+<p>Java Maps don't map well to XML Schema (no pun intended) because there is no Map concept in XML Schema so your clients.  Maps are transformed to a collection of {<tt>key, value</tt>} tuples instead. In addition to providing the type of the value, you must also provide Aegis with the type of the key:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class GiftService
+{
+    Map getGiftList() { /* returns a map of NiceChild =&gt; Present */ }
+}</pre>
+</div></div>
+<p>The mapping file should look like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;mappings&gt;</span>
+  <span class="code-tag">&lt;mapping&gt;</span>
+    <span class="code-tag">&lt;method name=<span class="code-quote">"getGiftList"</span>&gt;</span>
+      <span class="code-tag">&lt;return-type keyType=<span class="code-quote">"org.codehaus.xfire.NiceChild"</span> componentType=<span class="code-quote">"org.codehaus.xfire.Present"</span>&gt;</span>
+    <span class="code-tag">&lt;/method&gt;</span>
+  <span class="code-tag">&lt;/mapping&gt;</span>
+<span class="code-tag">&lt;/mappings&gt;</span></pre>
+</div></div>
+<p>This will generate the following type:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;xsd:complexType name=<span class="code-quote">"NiceChild2PresentMap"</span>&gt;</span>
+  <span class="code-tag">&lt;xsd:sequence&gt;</span>
+    <span class="code-tag">&lt;xsd:element name=<span class="code-quote">"entry"</span> minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"unbounded"</span>&gt;</span>
+      <span class="code-tag">&lt;xsd:complexType&gt;</span>
+        <span class="code-tag">&lt;xsd:sequence&gt;</span>
+          <span class="code-tag">&lt;xsd:element name=<span class="code-quote">"key"</span> type=<span class="code-quote">"ns1:NiceChild"</span> minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span>/&gt;</span>
+          <span class="code-tag">&lt;xsd:element name=<span class="code-quote">"value"</span> type=<span class="code-quote">"ns1:Present"</span> minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span>/&gt;</span>
+        <span class="code-tag">&lt;/xsd:sequence&gt;</span>
+      <span class="code-tag">&lt;/xsd:complexType&gt;</span>
+    <span class="code-tag">&lt;/xsd:element&gt;</span>
+  <span class="code-tag">&lt;/xsd:sequence&gt;</span>
+<span class="code-tag">&lt;/xsd:complexType&gt;</span></pre>
+</div></div>
+
+<h2><a name="Mappingcollections-CollectionsofCollectionsofCollectionsof...."></a>Collections of Collections of Collections of....</h2>
+<p>In some cases you may want to pass around Collections of Collections.Lets say that you have a service that returns a List of a List of Doubles (don't ask why you would do such a thing...):</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class ListService 
+{
+  <span class="code-keyword">public</span> List getListOfListOfDoubles
+  {
+    List l = <span class="code-keyword">new</span> ArrayList();
+    List doubles = <span class="code-keyword">new</span> ArrayList();
+      
+    doubles.add(<span class="code-keyword">new</span> <span class="code-object">Double</span>(1.0));
+        
+    l.add(doubles);
+    <span class="code-keyword">return</span> l;
+  }
+}</pre>
+</div></div>
+
+<p>To handle this we need to introduce a new &lt;component&gt; element. This is best shown with an example:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;mappings&gt;</span>
+  <span class="code-tag">&lt;mapping&gt;</span>
+    <span class="code-tag">&lt;method name=<span class="code-quote">"getListofListofDoubles"</span>&gt;</span>
+      <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"#someDoubles"</span>/&gt;</span>
+    <span class="code-tag">&lt;/method&gt;</span>
+    <span class="code-tag">&lt;component name=<span class="code-quote">"someDoubles"</span> class=<span class="code-quote">"java.util.List"</span> componentType=<span class="code-quote">"java.lang.Double"</span> /&gt;</span>
+  <span class="code-tag">&lt;/mapping&gt;</span>
+<span class="code-tag">&lt;/mappings&gt;</span></pre>
+</div></div> 
+<p>As you can see here, instead of the return type's componentType being a class, its a reference to a &lt;component&gt;. The componentType "#someDoubles" references to the &lt;component&gt; with the name "someDoubles".</p>
+
+<p>Aegis will be automatically name these collections ArrayOfDouble and ArrayOfArrayOfDouble. You may want to change this. To set your own names, supply a "typeName" attribute:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;mappings&gt;</span>
+  <span class="code-tag">&lt;mapping&gt;</span>
+    <span class="code-tag">&lt;method name=<span class="code-quote">"getListofListofDoubles"</span>&gt;</span>
+      <span class="code-tag">&lt;return-type componentType=<span class="code-quote">"#someDoubles"</span> typeName=<span class="code-quote">"LotsOfDoubles"</span>/&gt;</span>
+    <span class="code-tag">&lt;/method&gt;</span>
+    <span class="code-tag">&lt;component name=<span class="code-quote">"someDoubles"</span> class=<span class="code-quote">"java.util.List"</span> typeName=<span class="code-quote">"SomeDoubles"</span> componentType=<span class="code-quote">"java.lang.Double"</span> /&gt;</span>
+  <span class="code-tag">&lt;/mapping&gt;</span>
+<span class="code-tag">&lt;/mappings&gt;</span></pre>
+</div></div> 
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

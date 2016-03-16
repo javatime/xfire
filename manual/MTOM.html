@@ -1,0 +1,171 @@
+<html>
+    <head>
+        <title>Codehaus XFire : MTOM</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>MTOM is a way to handle large amounts of binary data in your services. Unlike attachments, the XML infoset stays the same. MTOM just "optimizes" any base64Binary data you have in your messages. When MTOM is turned on, this base64 data gets sent as a binary attachment saving time and space.</p>
+
+<p>Turning on MTOM is easy. You can do it via the API:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">service.setProperty(<span class="code-quote">"mtom-enabled"</span>, <span class="code-quote">"<span class="code-keyword">true</span>"</span>);</pre>
+</div></div>
+<p>Or via services.xml:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;service&gt;</span>
+  ... normal service definition
+  <span class="code-tag">&lt;properties&gt;</span>
+    <span class="code-tag">&lt;property key=<span class="code-quote">"mtom-enabled"</span>&gt;</span>true<span class="code-tag">&lt;/property&gt;</span>
+  <span class="code-tag">&lt;/properties&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div>
+
+<p>You also need to set the mtom-enabled property on your client:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">MyService myClient = ...;
+Client client = Client.getInstance(myClient);
+
+client.setProperty(<span class="code-quote">"mtom-enabled"</span>, <span class="code-quote">"<span class="code-keyword">true</span>"</span>);</pre>
+</div></div>
+
+<h2><a name="MTOM-MTOMandtheAegisBinding"></a>MTOM and the Aegis Binding</h2>
+<p>The Aegis (aka POJO) binding has support for optimization of the following classes:</p>
+<ul>
+	<li>DataSource</li>
+	<li>DataHandler</li>
+	<li>byte[]<br/>
+You could also write your own by extending the AbstractXOPType.</li>
+</ul>
+
+
+<h2><a name="MTOM-MTOMandJAXB2.0"></a>MTOM and JAXB 2.0</h2>
+<p>Any base64Binary type in a schema is a candidate for optimization with JAXB. You can also specify the expected mime content type:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;s:element name=<span class="code-quote">"GetPictureResponse"</span>&gt;</span>
+    <span class="code-tag">&lt;s:complexType&gt;</span>
+      <span class="code-tag">&lt;s:sequence&gt;</span>
+         <span class="code-tag">&lt;s:element name=<span class="code-quote">"image"</span> type=<span class="code-quote">"s:base64Binary"</span> xmime:expectedContentTypes=<span class="code-quote">"image/jpeg"</span>/&gt;</span>
+      <span class="code-tag">&lt;/s:sequence&gt;</span>
+    <span class="code-tag">&lt;/s:complexType&gt;</span>
+  <span class="code-tag">&lt;/s:element&gt;</span></pre>
+</div></div>
+<p>JAXB is then smart enough to use an Image instead of a byte array.</p>
+
+<h2><a name="MTOM-Cleaningupattachments%28IMPORTANT%21%29"></a>Cleaning up attachments (IMPORTANT!)</h2>
+<h3><a name="MTOM-InXFire1.2.3"></a>In XFire 1.2.3+</h3>
+<p>In XFire 1.2.3 we automatically delete attachments for you. If you wish to not have the attachment deleted, and the attachment was saved to disk, you'll want to do something like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">DataHandler handler = ... <span class="code-comment">// the datahandler or data source from your attachment
+</span>InputStream is = handler.getInputStream();
+
+<span class="code-comment">// A DeleteOnCloseFileInputStream is only used <span class="code-keyword">if</span> the attachment was saved to disk
+</span><span class="code-keyword">if</span> (is <span class="code-keyword">instanceof</span> DeleteOnCloseFileInputStream) {
+  <span class="code-comment">// tell XFire not to delete the file
+</span>  ((DeleteOnCloseFileInputStream) is).setDelete(<span class="code-keyword">false</span>);
+}
+
+AttachmentDataSource attSource = (AttachmentDataSource) handler.getDataSource();
+File file = attSource.getFile();
+<span class="code-comment">// <span class="code-keyword">do</span> something with the file...</span></pre>
+</div></div>
+
+<h2><a name="MTOM-InXFire1.2.2andbefore"></a>In XFire 1.2.2 and before</h2>
+<p>After you're done with your attachment, you'll probably want to delete it if it was saved to disk. The default threshold for saving an attachment to disk is about 100K. You only need to do this if it is a DataHandler or DataSource.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.attachments.AttachmentDataSource;
+
+<span class="code-comment">// <span class="code-keyword">if</span> you specified a DataHandler
+</span>DataHandler handler = ...;
+AttachmentDataSource attSource = (AttachmentDataSource) handler.getDataSource();
+
+<span class="code-comment">// or <span class="code-keyword">if</span> you specified a DataSource
+</span>DataSource source = ...;
+AttachmentDataSource attSource = (AttachmentDataSource) source;
+
+<span class="code-comment">// Delete the file <span class="code-keyword">if</span> there is one
+</span>File attFile = attSource.getFile();
+<span class="code-keyword">if</span> (attFile != <span class="code-keyword">null</span>) attFile.delete();</pre>
+</div></div>
+
+<h2><a name="MTOM-Configuringattachments"></a>Configuring attachments</h2>
+<p>There are two parameters you can tweak to configure how attachments work:<br/>
+#. The attachment directory<br/>
+#. The size threshold for creating a File for the attachment</p>
+
+<p>These can be set on both the service and the client:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service service = ...;
+service.setProperty(StreamedAttachments.ATTACHMENT_DIRECTORY, <span class="code-keyword">new</span> File(<span class="code-quote">"/some/directory"</span>));
+service.setProperty(StreamedAttachments.ATTACHMENT_MEMORY_THRESHOLD, <span class="code-keyword">new</span> <span class="code-object">Integer</span>(10000000));</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

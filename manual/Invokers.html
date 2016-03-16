@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Invokers</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>Invokers allow you to customise how a particular method is executed. This is particular useful if your underlying service objects are not plain javabeans and instead need to be created or looked up via a custom factory.</p>
+
+<p>XFire does provide a number of bundled invokers to handle simple cases. One of these simple cases is when it is desirable to have a singleton for the service object. In this case, you would like to provide a single object instance that should be used for all service invocations. The provided BeanInvoker covers this functionality, and would be used as follows:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service service = ....; <span class="code-comment">//look up the service from XFire, or create it
+</span>service.setInvoker(<span class="code-keyword">new</span> BeanInvoker(<span class="code-keyword">new</span> MyCustomBean(someParams)));</pre>
+</div></div>
+<p>The following example illustrates how an invoker can be used to allow xfire to expose remote stateless session beans as a webservice. Given the method to invoke, this invoker will create a stateless session bean instance to invoke the method on. The same technique can be used to enable service calls to any object that requires custom creation/lookup.</p>
+
+<p>The invoker implementation is as follows:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class EJBInvoker <span class="code-keyword">implements</span> Invoker
+{
+  <span class="code-keyword">private</span> EJBHome home;
+  <span class="code-keyword">private</span> Method createMethod;
+  <span class="code-keyword">private</span> <span class="code-keyword">static</span> <span class="code-keyword">final</span> <span class="code-object">Object</span>[] EMPTY_OBJECT = <span class="code-keyword">new</span> <span class="code-object">Object</span>[0];
+
+  <span class="code-keyword">public</span> EJBInvoker(EJBHome home)
+  {
+    <span class="code-keyword">this</span>.home = home;
+    <span class="code-keyword">try</span>
+    {
+      <span class="code-keyword">if</span>(!home.getEJBMetaData().isSession() || !home.getEJBMetaData().isStatelessSession())
+      {
+        <span class="code-keyword">throw</span> <span class="code-keyword">new</span> IllegalArgumentException(<span class="code-quote">"home must be <span class="code-keyword">for</span> a stateless session bean"</span>);
+      }
+      createMethod = home.getClass().getMethod(<span class="code-quote">"create"</span>, <span class="code-keyword">new</span> <span class="code-object">Class</span>[0]);
+    }
+    <span class="code-keyword">catch</span>(Exception ex)
+    {
+      <span class="code-keyword">throw</span> <span class="code-keyword">new</span> IllegalArgumentException(<span class="code-quote">"Unable to initialize invoker: "</span> + ex);
+    }
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">Object</span> invoke(Method m, <span class="code-object">Object</span>[] params, MessageContext context) <span class="code-keyword">throws</span> XFireFault
+  {
+    <span class="code-keyword">try</span>
+    {
+      <span class="code-object">Object</span> session = createMethod.invoke(home, EMPTY_OBJECT);
+      <span class="code-keyword">return</span> m.invoke(session, params);
+    }
+    <span class="code-keyword">catch</span>(Exception ex)
+    {
+      <span class="code-keyword">throw</span> <span class="code-keyword">new</span> XFireFault(<span class="code-quote">"Error invoking ejb method "</span> + m.getName(), ex, XFireFault.RECEIVER);
+    }
+  }
+}</pre>
+</div></div>
+<p>Invokers, once defined, need to be registered with the service binding. Once a handle onto a Service object has been obtained, the example invoker above can be registered on the binding like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service ejbService = ....; <span class="code-comment">//look up the service from XFire, or create it
+</span>ejbService.setInvoker(<span class="code-keyword">new</span> EJBInvoker(ejbHome));</pre>
+</div></div>
+<p>If you are using an EJB3 container you can use the following invoker, which is just a simplified version of the above:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"> <span class="code-keyword">public</span> class EJB3Invoker <span class="code-keyword">implements</span> Invoker {
+	<span class="code-keyword">private</span> <span class="code-object">Object</span> ejb;
+
+	<span class="code-keyword">public</span> EJB3Invoker(<span class="code-object">String</span> jndiName) <span class="code-keyword">throws</span> NamingException 	{
+		ejb = <span class="code-keyword">new</span> InitialContext().lookup(jndiName);
+	}
+
+	<span class="code-keyword">public</span> <span class="code-object">Object</span> invoke(Method m, <span class="code-object">Object</span>[] params, MessageContext context) <span class="code-keyword">throws</span> XFireFault 	{
+		<span class="code-keyword">try</span> 		{
+			<span class="code-keyword">return</span> m.invoke(ejb, params);
+		} 		<span class="code-keyword">catch</span> (Exception ex) 		{
+			<span class="code-keyword">throw</span> <span class="code-keyword">new</span> XFireFault(<span class="code-quote">"Error invoking ejb method "</span> + m.getName(),
+					ex, XFireFault.RECEIVER);
+		}
+	}
+}</pre>
+</div></div>
+
+<h2><a name="Invokers-Executors"></a>Executors</h2>
+
+<p>In addition to providing your own Invokers, you can also supply Executors for your service. Executors are a way to control scheduling for your service. XFire expects an executor to conform to this class definition, but there is no defined interface to implement:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class Executor
+{
+  <span class="code-keyword">public</span> void execute(<span class="code-object">Runnable</span> r) { .. }
+}</pre>
+</div></div>
+<p>To supply your own executor for a service just do:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service service = ....; <span class="code-comment">//look up the service from XFire, or create it
+</span>service.setExecutor(<span class="code-keyword">new</span> MyExecutor());</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

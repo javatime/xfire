@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <title>Codehaus XFire : FAQ</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h3><a name="FAQ-GeneralQuestions"></a>General Questions</h3>
+
+
+<h4><a name="FAQ-WhatarethegoalsofXFire%3F"></a>What are the goals of XFire?</h4>
+
+<ul>
+	<li>Create a flexible SOAP framework, where any processing mechanismcan be plugged in.</li>
+	<li>Be SOAP 1.2 and WS-I 1.1 compliant. Also to offer support for non-RPC/Encoded SOAP 1.1 services.</li>
+	<li>Intuitive, easy to use API.</li>
+	<li>Be Fast.</li>
+	<li>Allow many different binding methods (traditional java types, OGNL, Castor, JaxME, etc).</li>
+	<li>Create a processing model where your web service model and your java model can develop independently (see the Aegis Module).</li>
+	<li>Modules for WS-Security and WS-Adressing support.</li>
+</ul>
+
+
+<h3><a name="FAQ-TechnicalQuestions"></a>Technical Questions</h3>
+
+
+<h4><a name="FAQ-WhyisXFireproducinginvalidXML%3F"></a>Why is XFire producing invalid XML?</h4>
+
+<p>XFire is based on StAX and not all StAX implementations work correctly. See the <a href="Dependency Guide.html" title="Dependency Guide">Dependency Guide</a> for information on how to choose a stax implementation.</p>
+
+<h4><a name="FAQ-Whyaren%27tRPC%2FEncodedservicessupportedbytheJavaModule%3F"></a>Why aren't RPC/Encoded services supported by the Java Module?</h4>
+
+<p>For interoperability, <a href="http://www.ws-i.org/Profiles/Basic/2003-08/BasicProfile-1.0a.html#refinement35501800" title="Visit page outside Confluence">WS-I basic profile</a> basically says that trying to support RPC/encoded services is an interopability nightmare. And they're right&#33; <a href="SoapEncoding.html" title="SoapEncoding">It isn't easy.</a></p>
+
+<p>However, the basic framework to support RPC/Encoded services is in place. Vote for or contribute patches on <a href="http://jira.codehaus.org/browse/XFIRE-425" title="Visit page outside Confluence">bug XFIRE-425</a> if you need this.</p>
+
+<h4><a name="FAQ-IsXFireDOMBased%3F"></a>Is XFire DOM Based?</h4>
+
+<p>XFire is structured so that in most cases the SOAP document does not need to be cached in memory at all. It is able to do this by using StAX - the streaming XML API.</p>
+
+<h4><a name="FAQ-Whatisthisjava.lang.NoSuchMethodError%3Ajavax.xml.namespace.QName.%3Cinit%3E%28Ljava%2Flang%2FString%3BLjava%2Flang%2FString%3BLjava%2Flang%2FString%3B%29VException%3F"></a>What is this <em>java.lang.NoSuchMethodError: javax.xml.namespace.QName.&lt;init&gt;(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String</em><img class="emoticon" src="./icons/emoticons/wink.gif" height="20" width="20" align="absmiddle" alt="" border="0"/> <em>V</em> Exception?</h4>
+
+<p>Several application servers (WebSphere and WebLogic, for example) include an older version of the QName class. XFire (as well as XMLBeans and Stax) require the new version. <a href="XFire on Weblogic 8.1.html" title="XFire on Weblogic 8.1">WebLogic</a> usage has been documented, WebSphere will be similar.</p>
+
+<h4><a name="FAQ-WhenItrytoruntheexamplesIget%22Thebuildcannotcontinuebecauseofthefollowingunsatisfieddependency%3Ajavamail1.3.2.jar%22"></a>When I try to run the examples I get "The build cannot continue because of the following unsatisfied dependency: javamail-1.3.2.jar"</h4>
+
+<p>Due to Sun licensing restrictions we can't redistribute the javamail jar. You must download it and put it in your local maven repository - "~/.maven/javamail/jars/javamail-1.3.2.jar".</p>
+
+<h3><a name="FAQ-Interoperability"></a>Interoperability</h3>
+
+
+<h4><a name="FAQ-CanXFireactasaclienttotheGoogleWebService%3F"></a>Can XFire act as a client to the Google Web Service?</h4>
+
+<p>No, because it does not support RPC/Encoded services (see above).</p>
+
+<h4><a name="FAQ-CanXFireworkwith.NET%2FPHP%2FPerl%2FPythonclient%2Fserver%3F"></a>Can XFire work with .NET/PHP/Perl/Python client/server?</h4>
+
+<p>Yes, but you must ensure that your services are created and consumed with the document/literal style.</p>
+
+<p>See <a href="PHP Interoperation.html" title="PHP Interoperation">PHP Interoperation</a> for more details.</p>
+
+<h4><a name="FAQ-HowcanIaddcustomhandlertomyXFireclient%28generatedordynamic%29%26nbsp%3B%3F"></a>How can I add custom handler to my XFire client ( generated or dynamic )&nbsp; ?</h4>
+
+<p>You can add handlers with following code :</p>
+
+<p>Generated client :</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">GeoIPServiceClient service = <span class="code-keyword">new</span> GeoIPServiceClient();
+GeoIPServiceSoap geoIPClient = service.getGeoIPServiceSoap();Client client = Client.getInstance(geoIPClient);
+client.addInHandler(<span class="code-keyword">new</span> DOMOutHandler());</pre>
+</div></div>
+<p>Dynamic client:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service serviceModel = <span class="code-keyword">new</span> ObjectServiceFactory().create(SoapTestImpl.class);
+SoapTest soapTest = (SoapTest) <span class="code-keyword">new</span> XFireProxyFactory().create(serviceModel, <span class="code-quote">"http:<span class="code-comment">//localhost:8181/soap/soap/SoapTestImpl"</span>);Client client = Client.getInstance(soapTest);
+</span>client.addInHandler(<span class="code-keyword">new</span> DOMOutHandler());</pre>
+</div></div>
+
+<h4><a name="FAQ-Igotjava.lang.ClassCastException%09atjavax.xml.transform.TransformerFactory.newInstance%28UnknownSource%29%09%26nbsp%3BwhenaccessingserviceWSDL"></a>I got java.lang.ClassCastException	at javax.xml.transform.TransformerFactory.newInstance(Unknown Source)	&nbsp; when accessing service WSDL</h4>
+
+<p>This exception is cased by presents of different xalan versions in classpath. To fix this problem, you have to make sure that correct one will be used, but removing the other one or by setting java property with points to valid one, like :  &#45;Djavax.xml.transform.TransformerFactory=org.apache.xalan.processor.TransformerFactoryImpl</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

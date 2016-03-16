@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <title>Codehaus XFire : PHP Interoperation</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>The following blog entry has an example of how to write a PHP client for a web service exposed using XFire:</p>
+
+<p><a href="http://arsenalist.com/2007/01/19/php-client-for-web-services/" title="Visit page outside Confluence">http://arsenalist.com/2007/01/19/php-client-for-web-services/</a></p>
+
+
+<p>To consume XFire services from PHP requires the document/literal style of SOAP.</p>
+
+<p>The PHP below assumes this entry in your <tt>services.xml</tt>:<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;service&gt;</span>
+        <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.test.Echo<span class="code-tag">&lt;/serviceClass&gt;</span>
+        <span class="code-tag">&lt;implementationClass&gt;</span>org.codehaus.xfire.test.EchoImpl<span class="code-tag">&lt;/implementationClass&gt;</span>
+        <span class="code-tag">&lt;style&gt;</span>document<span class="code-tag">&lt;/style&gt;</span> <span class="code-tag"><span class="code-comment">&lt;!-- default --&gt;</span></span>
+        <span class="code-tag">&lt;use&gt;</span>literal<span class="code-tag">&lt;/use&gt;</span> <span class="code-tag"><span class="code-comment">&lt;!-- default --&gt;</span></span>
+    <span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div><br clear="all" /></p>
+
+<p>Incidentally, enabling MTOM does not appear to work yet with PHP.</p>
+
+<p>From PHP you'll need to specify this for your SOAP client<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$client = <span class="code-keyword">new</span> SoapClient(
+                         'http:<span class="code-comment">//yourhost/servlet/services/Echo?wsdl',
+</span>                         array(
+                               'trace' =&gt; 1,
+                               'soap_version' =&gt; SOAP_1_1,
+                               'style' =&gt; SOAP_DOCUMENT,
+                               'encoding' =&gt; SOAP_LITERAL
+                               )
+                         );</pre>
+</div></div><br clear="all" /></p>
+
+<p>document/literal style requires that the argument be a document, with you make by an associative array.&nbsp; The response is also a document, in this case with one field, "out".<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$response = $client-&gt;echo(array(<span class="code-quote">"in0"</span> =&gt; <span class="code-quote">"come back to me"</span>));
+$str = $response-&gt;out;
+$str == <span class="code-quote">"come back to me"</span>;</pre>
+</div></div><br clear="all" /></p>
+
+<p>XFire <a href="http://jira.codehaus.org/browse/XFIRE-425" title="Visit page outside Confluence">does not support RPC/Encoding</a> and <a href="http://bugs.php.net/bug.php?id=30302" title="Visit page outside Confluence">PHP does not support wrapped document/literal</a>, but they both do support RPC/Literal.</p>
+
+<p>To use that, make this change to your services.xml:<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;style&gt;</span>rpc<span class="code-tag">&lt;/style&gt;</span></pre>
+</div></div><br clear="all" /></p>
+
+<p>and this to your PHP constructor:<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">'style' =&gt; SOAP_RPC,</pre>
+</div></div><br clear="all" /></p>
+
+<p>Then you can make calls like this:<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$echoed = $client-&gt;echo(<span class="code-quote">"come back to me"</span>);</pre>
+</div></div><br clear="all" /></p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

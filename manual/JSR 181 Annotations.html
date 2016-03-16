@@ -1,0 +1,233 @@
+<html>
+    <head>
+        <title>Codehaus XFire : JSR 181 Annotations</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>We are working on adding JSR 181 2.0 support for annotations in XFire via Java 5 and <a href="http://jakarta.apache.org/commons/attributes/" title="Visit page outside Confluence">commons-attributes</a>. The Java 5 implementation will follow the JSR 181 spec and the commons-attributes implementation will mimic the spec in a pre-Java 5 way.</p>
+
+<p><b>Currently we have not passed the TCK and this is available only in early access form only. However, what we have is fairly stable and we are working on passing the TCK as soon as it is out. (Yes we know the JSR 181 1.0 TCK is out, be we are intent on passing the 2.0 version as we are implementing JAX-WS as well).</b></p>
+
+<p>As covered before, ServiceFactories are used to create services from classes. The default ServiceFactory is ObjectServiceFactory. To use annotations you must use the AnnotationsServiceFactory. You must pass it an annotation reader in the constructor which will read the particular type of annotation you are using.</p>
+
+<h2><a name="JSR181Annotations-UsingJava5Annotations"></a>Using Java 5 Annotations</h2>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">XFire xfire = XFireFactory.getInstance().getXFire();
+AnnotationServiceFactory factory = <span class="code-keyword">new</span> AnnotationServiceFactory(xfire.getTransportManager());
+Service service = factory.create(YourService.class)
+xfire.getServiceRegistry().register(service);</pre>
+</div></div>
+<p>In your services.xml, it would look like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;service&gt;</span>
+
+  <span class="code-tag">&lt;name&gt;</span>ServiceName<span class="code-tag">&lt;/name&gt;</span>
+  <span class="code-tag">&lt;namespace&gt;</span>urn:your:namespace<span class="code-tag">&lt;/namespace&gt;</span>
+  <span class="code-tag">&lt;serviceClass&gt;</span>your.service.Class<span class="code-tag">&lt;/serviceClass&gt;</span>
+  <span class="code-tag">&lt;serviceFactory&gt;</span>org.codehaus.xfire.jaxws.JAXWSServiceFactory<span class="code-tag">&lt;/serviceFactory&gt;</span>
+
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div>
+<p>&nbsp;<br/>
+The jar with the Java 5 JSR 181 annotations can be found <a href="http://www.ibiblio.org/maven/xfire/jars/xfire-jsr181-api-1.0-M1.jar" title="Visit page outside Confluence">here</a></p>
+
+<h2><a name="JSR181Annotations-UsingCommonsAttributesAnnotations"></a>Using Commons-Attributes Annotations</h2>
+
+<p>To use the commons-attributes annotations, you will need to follow <a href="http://jakarta.apache.org/commons/attributes/tutorial.html" title="Visit page outside Confluence">these instructions</a> on how to install the commons-attributes ant or maven plugin.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">XFire xfire = XFireFactory.getInstance().getXFire();
+TypeMappingRegistry registry = <span class="code-keyword">new</span> DefaultTypeMappingRegistry();
+
+AnnotationServiceFactory factory = <span class="code-keyword">new</span> AnnotationServiceFactory(xfire.getTransportManager());
+Service service = factory.create(YourService.class)
+xfire.getServiceRegistry().register(service);</pre>
+</div></div>
+<p>In your services.xml, it would look like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;service&gt;</span>
+
+  <span class="code-tag">&lt;name&gt;</span>ServiceName<span class="code-tag">&lt;/name&gt;</span>
+  <span class="code-tag">&lt;namespace&gt;</span>urn:your:namespace<span class="code-tag">&lt;/namespace&gt;</span>
+  <span class="code-tag">&lt;serviceClass&gt;</span>your.service.Class<span class="code-tag">&lt;/serviceClass&gt;</span>
+  <span class="code-tag">&lt;serviceFactory&gt;</span>org.codehaus.xfire.annotations.AnnotationServiceFactory<span class="code-tag">&lt;/serviceFactory&gt;</span>
+
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div>
+
+<h2><a name="JSR181Annotations-WritingServiceswithAnnotations"></a>Writing Services with Annotations</h2>
+
+<p><a href="http://incubator.apache.org/beehive/apidocs/classref_wsm/index.html" title="Visit page outside Confluence">Javadocs</a> (See the javax.jws packages only).</p>
+
+<p>Example:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> javax.jws.WebMethod;
+<span class="code-keyword">import</span> javax.jws.WebParam;
+<span class="code-keyword">import</span> javax.jws.WebResult;
+<span class="code-keyword">import</span> javax.jws.WebService;
+
+@WebService(name = <span class="code-quote">"EchoService"</span>, targetNamespace = <span class="code-quote">"http:<span class="code-comment">//www.openuri.org/2004/04/HelloWorld"</span>)
+</span>        <span class="code-keyword">public</span> class Jsr181EchoService
+{
+    @WebMethod(operationName = <span class="code-quote">"echoString"</span>, action = <span class="code-quote">"urn:EchoString"</span>)
+    @WebResult(name = <span class="code-quote">"echoResult"</span>)
+    <span class="code-keyword">public</span> <span class="code-object">String</span> echo(@WebParam(name = <span class="code-quote">"echoParam"</span>, header = <span class="code-keyword">true</span>) <span class="code-object">String</span> input)
+    {
+        <span class="code-keyword">return</span> input;
+    }
+}</pre>
+</div></div>
+<p>Alternatively you can place your annotations in your interface and have your implementation refer to it as shown below.</p>
+
+<p>The interface:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> com.example;
+
+<span class="code-keyword">import</span> javax.jws.WebMethod;
+<span class="code-keyword">import</span> javax.jws.WebParam;
+<span class="code-keyword">import</span> javax.jws.WebResult;
+<span class="code-keyword">import</span> javax.jws.WebService;
+
+@WebService(name = <span class="code-quote">"EchoService"</span>,  targetNamespace = <span class="code-quote">"http:<span class="code-comment">//www.openuri.org/2004/04/HelloWorld"</span>)
+</span><span class="code-keyword">public</span> <span class="code-keyword">interface</span> Jsr181EchoService
+{
+    @WebMethod(operationName = <span class="code-quote">"echoString"</span>, action = <span class="code-quote">"urn:EchoString"</span>)
+    @WebResult(name = <span class="code-quote">"echoResult"</span>)
+    <span class="code-keyword">public</span> <span class="code-object">String</span> echo(@WebParam(name = <span class="code-quote">"echoParam"</span>, header = <span class="code-keyword">true</span>) <span class="code-object">String</span> input);
+}</pre>
+</div></div>
+<p>and the implementation:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> com.example;
+
+<span class="code-keyword">import</span> javax.jws.WebService;
+
+@WebService(endpointInterface = <span class="code-quote">"com.example.Jsr181EchoService"</span>)
+<span class="code-keyword">public</span> class Jsr181EchoServiceImpl
+{
+    <span class="code-keyword">public</span> <span class="code-object">String</span> echo(<span class="code-object">String</span> input)
+    {
+        <span class="code-keyword">return</span> input;
+    }
+}</pre>
+</div></div>
+<p>To do this with commons-attributes instead, you will need to import the attributes from a different location and use the commons-attributes syntax:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.annotations.commons.WebMethod;
+<span class="code-keyword">import</span> org.codehaus.xfire.annotations.commons.WebParam;
+<span class="code-keyword">import</span> org.codehaus.xfire.annotations.commons.WebResult;
+<span class="code-keyword">import</span> org.codehaus.xfire.annotations.commons.WebService;
+
+/**
+ * @@WebService(name = <span class="code-quote">"EchoService"</span>, targetNamespace = <span class="code-quote">"http:<span class="code-comment">//www.openuri.org/2004/04/HelloWorld"</span>)
+</span> * @@org.codehaus.xfire.annotations.commons.soap.SOAPBinding(style = 1)
+ */
+<span class="code-keyword">public</span> class CommonsEchoService
+{
+
+    /**
+     * Returns the input.
+     *
+     * @param input the input.
+     * @<span class="code-keyword">return</span> the input.
+     * @@WebMethod(operationName = <span class="code-quote">"echoString"</span>, action=<span class="code-quote">"urn:EchoString"</span>)
+     * @@.echoParam WebParam(<span class="code-quote">"echoParam"</span>)
+     * @@.<span class="code-keyword">return</span> WebResult(<span class="code-quote">"echoResult"</span>)
+     */
+    <span class="code-keyword">public</span> <span class="code-object">String</span> echo(<span class="code-object">String</span> inputString)
+    {
+        <span class="code-keyword">return</span> inputString;
+    }
+}</pre>
+</div></div>
+
+<h3><a name="JSR181Annotations-Usingcustomannotations%26nbsp%3B"></a>Using custom annotations&nbsp;</h3>
+
+<p>Additionaly XFire provides some annotations which are not part of JSR 181, but allows to use XFire specific functionality .</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.annotations;
+
+@EnableMTOM
+@ServiceProperty(key=<span class="code-quote">"singlePropertyKey"</span>,list={<span class="code-quote">"value3"</span>,<span class="code-quote">"value2"</span>} )
+@ServiceProperties*(properties={@ServiceProperty(key=<span class="code-quote">"key12"</span>,value=<span class="code-quote">"value12"</span>)})
+@WebService(name=<span class="code-quote">"EchoService"</span>, targetNamespace=<span class="code-quote">"http:<span class="code-comment">//www.open.uri.org/2004/04/HelloWorld"</span> )
+</span>
+<span class="code-keyword">public</span> class Jsr181EchoService {
+
+}</pre>
+</div></div>
+
+<p>@EnableMTOM - enable MTOM on service<br/>
+@ServiceProperty - allows to specify property on given serwise ( instead of creating &lt;poperties&gt;&lt;property key="propertyKey"&gt;propertyValue&lt;/property&gt;&lt;/properties&gt; tags in service configuration file )<br/>
+@ServicesProperties - allows to specify as many properties as you want, at once.&nbsp;</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

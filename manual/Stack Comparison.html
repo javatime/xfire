@@ -1,0 +1,685 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Stack Comparison</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>There SOAP stack space has gotten more crowded recently. This chart is to help you decide which stack to use.</p>
+
+<p><b>If you have any corrections/additions please direct them to the mailing list.</b></p>
+
+<p>While feature matrices can be helpful, we think you should keep some other points in mind which are equally important.</p>
+<ul>
+	<li><a href="Performance.html" title="Performance">Performance</a> &#45; XFire is one of the fastest SOAP stacks available. We'll have some benchmarks coming soon, but a rough guide is that we're 2-5x faster than Axis 1.</li>
+	<li>Robustness - XFire is now at 1.2, it has been in development for over 2.5 years, and it has deployed in many large organizations around the world.</li>
+	<li>Ease of Use - XFire is significantly easier to use than a lot of SOAP stacks.</li>
+	<li>Embeddability - The SOAP stacks below have various degrees of embeddability. This may not be a factor in your application design, but here are our thoughts on the issue:
+	<ul>
+		<li>Axis 1's big embeddability flaw is that its API was never meant to be used by an end user. Also, it uses static references to the AxisEngine everywhere in the code, making it impossible to run two completely seperate instances side by side.</li>
+		<li>Axis 2 <a href="http://www.wso2.net/2006/05/can_i_embed_simplehttpserver_in_my_application_and_deploy_a_pojo" title="Visit page outside Confluence">seems to be a bit more embeddable</a>, although the API seems kind of ugly and there isn't any documentation on the subject. (Dan Diephouse: It also makes the mistake in my opinion of trying to be the equivalent of a J2EE container, which means it mucks with classloaders, has its own deployment model, etc. That is what Spring, JBI, other containers are for, so XFire doesn't feel the need to replicate that.)</li>
+		<li>Celtix - seems embeddable.</li>
+		<li>Glue - definitely embeddable.</li>
+		<li>JBossWS - We haven't had time to play with this one yet.</li>
+		<li>XFire - <a href="http://xfire.codehaus.org/Embedded+XFire+HTTP+Service" title="Visit page outside Confluence">Check out our sample</a>.</li>
+	</ul>
+	</li>
+</ul>
+
+
+<p>Last Date of Comparison: 9/1/2006</p>
+
+<h3><a name="StackComparison-GeneralFeatures"></a>General Features</h3>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Feature </th>
+<th class='confluenceTh'> Axis 1.x </th>
+<th class='confluenceTh'> Axis2 </th>
+<th class='confluenceTh'> &nbsp;Celtix </th>
+<th class='confluenceTh'> Glue </th>
+<th class='confluenceTh'> JBossWS&nbsp; </th>
+<th class='confluenceTh'> XFire (1.2) </th>
+<th class='confluenceTh'> JAXWS 2.1 RI&nbsp; </th>
+</tr>
+<tr>
+<td class='confluenceTd'> Basic Profile 1.1 Compliant </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> DIME </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> Easily Create Services from POJOs </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X&nbsp; </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> MTOM </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Open Source </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> RPC-Encoding </td>
+<td class='confluenceTd'> X&nbsp; </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> Spring Support <br clear="all" /> </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> X (via <a href="https://jax-ws-commons.dev.java.net/nonav/spring/" title="Visit page outside Confluence">spring extension</a>)&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> REST Support <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> IDEA/Eclipse Plugins <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> &nbsp;NetBeans Plugins <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Hot Deployment <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X (Via ServiceMix) <br clear="all" /> </td>
+<td class='confluenceTd'> X (via <a href="http://glassfish.dev.java.net/" title="Visit page outside Confluence">Glassfish</a>)&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Soap 1.1 <br clear="all" /> </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> x <br clear="all" /> </td>
+<td class='confluenceTd'> &nbsp;X <br clear="all" /> </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Soap 1.2 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Soap w/ Attachments </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> Coming in 2.0&#33; <br clear="all" /> </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Streaming XML (StAX based) <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WSDL-&gt;Code (Client) </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WSDL-&gt;Code (Server) </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Client Side Asynchrony <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Server Side Asynchrony&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Stateful Webservices <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+</tbody></table>
+
+<h3><a name="StackComparison-JSRstandards"></a>JSR standards</h3>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Feature </th>
+<th class='confluenceTh'> Axis 1.x </th>
+<th class='confluenceTh'> Axis2 </th>
+<th class='confluenceTh'> &nbsp;Celtix </th>
+<th class='confluenceTh'> Glue </th>
+<th class='confluenceTh'> JBossWS&nbsp; </th>
+<th class='confluenceTh'> XFire (1.2) </th>
+<th class='confluenceTh'> &nbsp; JAXWS 2.1 RI <br clear="all" /> </th>
+</tr>
+<tr>
+<td class='confluenceTd'> JAX-RPC </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X? </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp; &nbsp; <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JAX-WS </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;Coming in 2.0 &nbsp; <br clear="all" /> </td>
+<td class='confluenceTd'> <a href="JAX-WS.html" title="JAX-WS">Early Access</a>, full suport in 2.0 </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JBI (See <a href="http://servicemix.org" title="Visit page outside Confluence">ServiceMix</a>) </td>
+<td class='confluenceTd'> ? </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; (via <a href="http://glassfish.dev.java.net/" title="Visit page outside Confluence">Glassfish</a>) <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JSR 181 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JSR 181 on Java 1.4 <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X&nbsp; </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> SAAJ <br clear="all" /> </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> &nbsp;X&nbsp; </td>
+<td class='confluenceTd'> Coming in 2.0&#33; <br clear="all" /> </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JSR 109&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+</tbody></table>
+
+<h3><a name="StackComparison-DataBindings"></a>Data Bindings</h3>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Feature </th>
+<th class='confluenceTh'> Axis 1.x </th>
+<th class='confluenceTh'> Axis2 </th>
+<th class='confluenceTh'> &nbsp;Celtix </th>
+<th class='confluenceTh'> Glue </th>
+<th class='confluenceTh'> JBossWS <br clear="all" /> </th>
+<th class='confluenceTh'> XFire </th>
+<th class='confluenceTh'> JAXWS 2.1 RI <br clear="all" /> </th>
+</tr>
+<tr>
+<td class='confluenceTd'> XMLBeans&nbsp; Support <br clear="all" /> </td>
+<td class='confluenceTd'> X&nbsp; </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> Castor Support </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> JiBX </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> JAXB 1.1 <br clear="all" /> </td>
+<td class='confluenceTd'> X&nbsp; </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+<td class='confluenceTd'> &nbsp; <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JAXB 2.0 <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> Coming in 2.0 </td>
+<td class='confluenceTd'> &nbsp;X&nbsp; </td>
+<td class='confluenceTd'> X&nbsp; </td>
+<td class='confluenceTd'> X </td>
+</tr>
+</tbody></table>
+
+<h3><a name="StackComparison-WS%5C"></a>WS-&#42;</h3>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Feature </th>
+<th class='confluenceTh'> Axis 1.x </th>
+<th class='confluenceTh'> Axis2 </th>
+<th class='confluenceTh'> &nbsp;Celtix </th>
+<th class='confluenceTh'> Glue </th>
+<th class='confluenceTh'> JBossWS <br clear="all" /> </th>
+<th class='confluenceTh'> XFire </th>
+<th class='confluenceTh'> JAXWS 2.1 RI <br clear="all" /> </th>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Addressing </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Eventing </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;X&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Notification </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> ? </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X <a href="http://servicemix.org" title="Visit page outside Confluence">Via ServiceMix</a> </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-ReliableMessaging <br clear="all" /> </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Coming in 2.0&#33; </td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Policy <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp; </td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Coming in 2.0&#33; </td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Security Policy <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Security </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X <br clear="all" /> </td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Trust&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Secure Conversation&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Atomic Transaction <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Coordination </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WS-Metadata Exchange&nbsp; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X (via <a href="https://wsit.dev.java.net/" title="Visit page outside Confluence">WSIT </a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WSDL 1.1 Support </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+</tr>
+<tr>
+<td class='confluenceTd'> WSDL 2.0 Support </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> Coming in 2.0&#33; <br clear="all" /> </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+</tbody></table>
+
+<h3><a name="StackComparison-Transports"></a>Transports</h3>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Feature </th>
+<th class='confluenceTh'> Axis 1.x </th>
+<th class='confluenceTh'> Axis2 </th>
+<th class='confluenceTh'> &nbsp;Celtix </th>
+<th class='confluenceTh'> Glue </th>
+<th class='confluenceTh'> JBossWS <br clear="all" /> </th>
+<th class='confluenceTh'> XFire </th>
+<th class='confluenceTh'> JAXWS 2.1 RI <br clear="all" /> </th>
+</tr>
+<tr>
+<td class='confluenceTd'> HTTP </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+</tr>
+<tr>
+<td class='confluenceTd'> JMS </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X&nbsp; </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> &nbsp;X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X(via <a href="https://jms-ws-transport.dev.java.net/" title="Visit page outside Confluence">JMS extension</a>) <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Jabber </td>
+<td class='confluenceTd'> Experimental </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> SMTP </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> TCP </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X(via <a href="http://glassfish.dev.java.net/" title="Visit page outside Confluence">Glassfish</a>)&nbsp; </td>
+</tr>
+</tbody></table>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

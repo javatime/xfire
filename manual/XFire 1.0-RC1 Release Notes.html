@@ -1,0 +1,2404 @@
+<html>
+    <head>
+        <title>Codehaus XFire : XFire 1.0-RC1 Release Notes</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>The XFire team is proud to announce the 1.0-RC1 release&#33; XFire is a next-generation java SOAP framework. XFire makes service oriented development approachable through its easy to use API and support for standards. It is also highly performant since it is built on a low memory StAX based model.</p>
+
+<p>This release features many improvements:</p>
+<ul>
+	<li>Improved Client and Server stub generation</li>
+	<li>JAX-WS over XFire Early Access Release</li>
+	<li>Castor Support</li>
+	<li>Performance Improvements</li>
+	<li>Maven 2 Support</li>
+	<li>Many bug fixes</li>
+</ul>
+
+
+<p>Many people are already using XFire today and realizing its performance and ease of use benefits. Why not download it and see for yourself?</p>
+
+<h2><a name="XFire1.0-RC1ReleaseNotes-DownloadHere"></a>Download Here</h2>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Download </th>
+<th class='confluenceTh'> Description </th>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://dist.codehaus.org/org.codehaus.xfire/zips/xfire-distribution-1.0-RC1.zip" title="Visit page outside Confluence">xfire-distribution-1.0-RC1.zip</a> </td>
+<td class='confluenceTd'> Binary Distribution in zip package </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://dist.codehaus.org/org.codehaus.xfire/jars/xfire-all-1.0-RC1.jar" title="Visit page outside Confluence">xfire-all-1.0-RC1.jar</a> </td>
+<td class='confluenceTd'> Jar of all XFire modules (also see the <a href="Dependency Guide.html" title="Dependency Guide">Dependency Guide</a>) </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://dist.codehaus.org/org.codehaus.xfire/zips/xfire-src-1.0-RC1.zip" title="Visit page outside Confluence">xfire-src-1.0-RC1.jar</a> </td>
+<td class='confluenceTd'> XFire sources </td>
+</tr>
+</tbody></table>
+
+<h3><a name="XFire1.0-RC1ReleaseNotes-UpgradingtoRC1fromM6"></a>Upgrading to RC1 from M6</h3>
+
+<ul>
+	<li>Our Maven group id has changed from "xfire" to "org.codehaus.xfire". When using Maven 2, transitive dependencies should now work.</li>
+</ul>
+
+
+<h3><a name="XFire1.0-RC1ReleaseNotes-Errata"></a>Errata</h3>
+
+<ul>
+	<li>When building from source you may have to install the "maven-bundle-plugin" first. To do this simply execute "cd maven-bundle-plugin; mvn install" from the xfire source directory.</li>
+</ul>
+
+
+<h3><a name="XFire1.0-RC1ReleaseNotes-Detail"></a>Detail</h3>
+<p><a name="jiraissues">
+    <table  width="100%" cellspacing="0" class="grid">
+        <tr>
+            <th colspan="11" style="text-align: left;">
+                                    <a href="/spaces/doexportspace.action?key=XFIRE&macro.refresh=true#jiraissues"><img src="/images/icons/refresh_16.png" height="16" width="16" border="0" align="right" title="refresh"/></a>
+                                <a href="http://jira.codehaus.org/secure/IssueNavigator.jspa?&pid=10750&fixfor=12021&sorter/field=issuekey&tempMax=75&sorter/order=DESC&reset=true&">jira.codehaus.org</a>
+                <span class="smalltext">(64 issues)</span>
+            </th>
+        </tr>
+        <tr>
+                        <th style="text-align: left;">
+                T                                                                                                                                                                            </th>
+                        <th style="text-align: left;">
+                                Key                                                                                                                                                            </th>
+                        <th style="text-align: left;">
+                                                Summary                                                                                                                                            </th>
+                        <th style="text-align: left;">
+                                                                Assignee                                                                                                                            </th>
+                        <th style="text-align: left;">
+                                                                                Reporter                                                                                                            </th>
+                        <th style="text-align: left;">
+                                                                                                Pr                                                                                            </th>
+                        <th style="text-align: left;">
+                                                                                                                Status                                                                            </th>
+                        <th style="text-align: left;">
+                                                                                                                                Res                                                            </th>
+                        <th style="text-align: left;">
+                                                                                                                                                Created                                            </th>
+                        <th style="text-align: left;">
+                                                                                                                                                                Updated                            </th>
+                        <th style="text-align: left;">
+                                                                                                                                                                                Due            </th>
+                    </tr>
+                                            <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-266"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-266">XFIRE-266</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-266">xmlbeans doesn&#39;t always work with non document types</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">WON'T FIX</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 14, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 18, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-264"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-264">XFIRE-264</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-264">Create m2 poms for examples</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 12, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 18, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-262"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-262">XFIRE-262</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-262">WsGenTask not using URL correctly under windows</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Tomasz Sztelak
+                                    </td>
+                                <td nowrap="true">
+                                            Tim Robertson
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 09, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 10, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-261"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-261">XFIRE-261</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-261">XFireFault.SENDER should return Client SOAP 1.1 fault code</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            sumit shah
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 08, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 11, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-260"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-260">XFIRE-260</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-260">Don&#39;t reload context if it is cached in AbstractXFireSpringTest</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Adam Kramer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">WON'T FIX</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 12, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-257"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-257">XFIRE-257</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-257">Xfire instance prototype beans when scaning for jsr 181 annotations - only singletons should be scaned</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Jara Cesnek
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_critical.gif" alt="Critical" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 06, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 08, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-256"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-256">XFIRE-256</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-256">Unproper handling of NO_NAMESPACE attributes</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Thomas Bauer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 06, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 08, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-254"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-254">XFIRE-254</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-254">java.lang.IllegalArgumentException: void is a primitive in wsgen</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Phillip Rhodes
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 03, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 03, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-251"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-251">XFIRE-251</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-251">interfaces that inherit from other interfaces aren&#39;t introspected for their propertydescriptors</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Matthew Baird
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 02, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 05, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-250"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-250">XFIRE-250</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-250">Last service to specify schema(s) sets schema for all WSDL generated</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Adam Kramer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 31, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 05, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-248"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-248">XFIRE-248</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-248">StaxBuilder raises NullPointerException during build</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Thomas Bauer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 31, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 05, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-245"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-245">XFIRE-245</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-245">WsGenTask gives NullPointerException</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Matt Vincent
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 25, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 12, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-241"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-241">XFIRE-241</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-241">Castor Binding Module Addition</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Adam Kramer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 18, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 21, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-240"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-240">XFIRE-240</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-240">CURRENT_MESSAGE_PART context property not set in AegisBindingProvider.writeParameter</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Adam Kramer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 18, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 21, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-239"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-239">XFIRE-239</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-239">When creating Spring applicationContexts, recognize already created contexts and join def&#39;s with them</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 18, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 26, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-235"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-235">XFIRE-235</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-235">&quot;Couldn&#39;t find schema for part:&quot; exception when generating client code from BookService wsdl</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Joseph Culjak
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 17, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Oct 25, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-234"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-234">XFIRE-234</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-234">Need to be able to set properties on stubs.</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 17, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 04, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-230"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-230">XFIRE-230</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-230">Bean Collection Property componentType from aegis.xml ignored when run under Java5 with Java5 annotations</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 11, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 13, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-229"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-229">XFIRE-229</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-229">Consuming XFire Web Services with Oracle JDeveloper results in unexpected element name</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Julien Dubois
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">WON'T FIX</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 10, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 18, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-228"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-228">XFIRE-228</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-228">Aegis Mapping XML is ignored for Collection componentTypes</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 09, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 13, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-226"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-226">XFIRE-226</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-226">Add support for configuring ordering of handles within xfire and service and attachment to phases with Spring/XBean</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Brian Bonner
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 14, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-225"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-225">XFIRE-225</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-225">Maven2 - Commons Attribute section of xfire-annotations pom.xml is not working correctly</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Brian Bonner
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 12, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-224"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-224">XFIRE-224</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-224">Problem setting Service propertis using &quot;native&quot; Spring Configuration</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Brian Bonner
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 16, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-223"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-223">XFIRE-223</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-223">Namespace Prefix for name of elements/attributes is not inherited correctly from enclosing complexObject</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 06, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-222"><img src="http://jira.codehaus.org/images/icons/task.gif" alt="Task" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-222">XFIRE-222</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-222">make the mvn2 build work also on older jdks</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 04, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 04, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-221"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-221">XFIRE-221</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-221">Source xml data type can only handle DOMSource</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Guillaume Nodet
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 01, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 05, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-220"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-220">XFIRE-220</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-220">XFire incorrectly handle dateTime with precision above milliseconds</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Rodrigo Peinado
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 30, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 01, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-219"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-219">XFIRE-219</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-219">Jsr181HandlerMapping is not IoC friendly</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Bassam El-Abid
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 29, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 09, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-218"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-218">XFIRE-218</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-218">Spring JDK Proxy Support when using Java5 Jsr181 Annotations</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Bassam El-Abid
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 29, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 09, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-217"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-217">XFIRE-217</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-217">Duplicate namespace declaration when serializing org.w3c.dom.Document</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dave Howland
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 28, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-216"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-216">XFIRE-216</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-216">mvn site doesnt work</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 25, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 04, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-215"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-215">XFIRE-215</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-215">maven 2 build generates classfiles that work only with jdk 1.5</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 25, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 03, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-212"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-212">XFIRE-212</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-212">Set the session attribute properly in ServiceBean</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 19, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 19, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-209"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-209">XFIRE-209</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-209">JAXB and wsdl4j jars not included in distro</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 15, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 16, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-207"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-207">XFIRE-207</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-207">Xfire doesnt distinguish between same named services in different servlets. Invoking wrong bean.</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            Jara Cesnek
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_critical.gif" alt="Critical" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">WON'T FIX</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 15, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 01, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-206"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-206">XFIRE-206</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-206">wsdl rpc lit operation namespaces aren&#39;t processed correctly in WSDLServiceBuilder</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 22, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-205"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-205">XFIRE-205</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-205">Show function parameter names in the wsdl file instead of standard &quot; &quot;in&quot; + parameterNumber&quot; name </a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Abhishek Chatterjee
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 18, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-204"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-204">XFIRE-204</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-204">BeanType can&#39;t handle null primitive attributes</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-203"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-203">XFIRE-203</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-203">Groovy &amp; XFire : NPE</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Guillaume ALLEON
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 13, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-202"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-202">XFIRE-202</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-202">aegis.xml files are ignored if run on java5</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Mika Goeckel
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 12, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-201"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-201">XFIRE-201</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-201">XmlBeansType not being used for readObject</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Erik Onnen
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">CANNOT REPRODUCE</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 12, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-200"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-200">XFIRE-200</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-200">Aegis binding for exceptions</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Artti Jaakkola
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 12, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 15, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-199"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-199">XFIRE-199</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-199">OutOfMemory errors can occur when dealing with large byte arrays</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 08, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 27, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-198"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-198">XFIRE-198</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-198">NullPointerException with malformed headers.</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Krzysztof Dabrowski
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 08, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 09, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-197"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-197">XFIRE-197</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-197">Client-side NullPointerException when calling SOAP services with some parameters set to null</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Jack Xu Hong
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_critical.gif" alt="Critical" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 07, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 08, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-196"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-196">XFIRE-196</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-196">Add the ability to create a dynamic proxy in BeanType when the data type is an interface</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Jack Xu Hong
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 06, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 06, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-195"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-195">XFIRE-195</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-195">namespace prefx hints</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Matthew Pocock
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 06, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 06, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-193"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-193">XFIRE-193</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-193">Provide a way to specify a user name and password for basic authentication when using XFireProxyFactory.</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Roelf de Kock
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 06, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 08, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-191"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-191">XFIRE-191</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-191">Allow endpoint url to be overridden easily with generated client</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 04, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 12, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-189"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-189">XFIRE-189</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-189">JAX WS Client and Server stub generation</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 04, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 07, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-187"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-187">XFIRE-187</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-187">Handle fault elements in wsdls</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 02, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 04, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-185"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-185">XFIRE-185</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-185">Support multiple out parameters</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 28, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 28, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-181"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-181">XFIRE-181</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-181">The wsdl generation for a service that is using xmlbeans will throw an excpetion when the xsd type xs:IDREFS is used to define an element or an attribute in the schema.</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Brian Blitzer
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 23, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 26, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-179"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-179">XFIRE-179</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-179">Allow javax.xml.stream.XMLStreamReader return type for Message-style services</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Gareth Davies
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 21, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 08, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-177"><img src="$icons.get( $item.getChild('type').getValue() )" alt="Wish" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-177">XFIRE-177</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-177">JMS transport configuration example for Spring</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Artti Jaakkola
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 17, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jul 27, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-168"><img src="http://jira.codehaus.org/images/icons/improvement.gif" alt="Improvement" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-168">XFIRE-168</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-168">Create Maven2 pom.xml builds for XFire</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Christoph Sturm
+                                    </td>
+                                <td nowrap="true">
+                                            Brian Bonner
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_resolved.gif" alt="Resolved" border="0" />Resolved
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 11, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 25, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-160"><img src="$icons.get( $item.getChild('type').getValue() )" alt="Wish" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-160">XFIRE-160</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-160">XMLBeans example</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Artti Jaakkola
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_minor.gif" alt="Minor" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 09, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 30, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-158"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-158">XFIRE-158</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-158">Allow user to specify stax implementation - for binary XML</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Tomasz Sztelak
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 08, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Feb 17, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-152"><img src="http://jira.codehaus.org/images/icons/task.gif" alt="Task" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-152">XFIRE-152</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-152">Get JAXB jars on repository and switch builds to use them.</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Nov 02, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 26, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-147"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-147">XFIRE-147</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-147">Update to latest JSR 181 jar</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Arjen Poutsma
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Oct 11, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Jan 07, 2006
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-145"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-145">XFIRE-145</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-145">http transport may expect a reponse back from a client request</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Oct 09, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 11, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-129"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-129">XFIRE-129</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-129">Responses documents with additional namespaces do not appear to be included</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Brian Bonner
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Sep 21, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 28, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowNormal">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-110"><img src="http://jira.codehaus.org/images/icons/bug.gif" alt="Bug" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-110">XFIRE-110</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-110">Clarify Channel/Transport lifecycle</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Aug 26, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 11, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+                                    <tr class="rowAlternate">
+                                                            <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-95"><img src="http://jira.codehaus.org/images/icons/newfeature.gif" alt="New Feature" border="0" /></a>
+                                    </td>
+                                <td nowrap="true">
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-95">XFIRE-95</a>
+                                    </td>
+                                <td >
+                                            <a href="http://jira.codehaus.org/browse/XFIRE-95">Ability to set the services end point</a>
+                                    </td>
+                                <td nowrap="true">
+                                            Dan Diephouse
+                                    </td>
+                                <td nowrap="true">
+                                            Justen Stepka
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/priority_major.gif" alt="Major" border="0" />
+                                    </td>
+                                <td nowrap="true">
+                                            <img src="http://jira.codehaus.org/images/icons/status_closed.gif" alt="Closed" border="0" />Closed
+                                    </td>
+                                <td nowrap="true">
+                                            <font color="990000">FIXED</font>
+                                    </td>
+                                <td nowrap="true">
+                                            Jul 01, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            Dec 14, 2005
+                                    </td>
+                                <td nowrap="true">
+                                            
+                                    </td>
+                            </tr>
+            </table>
+</p>
+
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

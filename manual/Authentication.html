@@ -1,0 +1,229 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Authentication</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>Frequently you'll want to authenticate your service. There are many possible ways to do this. We'll try to outline some here.</p>
+
+<h2><a name="Authentication-HTTPAuthentication"></a>HTTP Authentication</h2>
+
+<p>HTTP authentication is one of the most straightforward ways to secure your service. You simply need to to configure your servlet container to require a username and password. If you are wondering how to configure your XFire client to send an HTTP username/password check out the documentation on the <a href="HTTP Transport.html" title="HTTP Transport">HTTP Transport</a>.</p>
+
+<h2><a name="Authentication-SOAPHeaderauthenticationwithJSR181"></a>SOAP Header authentication with JSR 181</h2>
+
+<p>You can also send SOAP headers which container username/password information. This is quite simple with JSR 181. You simply need to create a class that contains the username and password:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class UserToken {
+  <span class="code-keyword">private</span> <span class="code-object">String</span> username;
+  <span class="code-keyword">private</span> <span class="code-object">String</span> password;
+
+  <span class="code-keyword">public</span> <span class="code-object">String</span> getUsername() { <span class="code-keyword">return</span> username; };
+  <span class="code-keyword">public</span> void setUsername(<span class="code-object">String</span> username) { <span class="code-keyword">this</span>.username = username; }
+  <span class="code-keyword">public</span> <span class="code-object">String</span> getPassword() { <span class="code-keyword">return</span> password; };
+  <span class="code-keyword">public</span> void setPassword(<span class="code-object">String</span> password) { <span class="code-keyword">this</span>.password = password; }
+}</pre>
+</div></div>
+<p>Then write your service class so that it takes this token:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void someOperation(<span class="code-object">String</span> data, @WebParam(header=<span class="code-keyword">true</span>) UserToken token) {
+  authenticate(token)
+
+  <span class="code-comment">// <span class="code-keyword">do</span> your normal request here
+</span>}</pre>
+</div></div>
+
+<h2><a name="Authentication-SOAPHeaderAuthenticationwithHandlers"></a>SOAP Header Authentication with Handlers</h2>
+
+<p>Often you will want to authenticate use of your service based on particular Headers in the SOAP Message. Say for example we have a header like the following:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;AuthenticationToken xmlns=<span class="code-quote">"urn:yourapp:authentication"</span>&gt;</span>
+  <span class="code-tag">&lt;Username&gt;</span>test<span class="code-tag">&lt;/Username&gt;</span>
+  <span class="code-tag">&lt;Password&gt;</span>123<span class="code-tag">&lt;/Password&gt;</span>
+<span class="code-tag">&lt;/AuthenticationToken&gt;</span></pre>
+</div></div>
+<p>We can easily write a Handler to process this information.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.MessageContext;
+<span class="code-keyword">import</span> org.codehaus.xfire.handler.AbstractHandler;
+<span class="code-keyword">import</span> org.codehaus.yom.Element;
+
+<span class="code-keyword">public</span> class AuthenticationHandler <span class="code-keyword">extends</span> AbstractHandler
+{
+    <span class="code-keyword">private</span> <span class="code-keyword">final</span> <span class="code-keyword">static</span> <span class="code-object">String</span> TOKEN_NS = <span class="code-quote">"urn:yourapp:authentication"</span>;
+
+    <span class="code-keyword">public</span> void invoke(MessageContext context)
+        <span class="code-keyword">throws</span> XFireFault
+    {
+        <span class="code-keyword">if</span> (context.getInMessage().getHeader() == <span class="code-keyword">null</span>)
+        {
+            <span class="code-keyword">throw</span> <span class="code-keyword">new</span> XFireFault(<span class="code-quote">"Request must include company authentication token."</span>,
+                                 XFireFault.SENDER);
+        }
+
+        Element token = context.getInMessage().getHeader().getFirstChildElement(<span class="code-quote">"AuthenticationToken"</span>, TOKEN_NS);
+        <span class="code-keyword">if</span> (token == <span class="code-keyword">null</span>)
+        {
+            <span class="code-keyword">throw</span> <span class="code-keyword">new</span> XFireFault(<span class="code-quote">"Request must include authentication token."</span>,
+                                 XFireFault.SENDER);
+        }
+
+        <span class="code-object">String</span> username = token.getFirstChildElement(<span class="code-quote">"Username"</span>, TOKEN_NS).getValue();
+        <span class="code-object">String</span> password = token.getFirstChildElement(<span class="code-quote">"Password"</span>, TOKEN_NS).getValue();
+
+        <span class="code-keyword">try</span>
+        {
+            <span class="code-comment">// Do some authentication....
+</span>            ....
+
+            <span class="code-comment">// we've authenticated, now put the Company object in the context
+</span>            context.setProperty(COMPANY_KEY, company);
+        }
+        <span class="code-keyword">catch</span> (Exception e)
+        {
+            <span class="code-keyword">throw</span> <span class="code-keyword">new</span> XFireFault(<span class="code-quote">"Invalid username/password."</span>, XFireFault.SENDER);
+        }
+    }
+}</pre>
+</div></div>
+
+<h2><a name="Authentication-ClientAuthenticationHandler"></a>Client Authentication Handler</h2>
+
+<p>To make authentication to work, you also need to add the authentication information from the client.</p>
+
+<p>One way to do it is by adding an out handler to your port via the XFireProxy and add the requisite tokens there.</p>
+
+<p>A lot of the info below was taken as is from this blog: <a href="http://www.jroller.com/page/hexbinary/20051130" title="Visit page outside Confluence">http://www.jroller.com/page/hexbinary/20051130</a></p>
+
+<p>Also, all of the information below is true as of XFire 1.1-beta.</p>
+
+<p>Create a ClientAuthenticationHandler like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class ClientAuthenticationHandler <span class="code-keyword">extends</span> AbstractHandler {
+
+    <span class="code-keyword">private</span> <span class="code-object">String</span> username = <span class="code-keyword">null</span>;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> password = <span class="code-keyword">null</span>;
+
+
+    <span class="code-keyword">public</span> ClientAuthenticationHandler() {
+    }
+
+    <span class="code-keyword">public</span> ClientAuthenticationHandler(<span class="code-object">String</span> username,<span class="code-object">String</span> password) {
+        <span class="code-keyword">this</span>.username = username;
+        <span class="code-keyword">this</span>.password = password;
+    }
+
+    <span class="code-keyword">public</span> void setUsername(<span class="code-object">String</span> username) {
+        <span class="code-keyword">this</span>.username = username;
+    }
+
+    <span class="code-keyword">public</span> void setPassword(<span class="code-object">String</span> password) {
+        <span class="code-keyword">this</span>.password = password;
+    }
+
+    <span class="code-keyword">public</span> void invoke(MessageContext context) <span class="code-keyword">throws</span> Exception {
+
+
+        <span class="code-keyword">final</span> Namespace ns = Namespace.getNamespace(<span class="code-quote">"http:<span class="code-comment">//user.mynamesspace.com"</span>);
+</span>        Element el = <span class="code-keyword">new</span> Element(<span class="code-quote">"header"</span>,ns);
+        context.getOutMessage().setHeader(el);
+
+        Element auth = <span class="code-keyword">new</span> Element(<span class="code-quote">"AuthenticationToken"</span>, ns);
+        Element username_el = <span class="code-keyword">new</span> Element(<span class="code-quote">"Username"</span>,ns);
+        username_el.addContent(username);
+        Element password_el = <span class="code-keyword">new</span> Element(<span class="code-quote">"Password"</span>,ns);
+        password_el.addContent(password);
+        auth.addContent(username_el);
+        auth.addContent(password_el);
+        el.addContent(auth);
+
+
+
+    }
+}</pre>
+</div></div>
+<p>&nbsp;Now you need to add this authentication handler to the out handler of your client. One way to do this is programmatically:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">MyXFireClient rsc = <span class="code-keyword">new</span> MyXFireClient();
+        MyPortType myType = rsc.getServiceHttpPort();
+        XFireProxy proxy =  (XFireProxy)Proxy.getInvocationHandler(myType);
+        Client client = proxy.getClient();
+
+        client.addOutHandler(<span class="code-keyword">new</span> ClientAuthenticationHandler(<span class="code-quote">"myUserName"</span>,<span class="code-quote">"myPassword"</span>));</pre>
+</div></div>
+<p>&nbsp;And you're done&#33; Authenticating this way will add the requisite headers to your service.</p>
+
+<h3><a name="Authentication-WSSecurity"></a>WS-Security</h3>
+
+<p>WS-Security provides a Username/Password token that can be used. Check out the <a href="WS-Security.html" title="WS-Security">WS&#45;Security</a> instructions for more information.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

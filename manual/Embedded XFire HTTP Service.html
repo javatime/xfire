@@ -1,0 +1,197 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Embedded XFire HTTP Service</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This examples highlights how to</p>
+<ul>
+	<li>Create a Service using the API</li>
+	<li>Expose that Service using XFire's embedded HTTP server</li>
+	<li>Create a client for the service</li>
+</ul>
+
+
+<p>You can also use XFire with Servlets or Spring Remoting, this is just one of your many options with XFire&#33;</p>
+
+<h2><a name="EmbeddedXFireHTTPService-CreatingtheService"></a>Creating the Service</h2>
+
+<p>The first task is to write our Service. Further down we'll be showing how to create a Client. Java Proxies require an interface, and since that is how the <a href="Client API.html" title="Client API">Client API</a> works, we'll be writing our interface first. For this example, we're going to create a simple class which echoes back a String:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> Echo
+{
+    <span class="code-object">String</span> echo(<span class="code-object">String</span> echo);
+}</pre>
+</div></div>
+<p>We'll also need to write an implementation:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class EchoImpl
+        <span class="code-keyword">implements</span> Echo
+{
+    <span class="code-keyword">public</span> <span class="code-object">String</span> echo(<span class="code-object">String</span> echo)
+    {
+        <span class="code-keyword">return</span> echo;
+    }
+}</pre>
+</div></div>
+<p>Next we're going to write a class called ServiceStarter. This class creates a Service from the ServiceFactory and also starts up an instance of the XFireHttpServer.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.example;
+
+<span class="code-keyword">import</span> org.codehaus.xfire.XFire;
+<span class="code-keyword">import</span> org.codehaus.xfire.XFireFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.server.http.XFireHttpServer;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.Service;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.binding.ObjectServiceFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.invoker.BeanInvoker;
+<span class="code-keyword">import</span> org.codehaus.xfire.test.Echo;
+<span class="code-keyword">import</span> org.codehaus.xfire.test.EchoImpl;
+
+/**
+ * Creates an Echo service and exposes it via HTTP.
+ */
+<span class="code-keyword">public</span> class ServiceStarter
+{
+    XFireHttpServer server;
+    
+    <span class="code-keyword">public</span> void start() <span class="code-keyword">throws</span> Exception
+    {
+        <span class="code-comment">// Create an XFire Service
+</span>        ObjectServiceFactory serviceFactory = <span class="code-keyword">new</span> ObjectServiceFactory();
+        Service service = serviceFactory.create(Echo.class);
+        service.setInvoker(<span class="code-keyword">new</span> BeanInvoker(<span class="code-keyword">new</span> EchoImpl()));
+        
+        <span class="code-comment">// Register the service in the ServiceRegistry
+</span>        XFire xfire = XFireFactory.newInstance().getXFire();
+        xfire.getServiceRegistry().register(service);
+        
+        <span class="code-comment">// Start the HTTP server
+</span>        server = <span class="code-keyword">new</span> XFireHttpServer();
+        server.setPort(8191);
+        server.start();
+    }
+    
+    <span class="code-keyword">public</span> void stop() <span class="code-keyword">throws</span> Exception
+    {
+        server.stop();
+    }
+}</pre>
+</div></div>
+<p>ServiceFactorys are responsible for creating Services and configuring them in XFire. You'll see in other sections that there is an AnnotationServiceFactory as well and you can use that with <a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a>.</p>
+
+<p>The XFireHttpServer uses Jetty underneath so make sure that you have it on your classpath.&nbsp;</p>
+
+<p>If you use maven, here are all the dependencies you'll need:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.codehaus.xfire&lt;/groupId&gt;
+        &lt;artifactId&gt;xfire-java5&lt;/artifactId&gt;
+        &lt;version&gt;1.2.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;jetty&lt;/groupId&gt;
+        &lt;artifactId&gt;org.mortbay.jetty&lt;/artifactId&gt;
+        &lt;version&gt;5.1.10&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+        &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+        &lt;version&gt;2.4&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</pre>
+</div></div>
+
+<h2><a name="EmbeddedXFireHTTPService-StartingtheserviceandtheClient"></a>Starting the service and the Client</h2>
+
+<p>Using the Client is very similar. Once again we'll are creating a Service from an ObjectServiceFactory. This is because the Service object holds metadata about our Service. Our client needs this metadata to understand how the Service works. (NOTE: we also support <a href="Client and Server Stub Generation from WSDL.html" title="Client and Server Stub Generation from WSDL">WSDL code generation</a> and <a href="Dynamic Client.html" title="Dynamic Client">dynamic clients</a> if you didn't write the service or don't have the interface on your classpath). The XFireProxyFactory is then responsible for creating a proxied interface which will invoke this service.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">ServiceStarter starter = <span class="code-keyword">new</span> ServiceStarter();
+starter.start();
+
+<span class="code-comment">// Create a service model <span class="code-keyword">for</span> the client
+</span>ObjectServiceFactory serviceFactory = <span class="code-keyword">new</span> ObjectServiceFactory();
+Service serviceModel = serviceFactory.create(Echo.class);
+
+<span class="code-comment">// Create a client proxy
+</span>XFireProxyFactory proxyFactory = <span class="code-keyword">new</span> XFireProxyFactory();
+Echo echo = (Echo) proxyFactory.create(serviceModel, <span class="code-quote">"http:<span class="code-comment">//localhost:8191/Echo"</span>);
+</span>
+<span class="code-object">System</span>.out.println(echo.echo(<span class="code-quote">"Hello World"</span>));
+
+starter.stop();</pre>
+</div></div>
+<p>At the end, all we need to do is invoke "echo.echo("Hello World")" and "Hello World" should be sent right back to you&#33;</p>
+
+<p>If you were going to create a client from .NET you would be able to find the WSDL at <a href="http://localhost:8191/Echo?wsdl" title="Visit page outside Confluence">http://localhost:8191/Echo?wsdl</a>.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -1,0 +1,197 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Parsing a SOAP Message without Web Services</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="ParsingaSOAPMessagewithoutWebServices-Whatistheusecasefornotusingwebservices%3F"></a>What is the use case for not using web services?</h2>
+
+<p>One example of needing to parse a SOAP message is if you are using a message driven bean to listen to a JMS queue. The text received from the queue is a String with a SOAP message. How do you go about parsing the SOAP to get at the body? Also, how do you leverage XFire's flexible binding mechanism to marshall the SOAP Body for you?</p>
+
+<h3><a name="ParsingaSOAPMessagewithoutWebServices-Example1%3AIncomingSOAPmessageretrievedfromaJMSqueue"></a>Example 1: Incoming SOAP message retrieved from a JMS queue</h3>
+
+<p>Here is a typical message driven bean receiving a text message:</p>
+<div class="code"><div class="codeHeader"><b>MyMDB.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void onMessage(Message message) {
+  TextMessage textMessage = (TextMessage) message;
+  <span class="code-object">String</span> responseString = invoker.invokeService(<span class="code-quote">"TicketReceiptMessageService"</span>, textMessage.getText());
+  <span class="code-object">System</span>.out.println(<span class="code-quote">"Response is:"</span> + responseString);
+}</pre>
+</div></div>
+<p>In this example XFire is used to call a service named 'TicketReceiptMessageService' passing it the marshalled SOAP body.</p>
+
+<p>The 'TicketReceiptMessageService' needs to have an operation similiar to the SOAP body element so that XFire can determine which method to call on the service. Here is our incoming SOAP message:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;SOAP-ENV:Envelope <span class="code-keyword">xmlns:SOAP-ENV</span>=<span class="code-quote">"http://schemas.xmlsoap.org/soap/envelope/"</span> <span class="code-keyword">xmlns:xsd</span>=<span class="code-quote">"http://www.w3.org/2001/XMLSchema"</span> <span class="code-keyword">xmlns:xsi</span>=<span class="code-quote">"http://www.w3.org/2001/XMLSchema-instance"</span>&gt;</span>
+ <span class="code-tag">&lt;SOAP-ENV:Body&gt;</span>
+  <span class="code-tag">&lt;orchLayerProcessTicket xmlns=<span class="code-quote">"http://com/ticketingServices/ticket/"</span>&gt;</span>
+   <span class="code-tag">&lt;internalTrackingID xmlns=""&gt;</span>0<span class="code-tag">&lt;/internalTrackingID&gt;</span>
+   <span class="code-tag">&lt;busOrgID xmlns=""&gt;</span>jms_test<span class="code-tag">&lt;/busOrgID&gt;</span>
+   <span class="code-tag">&lt;ticketRequest xmlns=""/&gt;</span>
+  <span class="code-tag">&lt;/orchLayerProcessTicket&gt;</span>
+ <span class="code-tag">&lt;/SOAP-ENV:Body&gt;</span>
+<span class="code-tag">&lt;/SOAP-ENV:Envelope&gt;</span></pre>
+</div></div>
+<p>Here is the operation on the service which handles the incoming SOAP request:</p>
+<div class="code"><div class="codeHeader"><b>TicketReceiptMessageService.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> OrchLayerProcessTicketResponseDocument OrchLayerProcessTicket(OrchLayerProcessTicketDocument document) {
+    OrchLayerProcessTicketResponseDocument returnValue = OrchLayerProcessTicketResponseDocument.Factory.newInstance();
+    OrchLayerProcessTicketResponseType res = returnValue.addNewOrchLayerProcessTicketResponse();
+    ResultCode code = res.addNewResultCode();
+    code.setMessage(document.getOrchLayerProcessTicket().getBusOrgID());
+    <span class="code-keyword">return</span> returnValue;
+  }</pre>
+</div></div>
+<p>XMLBeans was used as the binding mechanism to marshall the SOAP Body. Before using XMLBeans as the binding tool you need to use the xmlbean Ant task to generate binding classes from your XSD schema. Configuring XFire in the xfire.xml file using Spring to handle this use case:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-//SPRING//DTD BEAN//EN"</span> <span class="code-quote">"http://www.springframework.org/dtd/spring-beans.dtd"</span>&gt;</span>
+<span class="code-tag">&lt;beans&gt;</span>
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"xfire.serviceRegistry"</span> class=<span class="code-quote">"org.codehaus.xfire.service.DefaultServiceRegistry"</span>/&gt;</span>
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"xfire.transportManager"</span> class=<span class="code-quote">"org.codehaus.xfire.transport.DefaultTransportManager"</span> init-method=<span class="code-quote">"initialize"</span> destroy-method=<span class="code-quote">"dispose"</span>/&gt;</span>
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"xfire"</span> class=<span class="code-quote">"org.codehaus.xfire.DefaultXFire"</span>&gt;</span>
+    <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span>&gt;</span>
+      <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.serviceRegistry"</span> /&gt;</span>
+    <span class="code-tag">&lt;/constructor-arg&gt;</span>
+    <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"1"</span>&gt;</span>
+      <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.transportManager"</span> /&gt;</span>
+    <span class="code-tag">&lt;/constructor-arg&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"xfire.aegisBindingProvider"</span> class=<span class="code-quote">"org.codehaus.xfire.aegis.AegisBindingProvider"</span>&gt;</span>
+    <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span>&gt;</span>
+      <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.xmlBeansTypeRegistry"</span>/&gt;</span>
+    <span class="code-tag">&lt;/constructor-arg&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"xfire.inboundServiceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.service.binding.ObjectServiceFactory"</span>&gt;</span>
+    <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span>&gt;</span>
+      <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.transportManager"</span> /&gt;</span>
+    <span class="code-tag">&lt;/constructor-arg&gt;</span>
+    <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"1"</span>&gt;</span>
+      <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.aegisBindingProvider"</span> /&gt;</span>
+    <span class="code-tag">&lt;/constructor-arg&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"xfire.xmlBeansTypeRegistry"</span> class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XmlBeansTypeRegistry"</span>/&gt;</span>
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+<p>The 'TicketReceiptMessageService' is configured in the services.xml file:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;name&gt;</span>TicketReceiptMessageService<span class="code-tag">&lt;/name&gt;</span>
+    <span class="code-tag">&lt;serviceFactory&gt;</span>#xfire.inboundServiceFactory<span class="code-tag">&lt;/serviceFactory&gt;</span>
+    <span class="code-tag">&lt;serviceClass&gt;</span>com.ticketing.TicketReceiptMessageService<span class="code-tag">&lt;/serviceClass&gt;</span>
+    <span class="code-tag">&lt;style&gt;</span>document<span class="code-tag">&lt;/style&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+<p>The last piece of the puzzle is the invocation code to handle a SOAP request and pass it to an XFire Channel to do the rest:</p>
+<div class="code"><div class="codeHeader"><b>ServiceInvokerImpl.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-object">String</span> invokeService(<span class="code-object">String</span> serviceName, <span class="code-object">String</span> request) <span class="code-keyword">throws</span> ServiceInvokerException {
+    <span class="code-keyword">return</span> invokeService(serviceName, <span class="code-keyword">new</span> ByteArrayInputStream(request.getBytes()));
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">String</span> invokeService(<span class="code-object">String</span> serviceName, InputStream stream) <span class="code-keyword">throws</span> ServiceInvokerException {
+    ByteArrayOutputStream out = <span class="code-keyword">null</span>;
+    XMLStreamReader reader = <span class="code-keyword">null</span>;
+    <span class="code-keyword">try</span> {
+      out = <span class="code-keyword">new</span> ByteArrayOutputStream();
+      MessageContext context = <span class="code-keyword">new</span> MessageContext();
+      context.setXFire(getXFire());
+      context.setProperty(Channel.BACKCHANNEL_URI, out);
+      context.setService(getXFire().getServiceRegistry().getService(serviceName));
+      reader = STAXUtils.createXMLStreamReader(stream, <span class="code-quote">"UTF-8"</span>, <span class="code-keyword">null</span>);
+      InMessage msg = <span class="code-keyword">new</span> InMessage(reader);
+
+      Transport t = getXFire().getTransportManager().getTransport(LocalTransport.BINDING_ID);
+      Channel c = t.createChannel();
+      c.receive(context, msg);
+      <span class="code-comment">// Validate that we don't have a SOAP Fault
+</span>      <span class="code-keyword">if</span> (StringUtils.contains(out.toString(), <span class="code-quote">"soap:Fault"</span>)) {
+        <span class="code-keyword">throw</span> <span class="code-keyword">new</span> ServiceInvokerException(<span class="code-quote">"SOAP Fault thrown:"</span> + out.toString());
+      }
+    } <span class="code-keyword">catch</span> (Exception e) {
+      <span class="code-keyword">throw</span> <span class="code-keyword">new</span> ServiceInvokerException(e.getMessage(), e);
+    } <span class="code-keyword">finally</span> {
+      <span class="code-keyword">try</span> {
+        reader.close();
+        out.close();
+      } <span class="code-keyword">catch</span> (Throwable e) {
+        <span class="code-keyword">throw</span> <span class="code-keyword">new</span> ServiceInvokerException(e.getMessage(), e);
+      }
+    }
+    <span class="code-keyword">return</span> out.toString();
+  }</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

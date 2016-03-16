@@ -1,0 +1,243 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Quick Start</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="QuickStart-Overview"></a>Overview</h2>
+
+<p>This document outlines what it takes to get started with your first XFire service. This is a fairly simple process. This document will lead you through setting up the XFire servlet. This document also presupposes that you are familiar with setting up servlets in your servlet container.</p>
+
+<p>This example can be found under "examples/book" in the <a href="Download.html" title="Download">XFire Distribution</a>.</p>
+
+<p>The general procedure is:</p>
+<ol>
+	<li>Set up the directory structure</li>
+	<li>Gather dependencies</li>
+	<li>Set up your web.xml</li>
+	<li>Write a service</li>
+	<li>Create your XFire configuration</li>
+	<li>Drop it into your servlet container</li>
+</ol>
+
+
+<p>It is also possible to embed XFire within your application.  See the <a href="Using the XFire API.html" title="Using the XFire API">Using the XFire API</a> section of the Users's Guide.</p>
+
+<h2><a name="QuickStart-Setupthedirectorystructure"></a>Set up the directory structure</h2>
+
+<p>The directory structure for the web app is simple:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">xfire/
++-WEB-INF/
+   +-web.xml
+   +-lib/ (holds dependencies)</pre>
+</div></div>
+<p>The code that goes along with this guide uses the maven war plugin to build a war for your servlet container. These files can be found under the "resources" directory in that distribution.</p>
+
+<h2><a name="QuickStart-Gatherdependencies"></a>Gather dependencies</h2>
+
+<p>XFire has a few dependencies. These will need to be added to your WEB-INF/lib directory. For a detailed description of what dependencies are need see the <a href="Dependency Guide.html" title="Dependency Guide">Dependency Guide</a>.</p>
+
+<h2><a name="QuickStart-Writeaservice"></a>Write a service</h2>
+
+<p>For this case, lets write a simple service which "finds" a book:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class BookServiceImpl <span class="code-keyword">implements</span> BookService
+{
+    <span class="code-keyword">private</span> Book onlyBook;
+    
+    <span class="code-keyword">public</span> BookServiceImpl()
+    {
+        onlyBook = <span class="code-keyword">new</span> Book();
+        onlyBook.setAuthor(<span class="code-quote">"Dan Diephouse"</span>);
+        onlyBook.setTitle(<span class="code-quote">"Using XFire"</span>);
+        onlyBook.setIsbn(<span class="code-quote">"0123456789"</span>);
+    }
+
+    <span class="code-keyword">public</span> Book[] getBooks() 
+    {
+        <span class="code-keyword">return</span> <span class="code-keyword">new</span> Book[] { onlyBook };
+    }
+    
+    <span class="code-keyword">public</span> Book findBook(<span class="code-object">String</span> isbn) <span class="code-keyword">throws</span> BookException
+    {
+        <span class="code-keyword">if</span> (isbn.equals(onlyBook.getIsbn()))
+            <span class="code-keyword">return</span> onlyBook;
+        
+        <span class="code-keyword">throw</span> <span class="code-keyword">new</span> BookException(<span class="code-quote">"Book not exists"</span>,<span class="code-keyword">new</span> BookExceptionDetail(<span class="code-quote">"NOT_EXIST"</span>,<span class="code-quote">"Can't find book"</span>));
+    }
+
+	<span class="code-keyword">public</span> Map getBooksMap() {
+		Map result = <span class="code-keyword">new</span> HashMap();
+		result.put(onlyBook.getIsbn(), onlyBook);
+		<span class="code-keyword">return</span> result;
+	}
+}</pre>
+</div></div>
+<p>And the corresponding book class:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class Book
+{
+    <span class="code-keyword">private</span> <span class="code-object">String</span> title;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> isbn;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> author;
+  
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getIsbn()
+    {
+        <span class="code-keyword">return</span> isbn;
+    }
+
+    <span class="code-keyword">public</span> void setIsbn(<span class="code-object">String</span> isbn)
+    {
+        <span class="code-keyword">this</span>.isbn = isbn;
+    }
+
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getTitle()
+    {
+        <span class="code-keyword">return</span> title;
+    }
+
+    <span class="code-keyword">public</span> void setTitle(<span class="code-object">String</span> title)
+    {
+        <span class="code-keyword">this</span>.title = title;
+    }
+ 
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getAuthor()
+    {
+        <span class="code-keyword">return</span> author;
+    }
+
+    <span class="code-keyword">public</span> void setAuthor(<span class="code-object">String</span> author)
+    {
+        <span class="code-keyword">this</span>.author = author;
+    }
+}</pre>
+</div></div>
+
+<h2><a name="QuickStart-CreateyourXFireconfiguration"></a>Create your XFire configuration</h2>
+
+<p>You will need to create a services.xml file which describes the services you are deploying. Put this file on your class path in "META-INF/xfire/services.xml". (Try "WEB-INF/classes/META-INF/xfire/services.xml" if the system cannot find the file.)</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;name&gt;</span>BookService<span class="code-tag">&lt;/name&gt;</span>
+    <span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/BookService<span class="code-tag">&lt;/namespace&gt;</span>
+    <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.BookService<span class="code-tag">&lt;/serviceClass&gt;</span>
+    <span class="code-tag">&lt;implementationClass&gt;</span>org.codehaus.xfire.demo.BookServiceImpl<span class="code-tag">&lt;/implementationClass&gt;</span>
+    <span class="code-tag">&lt;inHandlers&gt;</span>
+     <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"org.codehaus.xfire.demo.handlers.CheckVersionHandler"</span> /&gt;</span>
+    <span class="code-tag">&lt;/inHandlers&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+
+<h2><a name="QuickStart-Createyourweb.xml"></a>Create your web.xml</h2>
+
+<p>Follow the instructions on how to create a web.xml file <a href="Servlet Setup.html" title="Servlet Setup">here</a>.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;!DOCTYPE web-app
+    PUBLIC <span class="code-quote">"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"</span>
+    <span class="code-quote">"http://java.sun.com/dtd/web-app_2_3.dtd"</span>&gt;
+    
+<span class="code-tag">&lt;web-app&gt;</span>
+
+  <span class="code-tag">&lt;servlet&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>XFireServlet<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;display-name&gt;</span>XFire Servlet<span class="code-tag">&lt;/display-name&gt;</span>
+    <span class="code-tag">&lt;servlet-class&gt;</span>
+        org.codehaus.xfire.transport.http.XFireConfigurableServlet
+    <span class="code-tag">&lt;/servlet-class&gt;</span>
+  <span class="code-tag">&lt;/servlet&gt;</span>
+
+  <span class="code-tag">&lt;servlet-mapping&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>XFireServlet<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;url-pattern&gt;</span>/servlet/XFireServlet/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+  <span class="code-tag">&lt;/servlet-mapping&gt;</span>
+
+  <span class="code-tag">&lt;servlet-mapping&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>XFireServlet<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;url-pattern&gt;</span>/services/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+  <span class="code-tag">&lt;/servlet-mapping&gt;</span>
+<span class="code-tag">&lt;/web-app&gt;</span></pre>
+</div></div>
+
+<h2><a name="QuickStart-Addthewartoyourservletcontainer"></a>Add the war to your servlet container</h2>
+
+<p>To create the war in the example code using maven 2, do "mvn war:war". This will place a war in the "target" directory. Just drop this into your favorite servlet container and you should be set to go&#33;</p>
+
+<p>Access the WSDL via: <a href="http://localhost:8080/xfire-book-1.1/services/BookService?wsdl" title="Visit page outside Confluence">http://localhost:8080/xfire-book-1.1/services/BookService?wsdl</a></p>
+
+<h2><a name="QuickStart-Whatwentonhere"></a>What went on here</h2>
+
+<p>The services.xml gave XFire information on how to construct your service. Using the ObjectServiceFactory, your class was introspected for methods which were turned into web service operations. Likewise the Book class was bound to an XML schema. Once this was done, the Service generated from ObjectServiceFactory.create() was registered with the XFire ServiceFactory. At that point, your service was exposed and available&#33;</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

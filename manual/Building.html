@@ -1,0 +1,148 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Building</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>XFire maintains two build systems side by side: Maven and Ant. Both can be used for testing and buliding jars. Maven is used for building releases and distributions. A couple notes on how our build system is set up:</p>
+
+<p>In the xfire directory, there are several different modules. These can be compiled individually or as an aggregate, named "xfire-all".  The xfire-all module is solely used in the maven build to build an aggregate xfire-all jar. The ant build system does not require this.</p>
+
+<h2><a name="Building-BuildingwithAnt"></a>Building with Ant</h2>
+
+
+<h4><a name="Building-Buildingindividualjars"></a>Building individual jars</h4>
+
+<p>To compile jars for all the modules run</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ ant</pre>
+</div></div>
+<p>from the main directory. This will put a jar in each module's target directory. For example, the xfire-core jar will be placed in xfire-core/target as "xfire-core-VERSION.jar".</p>
+
+<h4><a name="Building-Buildingan%22xfireall%22jar"></a>Building an "xfire-all" jar</h4>
+
+<p>To compile an jar of all the xfire modules run</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ ant all</pre>
+</div></div>
+<p>from the main directory. The resultant jar will be placed in xfire/target.</p>
+
+<h4><a name="Building-RunningTests"></a>Running Tests</h4>
+
+<p>To run tests for all modules run</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ ant test</pre>
+</div></div>
+<p>from the main directory.</p>
+
+<p>To run tests for an individual module:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ cd xfire-core (replace core with any module you desire)
+$ ant test</pre>
+</div></div>
+
+<h2><a name="Building-BuildingwithMaven"></a>Building with Maven</h2>
+
+<p>To build with java 5.0 support you must included "-Dxfire.java5=true" in all your maven commands.</p>
+
+<h4><a name="Building-Buildingalltheindividualjars"></a>Building all the individual jars</h4>
+
+<p>To build jars for each xfire module and have them placed in your local maven repository, simply run "maven" from the main source directory.</p>
+
+<h4><a name="Building-Buildinganindividualmodule"></a>Building an individual module</h4>
+
+<p>To build an individual module:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ cd xfire-core (replace core with any module you desire)
+$ mvn install</pre>
+</div></div>
+
+<h4><a name="Building-Buildingan%22xfireall%22jar"></a>Building an "xfire-all" jar</h4>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ cd xfire-all
+$ mvn install</pre>
+</div></div>
+<p>or if you desire java 5.0 support:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ cd xfire-all
+$ mvn -Dxfire.java5=<span class="code-keyword">true</span> install</pre>
+</div></div>
+
+<h4><a name="Building-Additionalnotes"></a>Additional notes</h4>
+
+<p>&nbsp;&#45; due to license problems you may need to install some jars manualy in your local repo. Like :<br/>
+xmlbeans-jsr173-api from &nbsp; <a href="http://julien.dubois.free.fr/maven2/xmlbeans/xmlbeans-jsr173-api/2.0-dev/xmlbeans-jsr173-api-2.0-dev.jar&amp;nbsp" title="Visit page outside Confluence">http://julien.dubois.free.fr/maven2/xmlbeans/xmlbeans-jsr173-api/2.0-dev/xmlbeans-jsr173-api-2.0-dev.jar&amp;nbsp</a>;</p>
+
+<p>&#45; xfire-jibx module MUST be build with tests enabled ( if you turn test off with &#45;Dmaven.test.skip&nbsp; then build will fail ).</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

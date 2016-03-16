@@ -1,0 +1,244 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Dynamic Client</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>You get a DynamicClient when you create a Client with the URL of a WSDL.</p>
+
+<p>Example:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void testCurrencyConverter() <span class="code-keyword">throws</span> MalformedURLException, Exception
+    {
+        Client client = <span class="code-keyword">new</span> Client(<span class="code-keyword">new</span> URL(<span class="code-quote">"http:<span class="code-comment">//www.webservicex.net/CurrencyConvertor.asmx?WSDL"</span>));
+</span>
+        <span class="code-object">Object</span>[] results = client.invoke(<span class="code-quote">"ConversionRate"</span>, <span class="code-keyword">new</span> <span class="code-object">Object</span>[] {<span class="code-quote">"BRL"</span>, <span class="code-quote">"UGX"</span>});
+
+        <span class="code-comment">// Service returns a <span class="code-object">double</span> of the currency conversion rate.
+</span>        <span class="code-object">System</span>.out.println((<span class="code-object">Double</span>) results[0]);
+    }</pre>
+</div></div>
+<p>TODO: Need an example or explanation: how to pass complex types in the request, for example how to initialize HotwireFlow from the ORACLEs BPEL samples. </p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+&lt;definitions
+     name=<span class="code-quote">"HotwireFlow"</span>
+     targetNamespace=<span class="code-quote">"http://samples.otn.com"</span>
+     xmlns=<span class="code-quote">"http://schemas.xmlsoap.org/wsdl/"</span>
+     <span class="code-keyword">xmlns:tns</span>=<span class="code-quote">"http://samples.otn.com"</span>
+     <span class="code-keyword">xmlns:wsa</span>=<span class="code-quote">"http://schemas.xmlsoap.org/ws/2003/03/addressing"</span>
+     <span class="code-keyword">xmlns:plnk</span>=<span class="code-quote">"http://schemas.xmlsoap.org/ws/2003/05/partner-link/"</span>
+     <span class="code-keyword">xmlns:soap</span>=<span class="code-quote">"http://schemas.xmlsoap.org/wsdl/soap/"</span>
+    &gt;
+    <span class="code-tag">&lt;types&gt;</span>
+        &lt;schema attributeFormDefault=<span class="code-quote">"qualified"</span> elementFormDefault=<span class="code-quote">"qualified"</span> targetNamespace=<span class="code-quote">"http://samples.otn.com"</span>
+             xmlns=<span class="code-quote">"http://www.w3.org/2001/XMLSchema"</span>&gt;
+            <span class="code-tag">&lt;element name=<span class="code-quote">"flightRequest"</span> type=<span class="code-quote">"tns:FlightRequestType"</span>/&gt;</span>
+            <span class="code-tag">&lt;element name=<span class="code-quote">"approve"</span> type=<span class="code-quote">"boolean"</span>/&gt;</span>
+            <span class="code-tag">&lt;element name=<span class="code-quote">"cancel"</span> type=<span class="code-quote">"boolean"</span>/&gt;</span>
+            <span class="code-tag">&lt;element name=<span class="code-quote">"offer"</span> type=<span class="code-quote">"double"</span>/&gt;</span>
+            <span class="code-tag">&lt;complexType name=<span class="code-quote">"FlightRequestType"</span>&gt;</span>
+                <span class="code-tag">&lt;sequence&gt;</span>
+
+                    <span class="code-tag">&lt;element name=<span class="code-quote">"from"</span> type=<span class="code-quote">"string"</span>/&gt;</span>
+                    <span class="code-tag">&lt;element name=<span class="code-quote">"to"</span> type=<span class="code-quote">"string"</span>/&gt;</span>
+                    <span class="code-tag">&lt;element name=<span class="code-quote">"business"</span> type=<span class="code-quote">"boolean"</span>/&gt;</span>
+                    <span class="code-tag">&lt;element name=<span class="code-quote">"price"</span> type=<span class="code-quote">"double"</span>/&gt;</span>
+                    <span class="code-tag">&lt;element name=<span class="code-quote">"status"</span> type=<span class="code-quote">"string"</span>/&gt;</span>
+                    <span class="code-tag">&lt;element name=<span class="code-quote">"confirmationId"</span> type=<span class="code-quote">"string"</span>/&gt;</span>
+                <span class="code-tag">&lt;/sequence&gt;</span>
+            <span class="code-tag">&lt;/complexType&gt;</span>
+        <span class="code-tag">&lt;/schema&gt;</span>
+
+        <span class="code-tag">&lt;schema xmlns=<span class="code-quote">"http://www.w3.org/2001/XMLSchema"</span>&gt;</span>
+            <span class="code-tag">&lt;import namespace=<span class="code-quote">"http://schemas.xmlsoap.org/ws/2003/03/addressing"</span> schemaLocation=<span class="code-quote">"http://SEA-ignaytev:9700/orabpel/xmllib/ws-addressing.xsd"</span>/&gt;</span>
+        <span class="code-tag">&lt;/schema&gt;</span>
+    <span class="code-tag">&lt;/types&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"WSAReplyToHeader"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"ReplyTo"</span> element=<span class="code-quote">"wsa:ReplyTo"</span>/&gt;</span>
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"HotwireFlowResultMessage"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"payload"</span> element=<span class="code-quote">"tns:flightRequest"</span>/&gt;</span>
+
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"HotwireFlowCancelMessage"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"payload"</span> element=<span class="code-quote">"tns:cancel"</span>/&gt;</span>
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"WSARelatesToHeader"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"RelatesTo"</span> element=<span class="code-quote">"wsa:RelatesTo"</span>/&gt;</span>
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"WSAMessageIDHeader"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"MessageID"</span> element=<span class="code-quote">"wsa:MessageID"</span>/&gt;</span>
+
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"HotwireFlowOfferMessage"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"payload"</span> element=<span class="code-quote">"tns:offer"</span>/&gt;</span>
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"HotwireFlowApproveMessage"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"payload"</span> element=<span class="code-quote">"tns:approve"</span>/&gt;</span>
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;message name=<span class="code-quote">"HotwireFlowRequestMessage"</span>&gt;</span>
+        <span class="code-tag">&lt;part name=<span class="code-quote">"payload"</span> element=<span class="code-quote">"tns:flightRequest"</span>/&gt;</span>
+
+    <span class="code-tag">&lt;/message&gt;</span>
+    <span class="code-tag">&lt;portType name=<span class="code-quote">"HotwireFlow"</span>&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"initiate"</span>&gt;</span>
+            <span class="code-tag">&lt;input message=<span class="code-quote">"tns:HotwireFlowRequestMessage"</span>/&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"approve"</span>&gt;</span>
+            <span class="code-tag">&lt;input message=<span class="code-quote">"tns:HotwireFlowApproveMessage"</span>/&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"cancel"</span>&gt;</span>
+
+            <span class="code-tag">&lt;input message=<span class="code-quote">"tns:HotwireFlowCancelMessage"</span>/&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+    <span class="code-tag">&lt;/portType&gt;</span>
+    <span class="code-tag">&lt;portType name=<span class="code-quote">"HotwireFlowCallback"</span>&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"onResult"</span>&gt;</span>
+            <span class="code-tag">&lt;input message=<span class="code-quote">"tns:HotwireFlowResultMessage"</span>/&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"onOffer"</span>&gt;</span>
+            <span class="code-tag">&lt;input message=<span class="code-quote">"tns:HotwireFlowOfferMessage"</span>/&gt;</span>
+
+        <span class="code-tag">&lt;/operation&gt;</span>
+    <span class="code-tag">&lt;/portType&gt;</span>
+    <span class="code-tag">&lt;binding name=<span class="code-quote">"HotwireFlowCallbackBinding"</span> type=<span class="code-quote">"tns:HotwireFlowCallback"</span>&gt;</span>
+        <span class="code-tag">&lt;soap:binding style=<span class="code-quote">"document"</span> transport=<span class="code-quote">"http://schemas.xmlsoap.org/soap/http"</span>/&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"onResult"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:operation style=<span class="code-quote">"document"</span> soapAction=<span class="code-quote">"onResult"</span>/&gt;</span>
+            <span class="code-tag">&lt;input&gt;</span>
+                <span class="code-tag">&lt;soap:header message=<span class="code-quote">"tns:WSARelatesToHeader"</span> part=<span class="code-quote">"RelatesTo"</span> use=<span class="code-quote">"literal"</span> encodingStyle=""/&gt;</span>
+                <span class="code-tag">&lt;soap:body use=<span class="code-quote">"literal"</span>/&gt;</span>
+
+            <span class="code-tag">&lt;/input&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"onOffer"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:operation style=<span class="code-quote">"document"</span> soapAction=<span class="code-quote">"onOffer"</span>/&gt;</span>
+            <span class="code-tag">&lt;input&gt;</span>
+                <span class="code-tag">&lt;soap:header message=<span class="code-quote">"tns:WSARelatesToHeader"</span> part=<span class="code-quote">"RelatesTo"</span> use=<span class="code-quote">"literal"</span> encodingStyle=""/&gt;</span>
+                <span class="code-tag">&lt;soap:body use=<span class="code-quote">"literal"</span>/&gt;</span>
+            <span class="code-tag">&lt;/input&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+
+    <span class="code-tag">&lt;/binding&gt;</span>
+    <span class="code-tag">&lt;binding name=<span class="code-quote">"HotwireFlowBinding"</span> type=<span class="code-quote">"tns:HotwireFlow"</span>&gt;</span>
+        <span class="code-tag">&lt;soap:binding style=<span class="code-quote">"document"</span> transport=<span class="code-quote">"http://schemas.xmlsoap.org/soap/http"</span>/&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"initiate"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:operation style=<span class="code-quote">"document"</span> soapAction=<span class="code-quote">"initiate"</span>/&gt;</span>
+            <span class="code-tag">&lt;input&gt;</span>
+                <span class="code-tag">&lt;soap:header message=<span class="code-quote">"tns:WSAReplyToHeader"</span> part=<span class="code-quote">"ReplyTo"</span> use=<span class="code-quote">"literal"</span> encodingStyle=""/&gt;</span>
+                <span class="code-tag">&lt;soap:header message=<span class="code-quote">"tns:WSAMessageIDHeader"</span> part=<span class="code-quote">"MessageID"</span> use=<span class="code-quote">"literal"</span> encodingStyle=""/&gt;</span>
+                <span class="code-tag">&lt;soap:body use=<span class="code-quote">"literal"</span>/&gt;</span>
+
+            <span class="code-tag">&lt;/input&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"approve"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:operation style=<span class="code-quote">"document"</span> soapAction=<span class="code-quote">"approve"</span>/&gt;</span>
+            <span class="code-tag">&lt;input&gt;</span>
+                <span class="code-tag">&lt;soap:header message=<span class="code-quote">"tns:WSARelatesToHeader"</span> part=<span class="code-quote">"RelatesTo"</span> use=<span class="code-quote">"literal"</span> encodingStyle=""/&gt;</span>
+                <span class="code-tag">&lt;soap:body use=<span class="code-quote">"literal"</span>/&gt;</span>
+            <span class="code-tag">&lt;/input&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+
+        <span class="code-tag">&lt;operation name=<span class="code-quote">"cancel"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:operation style=<span class="code-quote">"document"</span> soapAction=<span class="code-quote">"cancel"</span>/&gt;</span>
+            <span class="code-tag">&lt;input&gt;</span>
+                <span class="code-tag">&lt;soap:header message=<span class="code-quote">"tns:WSARelatesToHeader"</span> part=<span class="code-quote">"RelatesTo"</span> use=<span class="code-quote">"literal"</span> encodingStyle=""/&gt;</span>
+                <span class="code-tag">&lt;soap:body use=<span class="code-quote">"literal"</span>/&gt;</span>
+            <span class="code-tag">&lt;/input&gt;</span>
+        <span class="code-tag">&lt;/operation&gt;</span>
+    <span class="code-tag">&lt;/binding&gt;</span>
+    <span class="code-tag">&lt;service name=<span class="code-quote">"HotwireFlow"</span>&gt;</span>
+
+        <span class="code-tag">&lt;port name=<span class="code-quote">"HotwireFlowPort"</span> binding=<span class="code-quote">"tns:HotwireFlowBinding"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:address location=<span class="code-quote">"http://SEA-ignaytev:9700/orabpel/default/HotwireFlow/1.0"</span>/&gt;</span>
+        <span class="code-tag">&lt;/port&gt;</span>
+    <span class="code-tag">&lt;/service&gt;</span>
+    <span class="code-tag">&lt;service name=<span class="code-quote">"HotwireFlowCallbackService"</span>&gt;</span>
+        <span class="code-tag">&lt;port name=<span class="code-quote">"HotwireFlowCallbackPort"</span> binding=<span class="code-quote">"tns:HotwireFlowCallbackBinding"</span>&gt;</span>
+            <span class="code-tag">&lt;soap:address location=<span class="code-quote">"http://set.by.caller"</span>/&gt;</span>
+        <span class="code-tag">&lt;/port&gt;</span>
+    <span class="code-tag">&lt;/service&gt;</span>
+
+  <span class="code-tag">&lt;plnk:partnerLinkType name=<span class="code-quote">"HotwireFlow"</span>&gt;</span>
+    <span class="code-tag">&lt;plnk:role name=<span class="code-quote">"HotwireFlowProvider"</span>&gt;</span>
+      <span class="code-tag">&lt;plnk:portType name=<span class="code-quote">"tns:HotwireFlow"</span>/&gt;</span>
+    <span class="code-tag">&lt;/plnk:role&gt;</span>
+    <span class="code-tag">&lt;plnk:role name=<span class="code-quote">"HotwireFlowRequester"</span>&gt;</span>
+      <span class="code-tag">&lt;plnk:portType name=<span class="code-quote">"tns:HotwireFlowCallback"</span>/&gt;</span>
+    <span class="code-tag">&lt;/plnk:role&gt;</span>
+  <span class="code-tag">&lt;/plnk:partnerLinkType&gt;</span>
+<span class="code-tag">&lt;/definitions&gt;</span></pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

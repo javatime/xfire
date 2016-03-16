@@ -1,0 +1,369 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Example - Exposing a Document-Style Service that uses XMLBeans</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h1><a name="Example-ExposingaDocument-StyleServicethatusesXMLBeans-ThisisOUTOFDATE.Useotherdocumentationplease."></a>This is OUT OF DATE. Use other documentation please.</h1>
+
+<h2><a name="Example-ExposingaDocument-StyleServicethatusesXMLBeans-ExampleofExposingaPOJOServicethatusesXMLBeansasparametersandreturnvalueusingXFire"></a>Example of Exposing a POJO Service that uses XMLBeans as parameters and return value using XFire</h2>
+
+<p>XFire is capable of exposing Document-Style services that use XMLBeans.</p>
+
+<p>For example, let's suppose you have XMLBeans that you generated from a Schema:</p>
+
+<p>PriceCheckRequestDocument - corresponding to an instance of PriceCheckRequest from a PreOrderManagement Schema (e.g. preorderschema.xsd) and<br/>
+PriceCheckResponseDocument - corresponding to an instance of a PriceCheckResponse from the same schema.</p>
+
+<p>This is quite typical in business-to-business sharing where companies may use different systems, but would like to standardize on common messaging &#8211; similar to the way EDI was used.</p>
+
+<p>You might have created a service as follows:</p>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>PriceCheckService.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> PriceCheckService
+{
+    /**
+     * @param request - xmlBean corresponding to a PriceCheckRequestDocument
+     * @<span class="code-keyword">return</span> and xmlBean corresponding to a PriceCheckResponseDocument
+     */
+    PriceCheckResponseDocument checkPrice(PriceCheckRequestDocument request);
+}</pre>
+</div></div>
+<p>PriceCheckRequestDocument is an XML bean that was generated from a schema using the XMLBeans 2.0's XMLBean Task from ANT. A sample Target is show below. The sample assumes that you have ant properties setup for: {generated-source} - location your build directory, {generated-source}/xmlbeans - location where your xmlbeans generated source will be deposited, {xbeans.jar}&#45; location and filename of where the xmlbeans jar file will be generated, and xsd is where your original schema files reside.</p>
+
+<h5><a name="Example-ExposingaDocument-StyleServicethatusesXMLBeans-directorystructure"></a>directory structure</h5>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">/build.xml
+/build
+      /lib                       -- built libraries go here
+          /myschema.jar          -- you'd set xbeans.jar to /build/lib/myschema.jar or equivalent
+/xsd
+    /&lt;your schema files here&gt;
+/generated-source                -- location where generated source files will be placed
+                 /xmlbeans       -- generated XML Beans source goes here
+/lib                             -- xml beans stuff goes here
+    /xmlbeans
+             /...
+    /xfire
+          /...
+    /spring
+           /...
+    /test
+         /...</pre>
+</div></div>
+
+<h5><a name="Example-ExposingaDocument-StyleServicethatusesXMLBeans-build.classpath"></a>build.classpath</h5>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;!-- Build Classpath --&gt;
+       &lt;path id=<span class="code-quote">"build.classpath"</span>&gt;
+           &lt;pathelement location=<span class="code-quote">"${build}"</span> /&gt;
+           &lt;fileset dir=<span class="code-quote">"${lib}"</span>&gt;
+                        &lt;include name=<span class="code-quote">"ant/*.jar"</span> /&gt;
+                  &lt;include name=<span class="code-quote">"*.jar"</span> /&gt;
+                      &lt;include name=<span class="code-quote">"xfire/*.jar"</span> /&gt;
+                        &lt;include name=<span class="code-quote">"spring/*.jar"</span> /&gt;
+                       &lt;include name=<span class="code-quote">"test/*.jar"</span> /&gt;
+         &lt;/fileset&gt;
+    &lt;/path&gt;</pre>
+</div></div>
+
+<h5><a name="Example-ExposingaDocument-StyleServicethatusesXMLBeans-ExampleAntTargetforgeneratingXMLBeans"></a>Example Ant Target for generating XMLBeans</h5>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>Sample ANT Target</b></div><div class="codeContent">
+<pre class="code-java">&lt;!-- Generate XMLBeans from Schema  (use verbose=<span class="code-quote">"<span class="code-keyword">true</span>"</span> to debug), refresh after build --&gt;
+   &lt;target name=<span class="code-quote">"generate-xmlbean"</span>&gt;
+              &lt;delete failonerror=<span class="code-quote">"<span class="code-keyword">false</span>"</span>&gt;
+                        &lt;fileset dir=<span class="code-quote">"${generated-source}/xmlbeans"</span>&gt;
+                          &lt;include name=<span class="code-quote">"**/*.*"</span> /&gt;
+                     &lt;/fileset&gt;
+            &lt;/delete&gt;
+             &lt;xmlbean classgendir=<span class="code-quote">"${generated-source}/xmlbeans"</span> verbose=<span class="code-quote">"<span class="code-keyword">false</span>"</span> destfile=<span class="code-quote">"${xbeans.jar}"</span>
+                      fork=<span class="code-quote">"<span class="code-keyword">true</span>"</span> javasource=<span class="code-quote">"1.4"</span> srconly=<span class="code-quote">"no"</span> classpathref=<span class="code-quote">"build.classpath"</span>
+                       failonerror=<span class="code-quote">"<span class="code-keyword">true</span>"</span>&gt;
+                   &lt;fileset dir=<span class="code-quote">"xsd"</span> includes=<span class="code-quote">"**.*"</span> /&gt;
+         &lt;/xmlbean&gt;
+    &lt;/target&gt;</pre>
+</div></div>
+<p>After running this task, you should have an file called myschema.jar that contains a bunch of class files and binary schema files in it.</p>
+
+<p>Now it's time to expose the service using XFire. I use Spring to handle configuration of everything. My PriceCheckService is exposed inside Spring. Since the Transaction Boundary is at the Service layer, I create a proxy using the TransactionProxyFactory.</p>
+
+<h5><a name="Example-ExposingaDocument-StyleServicethatusesXMLBeans-SpringApplicationContextfiles"></a>Spring ApplicationContext files</h5>
+
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>ApplicationContext.xml</b></div><div class="codeContent">
+<pre class="code-java">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;
+ &lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-<span class="code-comment">//SPRING//DTD BEAN//EN"</span>
+</span>               <span class="code-quote">"http:<span class="code-comment">//www.springframework.org/dtd/spring-beans.dtd"</span>&gt;
+</span>&lt;beans&gt;
+    &lt;!-- Web Service --&gt;
+    &lt;bean id=<span class="code-quote">"myPriceCheckService"</span>
+        name=<span class="code-quote">"com.paraware.webservice.PriceCheckService"</span> class=<span class="code-quote">"com.paraware.webservice.PriceCheckServiceImpl"</span>&gt;
+        &lt;property name=<span class="code-quote">"businessService"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"myBusinessService"</span>/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div></div>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>serviceContext.xml</b></div><div class="codeContent">
+<pre class="code-java">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;
+ &lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-<span class="code-comment">//SPRING//DTD BEAN//EN"</span>
+</span>               <span class="code-quote">"http:<span class="code-comment">//www.springframework.org/dtd/spring-beans.dtd"</span>&gt;
+</span>&lt;beans&gt;
+    &lt;bean id=<span class="code-quote">"myBusinessService"</span>
+        name=<span class="code-quote">"com.paraware.service.BusinessService"</span>
+        class=<span class="code-quote">"org.springframework.transaction.interceptor.TransactionProxyFactoryBean"</span>&gt;
+        &lt;property name=<span class="code-quote">"transactionManager"</span>&gt;
+            &lt;ref local=<span class="code-quote">"myTransactionManager"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"target"</span>&gt;
+            &lt;ref local=<span class="code-quote">"myBusinessServiceTarget"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"transactionAttributes"</span>&gt;
+            &lt;props&gt;
+                &lt;prop key=<span class="code-quote">"*"</span>&gt;PROPAGATION_REQUIRED,readOnly&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"myBusinessServiceTarget"</span>
+        class=<span class="code-quote">"com.paraware.service.BusinessServiceImpl"</span>
+        singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span> autowire=<span class="code-quote">"no"</span>&gt;
+        &lt;property name=<span class="code-quote">"authenticationDao"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"myAuthenticationDao"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"inventoryDao"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"myInventoryDao"</span>/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"myTransactionManager"</span>
+        name=<span class="code-quote">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>
+        class=<span class="code-quote">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span>&gt;
+        &lt;property name=<span class="code-quote">"dataSource"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"myDataSource"</span>/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div></div>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>daoContext.xml</b></div><div class="codeContent">
+<pre class="code-java">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;
+ &lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-<span class="code-comment">//SPRING//DTD BEAN//EN"</span>
+</span>               <span class="code-quote">"http:<span class="code-comment">//www.springframework.org/dtd/spring-beans.dtd"</span>&gt;
+</span>&lt;beans&gt;
+   &lt;bean id=<span class="code-quote">"myDataSource"</span>
+        class=<span class="code-quote">"org.springframework.jndi.JndiObjectFactoryBean"</span> singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span>&gt;
+        &lt;property name=<span class="code-quote">"jndiName"</span>&gt;
+            &lt;value&gt;jdbc/PriceCheckDataSource&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"resourceRef"</span>&gt;
+            &lt;value&gt;<span class="code-keyword">true</span>&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"myAuthenticationDao"</span>
+        name=<span class="code-quote">"com.paraware.dao.jdbc.AuthenticationDaoImpl"</span>
+        singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span> autowire=<span class="code-quote">"no"</span>
+        class=<span class="code-quote">"com.paraware.dao.jdbc.AuthenticationDaoImpl"</span>&gt;
+        &lt;property name=<span class="code-quote">"dataSource"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"myDataSource"</span>/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"myInventoryDao"</span>
+        name=<span class="code-quote">"com.paraware.dao.jdbc.InventoryDaoImpl"</span>
+        singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span> autowire=<span class="code-quote">"no"</span>
+        class=<span class="code-quote">"com.paraware.dao.jdbc.InventoryDaoImpl"</span>&gt;
+        &lt;property name=<span class="code-quote">"dataSource"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"myDataSource"</span>/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div></div>
+<p>Next, it's time to configure the xfire-servlet.xml file. This file is used by Spring to let the DispatchServlet know which controllers to work with. Spring will look for this file based on the name of the DispatcherServlet in the web.xml file. (i.e. <em>xfire</em>&#45;servlet.xml)</p>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>xfire-servlet.xml</b></div><div class="codeContent">
+<pre class="code-java">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;
+&lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-<span class="code-comment">//SPRING//DTD BEAN//EN"</span> <span class="code-quote">"http://www.springframework.org/dtd/spring-beans.dtd"</span>&gt;
+</span>&lt;beans&gt;
+    &lt;bean
+        class=<span class="code-quote">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;
+        &lt;property name=<span class="code-quote">"urlMap"</span>&gt;
+            &lt;map&gt;
+                &lt;!-- <span class="code-keyword">this</span> is where <span class="code-keyword">this</span> service will be exposed i.e. http:<span class="code-comment">//localhost/context/SoapCustomerService --&gt;
+</span>                &lt;entry key=<span class="code-quote">"/SoapCustomerService"</span>&gt;
+                    &lt;ref bean=<span class="code-quote">"SoapCustomerService"</span>/&gt;
+                &lt;/entry&gt;
+            &lt;/map&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XMLBeansServiceFactory"</span>
+        singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span>&gt;
+        &lt;property name=<span class="code-quote">"transportManager"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"xfire.transportManager"</span>/&gt;
+        &lt;/property&gt;
+        &lt;!-- make sure you specify <span class="code-keyword">this</span> binding provider <span class="code-keyword">if</span> you use setter injection, otherwise you'll get the aegis provider --&gt;
+        &lt;property name=<span class="code-quote">"bindingProvider"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"xfire.xmlbeansBindingProvider"</span>/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"xfire.xmlbeansBindingProvider"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XMLBeansBindingProvider"</span>
+        singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+    &lt;!-- Declare a parent bean with all properties common to both services --&gt;
+    &lt;bean id=<span class="code-quote">"SoapCustomerService"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.spring.XFireExporter"</span>&gt;
+        &lt;property name=<span class="code-quote">"serviceFactory"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"xfire"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"xfire"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"style"</span>&gt;
+            &lt;!-- <span class="code-keyword">this</span> needs to be specified to have document style properly handled --&gt;
+            &lt;value&gt;document&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"service"</span>&gt;
+            &lt;!-- notice <span class="code-keyword">this</span> is the service <span class="code-keyword">interface</span> that was exposed in applicationContext.xml --&gt;
+            &lt;ref bean=<span class="code-quote">"myPriceCheckService"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"serviceInterface"</span>&gt;
+            &lt;!-- notice <span class="code-keyword">this</span> is the fully qualified service <span class="code-keyword">interface</span> that was exposed in applicationContext.xml --&gt;
+            &lt;value&gt;com.paraware.webservice.PriceCheckService&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=<span class="code-quote">"wsdlConfigurer"</span>
+        class=<span class="code-quote">"com.paraware.xfire.XMLBeansWSDLBuilderConfigurer"</span>
+        init-method=<span class="code-quote">"init"</span>&gt;
+        &lt;property name=<span class="code-quote">"transportManager"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"xfire.transportManager"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"service"</span>&gt;
+            &lt;value&gt;SoapCustomerService&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"serviceRegistry"</span>&gt;
+            &lt;ref bean=<span class="code-quote">"xfire.serviceRegistry"</span>/&gt;
+        &lt;/property&gt;
+        &lt;property name=<span class="code-quote">"schemaLocations"</span>&gt;
+            &lt;list&gt;
+                &lt;!-- <span class="code-keyword">this</span> is the schema used to create your xml beans.  multiple schemas can be listed --&gt;
+                &lt;value&gt;/WEB-INF/pre-order.xsd&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</pre>
+</div></div>
+<p>Next, it's time to create the web.xml file. I'm using the ContextLoaderServlet but you can easily (and I would encourage this) use the ContextLoaderListener. I used the ContextLoaderServlet because I was working with a container that didn't support the ContextLoaderListener.</p>
+
+<p><b>Things to Note</b><br/>
+&#35;I have several configuration files. My applicationContext.xml file includes configuration of my PriceCheckService. This service actually makes use of another service called business service that I use elsewhere and define in serviceContext.xml.<br/>
+&#35;serviceContext.xml includes configuration of the business service and transactionalProxy<br/>
+&#35;daoContext.xml includes the dao configurations and the datasource (this is set to use the resource configured in web-xml which will be configured by the container.<br/>
+&#35;finally classpath:org/codehaus/xfire/spring/xfire.xml is specified to ensure that XFire spring beans are loaded in the context<br/>
+&#35;a resource reference is specified and indicates that a resource will need to be configured by the container.</p>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>web.xml</b></div><div class="codeContent">
+<pre class="code-java">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"ISO-8859-1"</span>?&gt;
+
+&lt;!DOCTYPE web-app
+    PUBLIC <span class="code-quote">"-<span class="code-comment">//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"</span>
+</span>    <span class="code-quote">"http:<span class="code-comment">//java.sun.com/dtd/web-app_2_3.dtd"</span>&gt;
+</span>&lt;web-app&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;/WEB-INF/applicationContext.xml
+            /WEB-INF/serviceContext.xml
+            /WEB-INF/daoContext.xml
+            &lt;!-- The XFire Spring Beans Configuration --&gt;
+            classpath:org/codehaus/xfire/spring/xfire.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;context&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.context.ContextLoaderServlet&lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;xfire&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;xfire&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+    &lt;resource-ref id=<span class="code-quote">"ResourceRef_1"</span>&gt;
+        &lt;description&gt; DataSource configured in container &lt;/description&gt;
+        &lt;res-ref-name&gt; jdbc/PriceCheckDataSource &lt;/res-ref-name&gt;
+        &lt;res-type&gt; javax.sql.DataSource &lt;/res-type&gt;
+        &lt;res-auth&gt; CONTAINER &lt;/res-auth&gt;
+        &lt;res-sharing-scope&gt;Shareable&lt;/res-sharing-scope&gt;
+    &lt;/resource-ref&gt;
+&lt;/web-app&gt;</pre>
+</div></div>
+<p><b>That's it.</b> You should be able to fire up your app using this URL: <a href="http://localhost/context/SoapCustomerService?wsdl" title="Visit page outside Confluence">http://localhost/context/SoapCustomerService?wsdl</a> and see the WSDL that is generated for your service. Then you can send a PriceCheckRequestDocument into the service and get a PriceCheckResponseDocument back out.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

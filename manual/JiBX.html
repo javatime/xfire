@@ -1,0 +1,349 @@
+<html>
+    <head>
+        <title>Codehaus XFire : JiBX</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="JiBX-JiBXBindings"></a>JiBX Bindings</h2>
+
+<p><a href="http://jibx.sourceforge.net/" title="Visit page outside Confluence">JiBX</a> is a binding framework which allows you to define a fairly complex mapping between an XML schema and your Java classes. This enables you to create a service that marshalls data between your pre-existing POJOs and documents that conform to an arbitrary XML schema. It's worth noting that you can also use the <a href="http://jibx.sourceforge.net/jibxtools/index.html" title="Visit page outside Confluence">JiBX Generator tools</a> to generate an XML schema and you can also do code generation from an XML schema to Java code using <a href="http://jibx.sourceforge.net/xsd2jibx/index.html" title="Visit page outside Confluence">Xsd2Jibx</a>. JiBX also has excellent performance compared to other binding frameworks; see the java.net <a href="https://bindmark.dev.java.net/" title="Visit page outside Confluence">bindmark</a> project for more details. For more information on JiBX, try the <a href="http://jibx.sourceforge.net/start.html" title="Visit page outside Confluence">official JiBX documentation</a>.</p>
+
+<h2><a name="JiBX-JiBXandXFire"></a>JiBX and XFire</h2>
+
+<p>In this explanation of using the JiBX bindings with XFire, we'll start with an XML schema and some Java classes, and then describe how to define a mapping between them. Let's say you have some existing Java code which converts temperatures between Farenheit and Celsius, and you want to provide a service which converts weather reports given in one or other scale. You might decide that you want to utilise <a href="http://www.webservicex.net/WS/WSDetails.aspx?CATID=12&amp;WSID=68" title="Visit page outside Confluence">this pre-existing XML schema</a>. The interesting part of this schema for us is the definition of the WeatherData type:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;xsd:complexType name=<span class="code-quote">"WeatherData"</span>&gt;
+   &lt;xsd:sequence&gt;
+    &lt;xsd:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"Day"</span> type=<span class="code-quote">"xsd:string"</span>/&gt;
+    &lt;xsd:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"WeatherImage"</span> type=<span class="code-quote">"xsd:string"</span>/&gt;
+    &lt;xsd:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MaxTemperatureF"</span> type=<span class="code-quote">"xsd:string"</span>/&gt;
+    &lt;xsd:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MinTemperatureF"</span> type=<span class="code-quote">"xsd:string"</span>/&gt;
+    &lt;xsd:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MaxTemperatureC"</span> type=<span class="code-quote">"xsd:string"</span>/&gt;
+    &lt;xsd:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MinTemperatureC"</span> type=<span class="code-quote">"xsd:string"</span>/&gt;
+   &lt;/xsd:sequence&gt;
+  &lt;/xsd:complexType&gt;</pre>
+</div></div>
+<p>We also have our existing TemperatureConverter class</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class TemperatureConverter {
+
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">float</span> convertToCelsius(<span class="code-object">float</span> fahrenheit) {
+    <span class="code-keyword">return</span> (fahrenheit - 32) / 1.8f;
+  }
+
+  <span class="code-keyword">public</span> <span class="code-keyword">static</span> <span class="code-object">float</span> convertToFahrenheit(<span class="code-object">float</span> celsius) {
+    <span class="code-keyword">return</span> (celsius * 1.8f) + 32;
+  }
+}</pre>
+</div></div>
+<p>We also have an interface for our service and an implementation of it utilises the conversion code:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> TemperatureConversionService {
+
+    Weather convertFahrenheitToCelsius(Weather fahrenheitWeather);
+
+    Weather convertCelsiusToFahrenheit(Weather celsiusWeather);
+}
+
+
+<span class="code-keyword">public</span> class TemperatureConversionServiceImpl <span class="code-keyword">implements</span> TemperatureConversionService {
+
+  <span class="code-keyword">public</span> TemperatureConversionServiceImpl() {}
+
+  <span class="code-keyword">public</span> Weather convertFahrenheitToCelsius(Weather fahrenheitWeather) {
+    fahrenheitWeather.setMaxTempC(
+       TemperatureConverter.convertToCelsius(fahrenheitWeather.getMaxTempF()));
+    fahrenheitWeather.setMinTempC(
+       TemperatureConverter.convertToCelsius(fahrenheitWeather.getMinTempF()));
+    <span class="code-keyword">return</span> fahrenheitWeather;
+  }
+
+  <span class="code-keyword">public</span> Weather convertCelsiusToFahrenheit(Weather celsiusWeather) {
+    celsiusWeather.setMaxTempF(
+       TemperatureConverter.convertToFahrenheit(celsiusWeather.getMaxTempC()));
+    celsiusWeather.setMinTempF(
+       TemperatureConverter.convertToFahrenheit(celsiusWeather.getMinTempC()));
+    <span class="code-keyword">return</span> celsiusWeather;
+  }
+}</pre>
+</div></div>
+<p>We also have a Weather class which our service interface uses to accept data and return the results:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class Weather {
+
+  <span class="code-keyword">private</span> <span class="code-object">String</span> day;
+  <span class="code-keyword">private</span> <span class="code-object">String</span> image;
+  <span class="code-keyword">private</span> <span class="code-object">float</span> maxTempF;
+  <span class="code-keyword">private</span> <span class="code-object">float</span> minTempF;
+  <span class="code-keyword">private</span> <span class="code-object">float</span> maxTempC;
+  <span class="code-keyword">private</span> <span class="code-object">float</span> minTempC;
+
+  <span class="code-keyword">public</span> Weather() {}
+
+  <span class="code-keyword">public</span> <span class="code-object">String</span> getDay() {
+    <span class="code-keyword">return</span> day;
+  }
+
+  <span class="code-keyword">public</span> void setDay(<span class="code-object">String</span> day) {
+    <span class="code-keyword">this</span>.day = day;
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">String</span> getImage() {
+    <span class="code-keyword">return</span> image;
+  }
+
+  <span class="code-keyword">public</span> void setImage(<span class="code-object">String</span> image) {
+    <span class="code-keyword">this</span>.image = image;
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">float</span> getMaxTempC() {
+    <span class="code-keyword">return</span> maxTempC;
+  }
+
+  <span class="code-keyword">public</span> void setMaxTempC(<span class="code-object">float</span> maxTempC) {
+    <span class="code-keyword">this</span>.maxTempC = maxTempC;
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">float</span> getMaxTempF() {
+    <span class="code-keyword">return</span> maxTempF;
+  }
+
+  <span class="code-keyword">public</span> void setMaxTempF(<span class="code-object">float</span> maxTempF) {
+    <span class="code-keyword">this</span>.maxTempF = maxTempF;
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">float</span> getMinTempC() {
+    <span class="code-keyword">return</span> minTempC;
+  }
+
+  <span class="code-keyword">public</span> void setMinTempC(<span class="code-object">float</span> minTempC) {
+    <span class="code-keyword">this</span>.minTempC = minTempC;
+  }
+
+  <span class="code-keyword">public</span> <span class="code-object">float</span> getMinTempF() {
+    <span class="code-keyword">return</span> minTempF;
+  }
+
+  <span class="code-keyword">public</span> void setMinTempF(<span class="code-object">float</span> minTempF) {
+    <span class="code-keyword">this</span>.minTempF = minTempF;
+  }
+}</pre>
+</div></div>
+<p>Now we need to define the relationship between the Weather class and the WeatherData type defined in the XML schema. In JiBX, this is done using a <em>binding definition</em>; the binding definition for our service is given below. Since there is a close correspondence between our Weather class and the WeatherData XML type, this binding definition is pretty straightforward. JiBX allows far more flexibility and complexity in these definitions. We've set 'usage="optional"' on the temperature properties since the client need only set these values for one of the temperature scales.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;binding&gt;
+ &lt;namespace uri=<span class="code-quote">"http:<span class="code-comment">//www.webservicex.net"</span>/&gt;
+</span> &lt;mapping name=<span class="code-quote">"WeatherData"</span> class=<span class="code-quote">"org.codehaus.xfire.jibx.Weather"</span>&gt;
+   &lt;value name=<span class="code-quote">"Day"</span> set-method=<span class="code-quote">"setDay"</span> get-method=<span class="code-quote">"getDay"</span>/&gt;
+   &lt;value name=<span class="code-quote">"WeatherImage"</span> set-method=<span class="code-quote">"setImage"</span> get-method=<span class="code-quote">"getImage"</span>/&gt;
+   &lt;value name=<span class="code-quote">"MaxTemperatureF"</span> usage=<span class="code-quote">"optional"</span> set-method=<span class="code-quote">"setMaxTempF"</span> get-method=<span class="code-quote">"getMaxTempF"</span>/&gt;
+   &lt;value name=<span class="code-quote">"MinTemperatureF"</span> usage=<span class="code-quote">"optional"</span> set-method=<span class="code-quote">"setMinTempF"</span> get-method=<span class="code-quote">"getMinTempF"</span>/&gt;
+   &lt;value name=<span class="code-quote">"MaxTemperatureC"</span> usage=<span class="code-quote">"optional"</span> set-method=<span class="code-quote">"setMaxTempC"</span> get-method=<span class="code-quote">"getMaxTempC"</span>/&gt;
+   &lt;value name=<span class="code-quote">"MinTemperatureC"</span> usage=<span class="code-quote">"optional"</span> set-method=<span class="code-quote">"setMinTempC"</span> get-method=<span class="code-quote">"getMinTempC"</span>/&gt;
+ &lt;/mapping&gt;
+&lt;/binding&gt;</pre>
+</div></div>
+<p>The service definition for a JiBX service is like any other, except that you need to specify the use of&nbsp; "org.codehaus.xfire.jibx.JibxServiceFactory" as the service factory. For example, using Spring we would do the following:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;<span class="code-keyword">import</span> resource=<span class="code-quote">"classpath:org/codehaus/xfire/spring/xfire.xml"</span>/&gt; &lt;bean id=<span class="code-quote">"jibxServiceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.jibx.JibxServiceFactory"</span>&gt;
+  &lt;constructor-arg ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;
+&lt;/bean&gt;
+
+&lt;bean id=<span class="code-quote">"serviceBean"</span>
+  class=<span class="code-quote">"org.codehaus.xfire.jibx.TemperatureConversionServiceImpl"</span>
+  singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span>/&gt;
+
+&lt;bean id=<span class="code-quote">"temperatureConversionService"</span>
+  class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span>
+  singleton=<span class="code-quote">"<span class="code-keyword">true</span>"</span>&gt;
+ &lt;property name=<span class="code-quote">"serviceBean"</span> ref=<span class="code-quote">"serviceBean"</span>/&gt;
+ &lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"jibxServiceFactory"</span>/&gt;
+ &lt;property name=<span class="code-quote">"serviceClass"</span> value=<span class="code-quote">"org.codehaus.xfire.jibx.TemperatureConversionService"</span>/&gt;
+ &lt;property name=<span class="code-quote">"namespace"</span> value=<span class="code-quote">"http:<span class="code-comment">//jibx.xfire.codehaus.org/"</span>/&gt;
+</span> &lt;property name=<span class="code-quote">"xfire"</span> ref=<span class="code-quote">"xfire"</span>/&gt;
+ &lt;property name=<span class="code-quote">"schemas"</span>&gt;
+  &lt;list&gt;
+   &lt;value&gt;WeatherService.xsd&lt;/value&gt;
+  &lt;/list&gt;
+ &lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div></div>
+<p>Note that the values of the schema property (here "WeatherService.xsd") can be either a filepath or the path to a resource on the classpath. We need to ensure that we have run the JiBX compiler on the class files and binding definition. You can do this on the command line or using the JiBX Ant task, like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;taskdef name=<span class="code-quote">"bind"</span> classname=<span class="code-quote">"org.jibx.binding.ant.CompileTask"</span>
+  classpath=<span class="code-quote">"/path/to/jibx-bind.jar"</span>/&gt;
+
+ &lt;target name=<span class="code-quote">"jibxCompile"</span>&gt;
+  &lt;bind verbose=<span class="code-quote">"<span class="code-keyword">true</span>"</span> load=<span class="code-quote">"<span class="code-keyword">true</span>"</span> binding=<span class="code-quote">"jibx_bindings.xml"</span>&gt;
+   &lt;classpathset dir=<span class="code-quote">"/classes"</span>/&gt;
+  &lt;/bind&gt;
+ &lt;/target&gt;</pre>
+</div></div>
+<p>Here our class files are in the "classes" directory and the "jibx_bindings.xml" file contains the binding definitions. Note that the relevant classes on both the client and server side will need to be "JiBX compiled", so if you have separate compilation stages for your service and for your client, you'll probably need to run this Ant task during each of these. You can now deploy this service like any other, ensuring that the "WeatherService.xsd" schema is available to the service at runtime. The binding definitions file does not need to be deployed with your service or client. The client also has to use the JibxServiceFactory, so for example we could have the following Spring config:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;<span class="code-keyword">import</span> resource=<span class="code-quote">"classpath:org/codehaus/xfire/spring/xfire.xml"</span>/&gt;
+
+  &lt;bean name=<span class="code-quote">"jibxServiceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.jibx.JibxServiceFactory"</span>&gt;
+    &lt;constructor-arg ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;
+  &lt;/bean&gt;
+
+  &lt;bean id=<span class="code-quote">"client"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireClientFactoryBean"</span>&gt;
+     &lt;property name=<span class="code-quote">"serviceInterface"</span>&gt;
+         &lt;value&gt;org.codehaus.xfire.jibx.TemperatureConversionService&lt;/value&gt;
+     &lt;/property&gt;
+     &lt;property name=<span class="code-quote">"wsdlDocumentUrl"</span>&gt;
+        &lt;value&gt;http:<span class="code-comment">//yourhostand:port/jibxExample/TemperatureConversion?wsdl&lt;/value&gt;
+</span>     &lt;/property&gt;
+     &lt;property name=<span class="code-quote">"namespaceUri"</span>&gt;
+        &lt;value&gt;http:<span class="code-comment">//jibx.xfire.codehaus.com/&lt;/value&gt;
+</span>     &lt;/property&gt;
+     &lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"jibxServiceFactory"</span>/&gt;
+  &lt;/bean&gt;</pre>
+</div></div>
+<p>Since the client and the service need to use the same service factory, it's normally useful to refactor the definition of the service factory out into a separate file which is imported by both the service and the client configurations.</p>
+
+<p>In our client code, we would have something along the lines of:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// get a Spring BeanFactoryReference ...
+</span>    TemperatureConversionService service = (TemperatureConversionService)ref.getFactory().getBean(<span class="code-quote">"client"</span>);
+    Weather fahrenheitWeather = <span class="code-keyword">new</span> Weather();
+    fahrenheitWeather.setDay(<span class="code-quote">"Monday"</span>);
+    fahrenheitWeather.setImage(<span class="code-quote">"WeatherMap.png"</span>);
+    fahrenheitWeather.setMaxTempF(70f);
+    fahrenheitWeather.setMinTempF(55f);
+    Weather celsiusWeather = service.convertFahrenheitToCelsius(fahrenheitWeather);</pre>
+</div></div>
+<p>And that's about it.</p>
+
+<h2><a name="JiBX-JiBXandJSR181Annotations"></a>JiBX and JSR 181 Annotations</h2>
+
+<p>We can configure XFire to utilise <a href="http://jcp.org/en/jsr/detail?id=181" title="Visit page outside Confluence">JSR-181 annotations</a> with JiBX bindings as follows. First, we add some annotations to our service interface and class</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> javax.jws.WebMethod;
+<span class="code-keyword">import</span> javax.jws.WebService;
+
+@WebService(
+    name = <span class="code-quote">"TemperatureConversionService"</span>,
+    targetNamespace = <span class="code-quote">"http:<span class="code-comment">//jibx.xfire.codehaus.com"</span>)
+</span><span class="code-keyword">public</span> <span class="code-keyword">interface</span> TemperatureConversionService {
+
+  @WebMethod(operationName = <span class="code-quote">"convertFahrenheitToCelsius"</span>)
+  Weather convertFahrenheitToCelsius(Weather fahrenheitWeather);
+
+  @WebMethod(operationName = <span class="code-quote">"convertCelsiusToFahrenheit"</span>)
+  Weather convertCelsiusToFahrenheit(Weather celsiusWeather);
+}
+
+
+@WebService(
+    endpointInterface = <span class="code-quote">"org.codehaus.xfire.jibx.TemperatureConversionService"</span>)
+<span class="code-keyword">public</span> class TemperatureConversionServiceImpl <span class="code-keyword">implements</span> TemperatureConversionService {  <span class="code-comment">// as the above implementation}</span></pre>
+</div></div>
+<p>We now have to tell XFire to use the Web Annotations service factory with the JiBX type registry. With a Spring config, we can do this as follows:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;!-- <span class="code-keyword">import</span> the xfire beans --&gt;
+  &lt;<span class="code-keyword">import</span> resource=<span class="code-quote">"classpath:org/codehaus/xfire/spring/xfire.xml"</span>/&gt;
+
+  &lt;bean id=<span class="code-quote">"webAnnotations"</span> class=<span class="code-quote">"org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations"</span>/&gt;
+
+  &lt;bean id=<span class="code-quote">"jibxTypeRegistry"</span> class=<span class="code-quote">"org.codehaus.xfire.jibx.JibxTypeRegistry"</span>/&gt;
+
+  &lt;bean id=<span class="code-quote">"bindingProvider"</span> class=<span class="code-quote">"org.codehaus.xfire.aegis.AegisBindingProvider"</span>&gt;
+    &lt;constructor-arg ref=<span class="code-quote">"jibxTypeRegistry"</span>/&gt;
+  &lt;/bean&gt;
+
+  &lt;bean id=<span class="code-quote">"serviceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.annotations.AnnotationServiceFactory"</span>&gt;
+    &lt;constructor-arg index=<span class="code-quote">"0"</span> ref=<span class="code-quote">"webAnnotations"</span>/&gt;
+    &lt;constructor-arg index=<span class="code-quote">"1"</span> ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;
+    &lt;constructor-arg type=<span class="code-quote">"org.codehaus.xfire.service.binding.BindingProvider"</span> ref=<span class="code-quote">"bindingProvider"</span>/&gt;
+  &lt;/bean&gt;</pre>
+</div></div>
+<p>We then need to configure the service to use this service factory:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;bean id=<span class="code-quote">"temperatureConversionService"</span>
+    class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span>&gt;
+   &lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"serviceFactory"</span>/&gt;
+ ... etc
+ &lt;/bean&gt;</pre>
+</div></div>
+<p>We also need to configure the client to use this service factory. One thing to watch out for here is that we now need to configure the client to use the <em>service implementation class</em> as value of the 'serviceInterface' property (you might have to add this class to the compilation of the client code, since the client may not explicitly depend on it):</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;bean id=<span class="code-quote">"client"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireClientFactoryBean"</span>&gt;
+     &lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"serviceFactory"</span>/&gt;
+
+     &lt;property name=<span class="code-quote">"serviceInterface"</span>&gt;
+         &lt;value&gt;org.codehaus.xfire.jibx.TemperatureConversionServiceImpl&lt;/value&gt;
+     &lt;/property&gt;.. etc
+  &lt;/bean&gt;</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

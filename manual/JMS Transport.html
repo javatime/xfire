@@ -1,0 +1,217 @@
+<html>
+    <head>
+        <title>Codehaus XFire : JMS Transport</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This guide gives you a quick rundown of how to configure XFire to use JMS as a transport. JMS is one of the easiest means to create a reliable SOAP connection. Additionally it is much faster then things such as WS-Reliability.</p>
+
+<p>This example assumes that you already know how to:</p>
+<ul>
+	<li>Configure services via XFire's services.xml format</li>
+	<li>Build and deploy simple XFire applications</li>
+	<li>Use your JMS provider</li>
+	<li>A working knowledge of <a href="http://www.springframework.org" title="Visit page outside Confluence">Spring</a></li>
+</ul>
+
+
+<p>We're just going to show a simple synchronous Echo example running over JMS. The first thing you need to do is create your services.xml file (see below for more information re: Spring 2.0):</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+
+  &lt;!-- 
+    Register the JMS transport. Note: this needs to happen *before* we
+    create our service.
+    --&gt;
+  <span class="code-tag">&lt;xfire&gt;</span>
+    <span class="code-tag">&lt;transports&gt;</span>
+      &lt;bean id=<span class="code-quote">"jmsTransport"</span> 
+            class=<span class="code-quote">"org.codehaus.xfire.transport.jms.JMSTransport"</span> 
+            xmlns=<span class="code-quote">"http://xbean.org/schemas/spring/1.0"</span>&gt;
+        <span class="code-tag">&lt;constructor-arg ref=<span class="code-quote">"xfire"</span>/&gt;</span>
+        <span class="code-tag">&lt;constructor-arg ref=<span class="code-quote">"connectionFactory"</span>/&gt;</span>
+      <span class="code-tag">&lt;/bean&gt;</span>
+    <span class="code-tag">&lt;/transports&gt;</span>
+  <span class="code-tag">&lt;/xfire&gt;</span>
+
+  <span class="code-tag">&lt;service <span class="code-keyword">xmlns:e</span>=<span class="code-quote">"urn:Echo"</span>&gt;</span>
+    <span class="code-tag">&lt;name&gt;</span>Echo<span class="code-tag">&lt;/name&gt;</span>
+    <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.test.Echo<span class="code-tag">&lt;/serviceClass&gt;</span>
+    <span class="code-tag">&lt;implementationClass&gt;</span>org.codehaus.xfire.test.EchoImpl<span class="code-tag">&lt;/implementationClass&gt;</span>
+    <span class="code-tag">&lt;bindings&gt;</span>
+      <span class="code-tag">&lt;soap11Binding name=<span class="code-quote">"e:EchoJMSBinding"</span> transport=<span class="code-quote">"urn:xfire:transport:jms"</span>&gt;</span>
+        <span class="code-tag">&lt;endpoints&gt;</span>
+          <span class="code-tag">&lt;endpoint name=<span class="code-quote">"e:EchoJMSEndpoint"</span> url=<span class="code-quote">"jms://Echo"</span> /&gt;</span>
+        <span class="code-tag">&lt;/endpoints&gt;</span>
+      <span class="code-tag">&lt;/soap11Binding&gt;</span>
+    <span class="code-tag">&lt;/bindings&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+  
+  &lt;bean id=<span class="code-quote">"connectionFactory"</span> 
+        class=<span class="code-quote">"org.apache.activemq.ActiveMQConnectionFactory"</span>
+        singleton=<span class="code-quote">"true"</span>
+        xmlns=<span class="code-quote">"http://xbean.org/schemas/spring/1.0/"</span>&gt;
+    <span class="code-tag">&lt;constructor-arg value=<span class="code-quote">"vm://localhost?broker.persistent=false"</span> type=<span class="code-quote">"java.lang.String"</span>/&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+  
+
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+<p>There is a lot in here, so lets recap this a little bit.</p>
+
+<p>The &lt;xfire&gt; section contains a &lt;transports&gt; element. In &lt;transports&gt; we are creating our JMSTransport via the Spring bean syntax. XFire will then automatically register this transport for us into the TransportManager.</p>
+
+<p>The &lt;service&gt; element contains our service definition. This is pretty standard, except you'll notice we're creating a new binding for JMS. &lt;soap11Binding transport="urn:xfire:transport:jms"&gt; tells XFire that we want to add a SOAP 1.1 binding for JMS. In the endpoints section we tell XFire exactly what that endpoint will be. The JMS urls take the form of jms://{QueueName}.</p>
+
+<p>In the sections below we configure our JMS QueueConnectionFactory using ActiveMQ.</p>
+
+<h3><a name="JMSTransport-Spring2.0%26nbsp%3B"></a>Spring 2.0&nbsp;</h3>
+
+<p>For Spring 2.0, you must define the services.xml root element as follows:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+</pre>
+</div></div>
+<p>&nbsp;For the service definition to work correctly, you must define the service root element as follows:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;service xmlns="http://xfire.codehaus.org/config/1.0"&gt; 
+</pre>
+</div></div>
+<p>When registering the JMS transport, you must specify the xmlns on the &lt;xfire&gt; element, as follows:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>  &lt;xfire xmlns=" http://xfire.codehaus.org/config/1.0"&gt;
+    &lt;transports&gt;
+      &lt;bean id="jmsTransport"
+            class="org.codehaus.xfire.transport.jms.JMSTransport"
+            xmlns="http://xbean.org/schemas/spring/1.0"&gt;
+        &lt;constructor-arg ref="xfire"/&gt;
+        &lt;constructor-arg ref="jmsConnectionFactory"/&gt;
+      &lt;/bean&gt;
+    &lt;/transports&gt;
+  &lt;/xfire&gt;
+</pre>
+</div></div>
+<p>Thanks to <b>Chris Mathrusse</b> for getting to the bottom of this and providing this information back to the XFire community.</p>
+
+<p>Once all of this is properly configured we will of course want to write a client:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> java.lang.reflect.Proxy;
+
+<span class="code-keyword">import</span> org.codehaus.xfire.client.XFireProxy;
+<span class="code-keyword">import</span> org.codehaus.xfire.client.XFireProxyFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.Service;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.binding.ObjectServiceFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.spring.AbstractXFireSpringTest;
+<span class="code-keyword">import</span> org.codehaus.xfire.test.Echo;
+<span class="code-keyword">import</span> org.codehaus.xfire.transport.jms.JMSTransport;
+<span class="code-keyword">import</span> org.springframework.context.ApplicationContext;
+<span class="code-keyword">import</span> org.apache.xbean.spring.context.ClassPathXmlApplicationContext;
+
+<span class="code-keyword">public</span> class JMSExampleTest
+    <span class="code-keyword">extends</span> AbstractXFireSpringTest
+{
+    <span class="code-keyword">protected</span> ApplicationContext createContext()
+    {
+        <span class="code-keyword">return</span> <span class="code-keyword">new</span> ClassPathXmlApplicationContext(<span class="code-keyword">new</span> <span class="code-object">String</span>[] {
+                <span class="code-quote">"/org/codehaus/xfire/transport/jms/example/jms.xml"</span>, 
+                <span class="code-quote">"/org/codehaus/xfire/spring/xfire.xml"</span> });  
+    }
+
+    <span class="code-keyword">public</span> void testClient()
+            <span class="code-keyword">throws</span> Exception
+    {
+        <span class="code-comment">// Create a ServiceFactory to create the ServiceModel.
+</span>        <span class="code-comment">// We need to add the JMSTransport to the list of bindings to create.
+</span>        ObjectServiceFactory sf = <span class="code-keyword">new</span> ObjectServiceFactory(getTransportManager());
+        sf.addSoap11Transport(JMSTransport.BINDING_ID);
+        
+        <span class="code-comment">// Create the service model
+</span>        Service serviceModel = sf.create(Echo.class);
+        
+        <span class="code-comment">// Create a proxy <span class="code-keyword">for</span> the service
+</span>        XFireProxyFactory factory = <span class="code-keyword">new</span> XFireProxyFactory(getXFire());
+        Echo echo = (Echo) factory.create(serviceModel, <span class="code-quote">"jms:<span class="code-comment">//Echo"</span>);
+</span>        
+        <span class="code-comment">// Since JMS doesn't really have a concept of anonymous endpoints, we need
+</span>        <span class="code-comment">// need to let xfire know what JMS endpoint we should use
+</span>        ((XFireProxy) Proxy.getInvocationHandler(echo)).getClient().setEndpointUri(<span class="code-quote">"jms:<span class="code-comment">//Peer1"</span>);
+</span>        
+        <span class="code-comment">// run the client!
+</span>        <span class="code-object">String</span> resString = echo.echo(<span class="code-quote">"hello"</span>);
+        assertEquals(<span class="code-quote">"hello"</span>, resString);
+    }
+}</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

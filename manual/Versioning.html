@@ -1,0 +1,224 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Versioning</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This page attempts to cover basic versioning patterns in web services. A lot of these patterns can be mixed and matched to provide the best combination.</p>
+
+<h2><a name="Versioning-NoVersionPattern"></a>No Version Pattern</h2>
+
+<p><b>Description:</b> Some people may choose to not worry about versioining at all. While, not strictly a versioning pattern, it is helpful to mention this to know the upsides and downsides.</p>
+
+<p><b>Pros:</b> Easy.<br/>
+<b>Cons:</b> Old clients built on the previous version will break.<br/>
+<b>When to use:</b> when you have total control over every client using your service.<br/>
+<b>References</b>: None.</p>
+
+<h2><a name="Versioning-NamespacePattern"></a>Namespace Pattern</h2>
+
+<p><b>Description:</b> Namespaces can be used to determine different type versions. Your first service revision may have a target namespace of "urn:company:service:v1" and each subsequent major revision will have an increased version number. Knowing the version of your xml documents, will tell you which version of the service to invoke.</p>
+
+<p><b>Example:</b><br/>
+Say you want to move from a decimal type for prices (which allows a minimum of 18 digits beyond the decimal point) to a more approciate price type which you created which only allows 2 digits beyond the decimal:<br/>
+<em>Old Version:</em></p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;soap:Envelope <span class="code-keyword">xmlns:soap</span>=<span class="code-quote">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+  <span class="code-tag">&lt;soap:Body&gt;</span>
+    <span class="code-tag">&lt;Price xmlns=<span class="code-quote">"urn:company:service:v1"</span>&gt;</span>3.333333<span class="code-tag">&lt;/Price&gt;</span>
+  <span class="code-tag">&lt;/soap:Body&gt;</span>
+<span class="code-tag">&lt;/soap:Envelope&gt;</span></pre>
+</div></div>
+<p><em>New Version</em></p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;soap:Envelope <span class="code-keyword">xmlns:soap</span>=<span class="code-quote">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+  <span class="code-tag">&lt;soap:Body&gt;</span>
+    <span class="code-tag">&lt;Price xmlns=<span class="code-quote">"urn:company:service:v2"</span>&gt;</span>3.33<span class="code-tag">&lt;/Price&gt;</span>
+  <span class="code-tag">&lt;/soap:Body&gt;</span>
+<span class="code-tag">&lt;/soap:Envelope&gt;</span></pre>
+</div></div>
+<p>Because of the namespace change you know that the first request is still acceptable even though it doesn't conform to your latest schema.</p>
+
+<p><b>Services following this pattern:</b> Amazon<br/>
+<b>Pros:</b> Takes advantage of XML namespaces, works well with backwards incompatabile schema changes.<br/>
+<b>Cons:</b> Doesn't take advantage of XML schema extensibility.<br/>
+<b>When to use:</b><br/>
+<b>References</b>:</p>
+<ul>
+	<li><a href="http://www.xml.com/pub/a/2004/07/21/design.html" title="Visit page outside Confluence">Designing Extensible, Versionable XML Formats</a> (Very very good)</li>
+	<li><a href="http://www.xml.com/pub/a/2003/12/03/versioning.html" title="Visit page outside Confluence">Versioning XML Vocabularies</a></li>
+</ul>
+
+
+<h2><a name="Versioning-VersionParameterPattern"></a>Version Parameter Pattern</h2>
+
+<p><b>Description:</b> Including a version number in the request will help you determine how to process the request and what kind of response to return.</p>
+
+<p><b>Examples:</b><br/>
+<em>Example 1 (Header):</em></p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;soap:Envelope <span class="code-keyword">xmlns:soap</span>=<span class="code-quote">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+  <span class="code-tag">&lt;soap:Header&gt;</span>
+    <span class="code-tag">&lt;Version xmlns=<span class="code-quote">"urn:company:service"</span>&gt;</span>340<span class="code-tag">&lt;/Version&gt;</span>
+  <span class="code-tag">&lt;/soap:Header&gt;</span>
+  <span class="code-tag">&lt;soap:Body&gt;</span>
+    ....
+  <span class="code-tag">&lt;/soap:Body&gt;</span>
+<span class="code-tag">&lt;/soap:Envelope&gt;</span></pre>
+</div></div>
+<p><em>Example 2 (Body):</em></p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;soap:Envelope <span class="code-keyword">xmlns:soap</span>=<span class="code-quote">"http://schemas.xmlsoap.org/soap/envelope/"</span>
+  <span class="code-tag">&lt;soap:Body&gt;</span>
+    <span class="code-tag">&lt;SomeRequest xmlns=<span class="code-quote">"urn:company:service"</span>&gt;</span>
+      <span class="code-tag">&lt;Version&gt;</span>340<span class="code-tag">&lt;/Version&gt;</span>
+      ....
+    <span class="code-tag">&lt;/SomeRequest&gt;</span>
+  <span class="code-tag">&lt;/soap:Body&gt;</span>
+<span class="code-tag">&lt;/soap:Envelope&gt;</span></pre>
+</div></div>
+<p><b>Services following this pattern:</b> eBay (header)<br/>
+<b>Pros:</b> Uses XML schema extensibility.<br/>
+<b>Cons:</b> Does not work well with incompatabile schema changes, doesn't take advantage of XML namespaces, requires users to pass the parameter in ever request.<br/>
+<b>When to use:</b><br/>
+<b>References</b>:</p>
+<ul>
+	<li><a href="http://dev4net.com/blog/archive/2004/12/03/962.aspx" title="Visit page outside Confluence">http://dev4net.com/blog/archive/2004/12/03/962.aspx</a></li>
+	<li><a href="http://developer.ebay.com/DevZone/SOAP/docs/WebHelp/wwhelp/wwhimpl/js/html/wwhelp.htm" title="Visit page outside Confluence">eBay API Documentation</a></li>
+</ul>
+
+
+<h2><a name="Versioning-EndpointPatternbyspecifyingaCustomXFireServletController"></a>Endpoint Pattern by specifying a Custom XFire Servlet Controller</h2>
+
+<p>Web service URLs (endpoints) follow an arbitrary convention, for example, version 1.0.0 of a service called SportsService would have a URL like:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">http:<span class="code-comment">//myhostname.com/services/1_0_0/SportsService</span></pre>
+</div></div>
+
+<p>In order to accomplish this you must override XFireServletController.getService(HttpServletRequest).  A custom XFire Servlet controller can be specified by overriding XFireServlet.createController().  It is in your implementation of getService() that you can establish how your URL will map to a service.</p>
+
+<p>The following code snippet illustrates this pattern.  The complete example may be viewed at:</p>
+
+<p><a href="http://arsenalist.com/2007/03/01/web-service-versioning-with-endpoints-using-xfire/" title="Visit page outside Confluence">http://arsenalist.com/2007/03/01/web-service-versioning-with-endpoints-using-xfire/</a></p>
+
+<p>Overriding XFireSpringServlet to create a Custom XFire Servlet Controller:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class CustomXFireServlet <span class="code-keyword">extends</span>  XFireSpringServlet {
+
+  <span class="code-keyword">public</span> XFireServletController createController() <span class="code-keyword">throws</span> ServletException {
+    <span class="code-keyword">return</span> <span class="code-keyword">new</span> CustomXFireServletController(getXFire(), getServletContext());
+  }
+}</pre>
+</div></div>
+
+<p>Overriding the getService(HttpServletRequest) method to establish a URL to service name mapping.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class CustomXFireServletController <span class="code-keyword">extends</span> XFireServletController {
+  <span class="code-keyword">public</span> CustomXFireServletController(XFire xFire) {
+    <span class="code-keyword">super</span>(xFire);
+  }
+
+  <span class="code-keyword">public</span> CustomXFireServletController(XFire xFire, ServletContext servletContext) {
+    <span class="code-keyword">super</span>(xFire, servletContext);
+  }
+
+  <span class="code-keyword">protected</span> <span class="code-object">String</span> getService(HttpServletRequest request) {
+    <span class="code-object">String</span> pathInfo = request.getPathInfo();
+    <span class="code-object">String</span> serviceName = ..... <span class="code-comment">// parse service name out of pathInfo
+</span>    <span class="code-keyword">return</span> serviceName;    
+  }
+}</pre>
+</div></div>
+
+<h2><a name="Versioning-NewEndpointPattern"></a>New Endpoint Pattern</h2>
+
+<p><b>Description:</b> The new endpoint pattern is very close to the version paramter pattern. The only difference is that instead of putting the version being accessed into the request, it becomes part of the URL being invoked.</p>
+
+<p><em>Example:</em></p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">http:<span class="code-comment">//example.com/service/v1
+</span>http:<span class="code-comment">//example.com/service/v2</span></pre>
+</div></div>
+<p><b>Services following this pattern:</b> JIRA?<br/>
+<b>Pros:</b> Uses XML schema extensibility.<br/>
+<b>Cons:</b> Requires users to update their invocation url each you update versions, Does not work well with incompatabile schema changes, doesn't take advantage of XML namespaces.<br/>
+<b>When to use:</b><br/>
+<b>References:</b></p>
+<ul>
+	<li><a href="http://blogs.msdn.com/dareobasanjo/archive/2004/11/30/272113.aspx" title="Visit page outside Confluence">http://blogs.msdn.com/dareobasanjo/archive/2004/11/30/272113.aspx</a></li>
+</ul>
+
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

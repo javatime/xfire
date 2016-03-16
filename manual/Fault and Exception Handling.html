@@ -1,0 +1,208 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Fault and Exception Handling</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="FaultandExceptionHandling-ExceptionsinServices"></a>Exceptions in Services</h2>
+
+<p>Any non-runtime exception that is thrown by a service will eventually be caught by XFire and turned into a Fault.  The fault is created by the static method XFireFault.createFault(Exception e). If a fault occurrs, all the handlers that been executed will have their handleFault() method executed in the order reverse of execution.</p>
+
+<p>When a fault occurs, the fault pipeline is invoked. This is created from the service's fault handlers, the transport's fault handlers, and the global fault handlers. To add a handler to the fault pipeline you would do something like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service myService = ...;
+
+myService.addFaultHandler(<span class="code-keyword">new</span> MyFaultHandler());</pre>
+</div></div>
+<p>You should create your faiult handler by subclassing org.codehaus.xfire.handler.AbstractHandler. This will fill in various required functions. The only method you are required to provide is 'invoke'</p>
+
+
+<p>Inside your FaultHandler you may want to get ahold of the fault. This can be done like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> void invoke(MessageContext context) <span class="code-keyword">throws</span> Exception
+{
+  XFireFault fault = (XFireFault) context.getExchange().getFaultMessage().getBody();
+
+  ... <span class="code-keyword">do</span> something with the fault
+}</pre>
+</div></div>
+
+<h2><a name="FaultandExceptionHandling-CustomExceptionstoSOAPFaults"></a>Custom Exceptions to SOAP Faults</h2>
+
+<p>XFire provides a way to process your custom exceptions as SOAP Faults when not using JAX-WS 2.0 <em>@WebFault</em>.<br/>
+These faults have a &lt;detail /&gt; element where useful information can be put.<br/>
+Here is an example of a SOAP fault with a &lt;detail /&gt; element and custom data in it :</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+                       xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+   &lt;soap:Body&gt;
+      &lt;soap:Fault&gt;
+         &lt;faultcode&gt;soap:Client&lt;/faultcode&gt;
+         &lt;faultstring&gt;A NPE occured&lt;/faultstring&gt;
+         &lt;detail&gt;
+            &lt;WeatherFault xmlns="http://www.webservicex.net"&gt;
+               &lt;detailMessage&gt;More explanation here...&lt;/detailMessage&gt;
+               &lt;code&gt;code1&lt;/code&gt;
+            &lt;/WeatherFault&gt;
+         &lt;/detail&gt;
+      &lt;/soap:Fault&gt;
+   &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;
+</pre>
+</div></div>
+<p>To add your custom data in the &lt;detail /&gt; element, your exception needs to extend <em>org.codehaus.xfire.fault.FaultInfoException.</em><br/>
+Below is an example of such an exception :</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.jaxb;
+
+<span class="code-keyword">import</span> javax.xml.namespace.QName;
+<span class="code-keyword">import</span> org.codehaus.xfire.fault.FaultInfoException;
+<span class="code-keyword">import</span> net.webservicex.WeatherFaultDetail;
+
+<span class="code-keyword">public</span> class WeatherException <span class="code-keyword">extends</span> FaultInfoException {
+
+	<span class="code-keyword">private</span> WeatherFaultDetail faultDetail;
+
+	<span class="code-keyword">public</span> WeatherException(Throwable cause, <span class="code-object">String</span> message,
+			WeatherFaultDetail detail) {
+		<span class="code-keyword">super</span>(message, cause);
+		<span class="code-keyword">this</span>.faultDetail = detail;
+	}
+
+	<span class="code-keyword">public</span> WeatherFaultDetail getFaultInfo() {
+		<span class="code-keyword">return</span> faultDetail;
+	}
+
+	<span class="code-keyword">public</span> <span class="code-keyword">static</span> QName getFaultName() {
+		<span class="code-keyword">return</span> <span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.webservicex.net"</span>, <span class="code-quote">"WeatherFault"</span>);
+</span>	}
+
+}</pre>
+</div></div>
+<p>The two important methods in this class are the getFaultInfo() method which will return the detail of the fault, and the getFaultName() method which will return the QName of the fault type. This means there must be a schema that defines the <a href="http://www.webservicex.net/WeatherFault" title="Visit page outside Confluence">http://www.webservicex.net/WeatherFault</a> type. Here is an example of such a schema :</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;s:schema elementFormDefault="qualified" targetNamespace="http://www.webservicex.net"
+          xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.webservicex.net"&gt;
+     &lt;s:complexType name="WeatherFaultDetail"&gt;
+        &lt;s:sequence&gt;
+            &lt;s:element minOccurs="0" maxOccurs="1" name="detailMessage" type="s:string"/&gt;
+            &lt;s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/&gt;
+        &lt;/s:sequence&gt;
+    &lt;/s:complexType&gt;
+&lt;/s:schema&gt;
+</pre>
+</div></div>
+<p>When a service interface has a method that throws a WeatherException, there will be a corresponding WSDL operation with a wsdl:fault which name will be WeatherFault, and which detail type will be WeatherFaultDetail :</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">@WebMethod
+GetWeatherByZipCodeResponse GetWeatherByZipCode(@WebParam(name=<span class="code-quote">"GetWeatherByZipCode"</span>) GetWeatherByZipCode body) <span class="code-keyword">throws</span> WeatherException;</pre>
+</div></div>
+<p>Here is a sample of the resulting WSDL :&nbsp;&nbsp;&nbsp;</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;wsdl:definitions targetNamespace="http://www.webservicex.net"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:tns="http://www.webservicex.net"
+xmlns:....&gt;
+&lt;wsdl:types&gt;
+    .........
+    &lt;s:schema elementFormDefault="qualified" targetNamespace="http://www.webservicex.net" xmlns:s="http://www.w3.org/2001/XMLSchema"&gt;
+    .........
+        &lt;s:complexType name="WeatherFaultDetail"&gt;
+            &lt;s:sequence&gt;
+                &lt;s:element minOccurs="0" maxOccurs="1" name="detailMessage" type="s:string"/&gt;
+                &lt;s:element minOccurs="0" maxOccurs="1" name="code" type="s:string"/&gt;
+            &lt;/s:sequence&gt;
+        &lt;/s:complexType&gt;
+        &lt;xsd:element name="WeatherFault" type="tns:WeatherFaultDetail"/&gt;
+    .........
+    &lt;/s:schema&gt;
+    .........
+&lt;/wsdl:types&gt;
+     .........
+&lt;wsdl:operation name="GetWeatherByZipCode"&gt;
+    &lt;wsdlsoap:operation soapAction=""/&gt;
+     &lt;wsdl:input name="GetWeatherByZipCodeRequest"&gt;
+        &lt;wsdlsoap:body use="literal"/&gt;
+     &lt;/wsdl:input&gt;
+     &lt;wsdl:output name="GetWeatherByZipCodeResponse"&gt;
+         &lt;wsdlsoap:body use="literal"/&gt;
+     &lt;/wsdl:output&gt;
+     &lt;wsdl:fault name="WeatherFault"&gt;
+         &lt;wsdlsoap:fault name="WeatherFault" use="literal"/&gt;
+     &lt;/wsdl:fault&gt;
+&lt;/wsdl:operation&gt;
+</pre>
+</div></div>
+<p>Now clients know that a WeatherFault can be thrown when invoking <em>GetWeatherByZipCode</em> operation, and they know how to process custom data in the &lt;detail /&gt; element.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

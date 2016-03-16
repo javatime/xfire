@@ -1,0 +1,162 @@
+<html>
+    <head>
+        <title>Codehaus XFire : SOAP and REST Clients</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    
+<h2><a name="SOAPandRESTClients-ClientOverview"></a>Client Overview</h2>
+<p>The XFire <a href="Core.html" title="Core">Core</a> contains classes which function as SOAP and REST clients.  Currently there is only a prebundled client for the XMLBeans module.  You can use this client via the API and you can also generate a client from a WSDL file.  To learn more see section on XMLBeans Client Generator.</p>
+
+<p>If you wish to use the SOAP/REST clients without XMLBeans, read on to learn how to create a ClientHandler of your own.</p>
+
+<h2><a name="SOAPandRESTClients-WritingaClientHandler"></a>Writing a ClientHandler</h2>
+<p>A ClientHandler generates a request and parses a response.   You pass this handler to the SoapClient constructor.  When the service is invoked() it will delegate the generation of the SOAP Body request and parsing of the response Body to your handler.</p>
+
+<p>For instance:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">YourHandler handler = <span class="code-keyword">new</span> YourHandler();
+SoapHttpClient client = <span class="code-keyword">new</span> SoapHttpClient(handler);
+client.setServiceUrl(<span class="code-quote">"http:<span class="code-comment">//some.service.com"</span>);
+</span>
+client.invoke();</pre>
+</div></div>
+
+<p>A client handler must implement the following interface:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class ObjectHandler
+    <span class="code-keyword">implements</span> ClientHandler
+{
+    <span class="code-keyword">private</span> <span class="code-object">Object</span> request;
+    <span class="code-keyword">private</span> <span class="code-object">Object</span> response;
+    
+    <span class="code-keyword">public</span> <span class="code-object">boolean</span> hasRequest()
+    {
+        <span class="code-keyword">return</span> <span class="code-keyword">true</span>;
+    }
+    
+    <span class="code-keyword">public</span> void writeRequest(XMLStreamWriter writer) <span class="code-keyword">throws</span> XMLStreamException
+    {
+        serialize(request, writer);
+    }
+
+    <span class="code-keyword">protected</span> void serialize(<span class="code-object">Object</span> request2, XMLStreamWriter writer)
+    {
+        <span class="code-comment">// TODO 
+</span>    }
+
+    <span class="code-keyword">public</span> void handleResponse(XMLStreamReader reader) <span class="code-keyword">throws</span> XMLStreamException
+    {
+        response = deserialize(reader);
+    }
+
+    <span class="code-keyword">private</span> <span class="code-object">Object</span> deserialize(XMLStreamReader reader)
+    {
+        <span class="code-comment">// TODO
+</span>        <span class="code-keyword">return</span> <span class="code-keyword">null</span>;
+    }
+
+    <span class="code-keyword">public</span> <span class="code-object">Object</span> getRequest()
+    {
+        <span class="code-keyword">return</span> request;
+    }
+    
+    <span class="code-keyword">public</span> void setRequest(<span class="code-object">Object</span> request)
+    {
+        <span class="code-keyword">this</span>.request = request;
+    }
+    
+    <span class="code-keyword">public</span> <span class="code-object">Object</span> getResponse()
+    {
+        <span class="code-keyword">return</span> response;
+    }
+    
+    <span class="code-keyword">public</span> void setResponse(<span class="code-object">Object</span> response)
+    {
+        <span class="code-keyword">this</span>.response = response;
+    }
+}</pre>
+</div></div>
+
+<p>The above is pretty straight forard. We are serializing the request object and deserializing the respone object.  To use this handler, it would look something like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">ObjectHandler handler = <span class="code-keyword">new</span> ObjectHandler ();
+SoapHttpClient client = <span class="code-keyword">new</span> SoapHttpClient(handler);
+client.setServiceUrl(<span class="code-quote">"http:<span class="code-comment">//some.service.com"</span>);
+</span>
+handler.setRequest( yourRequestObject );
+client.invoke();
+
+<span class="code-object">Object</span> response = handler.getResponse();</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

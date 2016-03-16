@@ -1,0 +1,112 @@
+<html>
+    <head>
+        <title>Codehaus XFire : The ServiceFactory</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="TheServiceFactory-CreatingaServiceFromaClass"></a>Creating a Service From a Class</h2>
+
+<p>In the simplest case you will have a service modeled as a java object which you would like to make a web service. This is easy enough through the ServiceFactory interface:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">XFire xfire = XFireFactory.newInstance().getXFire();
+ServiceFactory factory = <span class="code-keyword">new</span> ObjectServiceFactory(xfire.getTransportManager(), <span class="code-keyword">null</span>);
+
+Service service = factory.create(YourService.class);</pre>
+</div></div>
+<p>This will create a SOAP 1.1 Wrapped/Document style service for your class. If you have any complex types (i.e. not string, int, long, boolean, etc) XFire will automatically try and serialize these for you (using the Aegis binding). After you create the service you must register it:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">xfire.getServiceRegistry().register(service);</pre>
+</div></div>
+<p>You can also gain more control over how your service is configured but using a more verbose method to build your service:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">XFire xfire = XFireFactory.newInstance().getXFire();
+ServiceFactory factory = <span class="code-keyword">new</span> ObjectServiceFactory(xfire.getTransportManager(), <span class="code-keyword">null</span>);
+
+Service service = factory.create(YourService.class,
+                                 <span class="code-quote">"Name"</span>,
+                                 <span class="code-quote">"namespace"</span>,
+                                 <span class="code-keyword">null</span>);</pre>
+</div></div>
+<p>If you used an interface to build the service (recommended), you can set the service implementation like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">service.setProperty(ObjectInvoker.SERVICE_IMPL_CLASS, YourServiceImpl.class);</pre>
+</div></div>
+
+<h2><a name="TheServiceFactory-Invokers"></a>Invokers</h2>
+
+<p>XFire uses Invokers to control how your service is invoked. The default is that your service class is instantiated just once.</p>
+
+<p>In a lot of cases you don't want XFire to manage your service objects. For instance if you wanted to use a factory to create your services you could write your own service Invoker which did that. Or if you already have an instance of an object that you wanted to invoke you could write an invoker to just use that object.</p>
+
+<p>See the Invoker, ObjectInvoker, and BeanInvoker classes for examples of invokers and the API. For an example usage, see <a href="Invokers.html" title="Invokers">Invokers</a>.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

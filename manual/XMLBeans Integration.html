@@ -1,0 +1,159 @@
+<html>
+    <head>
+        <title>Codehaus XFire : XMLBeans Integration</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="XMLBeansIntegration-Creatingaservice"></a>Creating a service</h2>
+
+<p>Steps</p>
+<ol>
+	<li>Create your Schema</li>
+	<li>Create your XMLBeans</li>
+	<li>Create your Service</li>
+	<li>Register your service</li>
+</ol>
+
+
+<p>Assuming that you know how to do steps 1 and 2, lets pick up at step 3. Create your service class:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.xmlbeans;
+
+<span class="code-keyword">import</span> net.webservicex.GetWeatherByZipCodeDocument;
+<span class="code-keyword">import</span> net.webservicex.GetWeatherByZipCodeResponseDocument;
+<span class="code-keyword">import</span> net.webservicex.WeatherForecasts;
+
+<span class="code-keyword">public</span> class WeatherService
+{
+    <span class="code-keyword">public</span> GetWeatherByZipCodeResponseDocument GetWeatherByZipCode( GetWeatherByZipCodeDocument body )
+    {
+        GetWeatherByZipCodeResponseDocument res =
+            GetWeatherByZipCodeResponseDocument.Factory.newInstance();
+
+        WeatherForecasts weather =
+            res.addNewGetWeatherByZipCodeResponse().addNewGetWeatherByZipCodeResult();
+
+        weather.setLatitude(1);
+        weather.setLongitude(1);
+        weather.setPlaceName(<span class="code-quote">"Grand Rapids, MI"</span>);
+
+        <span class="code-keyword">return</span> res;
+    }
+}</pre>
+</div></div>
+<p>Notice that we used the "Document" Types, not the "GetWeatherByZipCode" class. After you've created your service class you simply need to register it:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">XFire xfire = XFireFactory.newInstance().getXFire();
+XmlBeansServiceFactory factory = <span class="code-keyword">new</span> XmlBeansServiceFactory(xfire.getTransportManager());
+
+Service service = factory.create(WeatherService.class);
+
+xfire.getServiceRegistry().register(service);</pre>
+</div></div>
+<p>XFire will now expose your service as the "WeatherService" and will generate WSDL for you automatically&#33;</p>
+
+<h2><a name="XMLBeansIntegration-XMLBeanswithJSR181"></a>XMLBeans with JSR 181</h2>
+
+<p>You may use your XMLBeans service with JSR 181 annotations. You need to set up a special service factory to create your service though:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.aegis.AegisBindingProvider;
+<span class="code-keyword">import</span> org.codehaus.xfire.xmlbeans.XmlBeansWSDLBuilderFactory;
+
+AnnotationServiceFactory asf = <span class="code-keyword">new</span> AnnotationServiceFactory();
+<span class="code-comment">// Set up the XMLBeans binding
+</span>AegisBindingProvider provider = <span class="code-keyword">new</span> AegisBindingProvider(<span class="code-keyword">new</span> XmlBeansTypeRegistry());
+asf.setBindingProvider(provider);
+
+<span class="code-comment">// Tell XFire to use the schemas from XMLBeans in the WSDL
+</span>asf.setWsdlBuilderFactory(<span class="code-keyword">new</span> XmlBeansWSDLBuilderFactory());</pre>
+</div></div>
+<p>Then you can create your service:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service service = asf.create(MyService.class);</pre>
+</div></div>
+
+<h2><a name="XMLBeansIntegration-ProblemswithXMLBeans%28XMLBeansNamespaceHack%29"></a>Problems with XMLBeans (XMLBeans Namespace Hack)</h2>
+
+<p>Due to some bugs in how XMLBeans handles StAX streams you may need to enable the "xmlbeans namespace hack". This just tells xfire to use the XMLBeans DOM to write to the outgoing xml stream instead of using the XMLBeans XMLStreamReader. You will need to enable this when:<br/>
+1. You are using RPC/Literal services<br/>
+2. Any of your operations contain parameters that are &lt;complexType&gt;s instead of &lt;element&gt;s in your schema.</p>
+
+<p>To enable the fix simply do:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.service.Service;
+<span class="code-keyword">import</span> org.codehaus.xfire.xmlbeans.XmlBeansType;
+
+Service service = ...;
+service.setProperty(XmlBeansType.XMLBEANS_NAMESPACE_HACK, <span class="code-quote">"<span class="code-keyword">true</span>"</span>);</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

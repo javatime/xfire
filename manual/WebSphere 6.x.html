@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <title>Codehaus XFire : WebSphere 6.x</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>If you are trying to deploy XFire on <b>IBM WebSphere 6.x</b> and it's not working, you maybe should try following these instructions to make sure it's not an issue from XFire distribution.</p>
+<ol>
+	<li>Due to default <b>WAS</b> policy, a custom <b>was.policy</b> file must be deployed in (either EAR or WAR archive) with the following content:<br/>
+<b><em>META-INF/was.policy</em></b>&nbsp;
+<div class="code"><div class="codeContent">
+<pre class="code-java">grant codeBase <span class="code-quote">"file:${application}"</span> {
+  permission java.security.AllPermission;
+};</pre>
+</div></div>
+<p>Obs: you can see <em>SecurityPermission</em> errors in WAS logs trying to deploy without this set up.</p></li>
+	<li>Due to default <b>WAS</b> class loader configuration, you must change some properties of your deployed application before starts it.<br/>
+Go to the <em>Administration Console</em> <em>&gt; Applications &gt; [ Your Application ]</em><br/>
+In the Application Configuration page, look for the field <em>Class Loading and File Upload Detection</em><br/>
+Change these fields as follows:
+	<ul>
+		<li><b>Class loader mode:</b> <em>Parent Last</em><br/>
+&#42; This change is required</li>
+		<li><b>WAR class loader policy:</b> <em>Application</em><br/>
+&#42; Change this property if you deployed your XFire webapp inside an EAR.</li>
+	</ul>
+	</li>
+</ol>
+
+
+<p>Obs: you can see ClassCastExcecptions in WAS logs trying to run without these changes due to XFire distro and WebSphere jars incompatibilities (i.e.: JDOM)</p>
+
+<p>Cheers&#33;<br/>
+&#45;&#45;<br/>
+Bruno Borges (at) GMail</p>
+
+<p>As mentioned above, there are incompatibility issues with Websphere 6.x and the XFire distro.&nbsp; The main issue is with the version of the jdom.jar, that ships with Websphere 6.x.&nbsp; This jar was deprecated in Websphere 5.1, but still ships with 6.x.&nbsp; If you simply remove the jdom.jar from the Websphere / Appserver / lib directory, XFire will deploy without fault.&nbsp; So if the above method does not work or more likely not allowed, try simply removing the jdom.jar.&nbsp;</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

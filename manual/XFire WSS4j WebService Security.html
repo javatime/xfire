@@ -1,0 +1,337 @@
+<html>
+    <head>
+        <title>Codehaus XFire : XFire WSS4j WebService Security</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>原文 by david.turing：<a href="http://www.blogjava.net/openssl/archive/2006/08/08/xfire_wss4j.html" title="Visit page outside Confluence">http://www.blogjava.net/openssl/archive/2006/08/08/xfire_wss4j.html</a> &nbsp;<br/>
+&nbsp;<br/>
+鉴于很多系统需要实施WS-Security的标准，我们在SpringSide中提供了XFire+WSS4J的Demo，本文介绍SpringSide中Spring+XFire+WSS4J的基本配置</p>
+
+<p><font color="#ff1493"><b>[WebService Server端配置]</b></font><br/>
+第一，创建一个基本的BookService<br/>
+<font color="#0000ff">public</font><font color="#000000">&nbsp;</font><font color="#0000ff">interface</font><font color="#000000">&nbsp;BookService&nbsp;</font><font color="#000000">{</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>/*<b>&nbsp;</b>/<font color="#008000">/*&#42;</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;按书名模糊查询图书</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&#42;/</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;findBooksByName(String&nbsp;name);</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>/*<b>&nbsp;</b>/<font color="#008000">/*&#42;</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;查找目录下的所有图书</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</font><font color="#808080">@param</font><font color="#008000">&nbsp;categoryId&nbsp;如果category为null或"all"，&nbsp;列出所有图书。</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&#42;/</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;findBooksByCategory(String&nbsp;categoryId);</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>/*<b>&nbsp;</b>/<font color="#008000">/*&#42;</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;列出所有分类.</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#42;</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;</font><font color="#808080">@return</font><font color="#008000">&nbsp;List&lt;Category&gt;，或是null。</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&#42;/</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;getAllCategorys();</font><br/>
+{color:#000000}}<font color=""><br/>
+第二，接口扩展，即Extend基本的BookService，在XFire中，不同的WSS4J策略需要针对不同的ServiceClass，否则&lt;inHandlers&gt;里面的定义会Overlap。 <font color="#0000ff"></font>public</font><font color="#000000">&nbsp;</font><font color="#0000ff">interface</font><font color="#000000">&nbsp;BookServiceWSS4JEnc&nbsp;&nbsp;</font><font color="#0000ff">extends</font><font color="#000000">&nbsp;BookService&nbsp;</font><font color="#000000">{</font></p>
+
+<p>{color:#000000}}<font color=""><br/>
+<font color="#0000ff"></font>public</font><font color="#000000">&nbsp;</font><font color="#0000ff">interface</font><font color="#000000">&nbsp;BookServiceWSS4JSign&nbsp;&nbsp;</font><font color="#0000ff">extends</font><font color="#000000">&nbsp;BookService&nbsp;</font><font color="#000000">{</font></p>
+
+<p>{color:#000000}}<font color=""><br/>
+第三，配置Spring的ApplicationContext文件<br/>
+<font color="#000000"></font>&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&lt;&#33;-&#45;</font><font color="#008000">BookService&nbsp;基类</font><font color="#008000">&#45;-&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="baseWebService"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.spring.remoting.XFireExporter"</font><font color="#ff0000">&nbsp;abstract</font><font color="#0000ff">="true"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceFactory"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="xfire.serviceFactory"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="xfire"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="xfire"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">class</font><font color="#0000ff">="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="mappings"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">value</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BookService=bookService</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BookServiceWSS4J=bookServiceWSS4J</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BookServiceWSS4JEnc=bookServiceWSS4JEnc</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/BookServiceWSS4JSign=bookServiceWSS4JSign</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">value</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;</font><font color="#008000">&lt;&#33;-&#45;</font><font color="#008000">(1)BookWebService&nbsp;不需要认证</font><font color="#008000">&#45;-&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="bookService"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.spring.remoting.XFireExporter"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceFactory"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="xfire.serviceFactory"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="xfire"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="xfire"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceBean"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="bookManager"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceClass"</font><font color="#ff0000">&nbsp;value</font><font color="#0000ff">="org.springside.bookstore.plugins.xfire.service.BookService"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&lt;&#33;-&#45;</font><font color="#008000">&nbsp;&nbsp;(3)BookWebService&nbsp;使用&nbsp;WSS4J验证</font><font color="#008000">&#45;-&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="bookServiceWSS4J"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.spring.remoting.XFireExporter"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceBean"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="bookManager"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceClass"</font><font color="#ff0000">&nbsp;value</font><font color="#0000ff">="org.springside.bookstore.plugins.xfire.service.BookServiceWSS4J"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="inHandlers"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">list</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="domInHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="wss4jInHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="validateUserTokenHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">list</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="domInHandler"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.util.dom.DOMInHandler"</font><font color="#0000ff">/&gt;</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="wss4jInHandler"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.security.wss4j.WSS4JInHandler"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="properties"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">props</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="action"</font><font color="#0000ff">&gt;</font><font color="#000000">UsernameToken</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="passwordCallbackClass"</font><font color="#0000ff">&gt;</font><font color="#000000">org.springside.bookstore.plugins.xfire.wss4j.PasswordHandler</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">props</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="validateUserTokenHandler"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.springside.bookstore.plugins.xfire.wss4j.WSS4JTokenHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&lt;&#33;-&#45;</font><font color="#008000">&nbsp;&nbsp;(4)BookWebService&nbsp;使用&nbsp;WSS4J验证&nbsp;Encrypt模式</font><font color="#008000">&#45;-&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="bookServiceWSS4JEnc"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.spring.remoting.XFireExporter"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceBean"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="bookManager"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceClass"</font><font color="#ff0000">&nbsp;value</font><font color="#0000ff">="org.springside.bookstore.plugins.xfire.service.BookServiceWSS4JEnc"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="inHandlers"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">list</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="domInHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="wss4jInHandlerEnc"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="validateUserTokenHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">list</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="wss4jInHandlerEnc"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.security.wss4j.WSS4JInHandler"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="properties"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">props</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="action"</font><font color="#0000ff">&gt;</font><font color="#000000">Encrypt</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="decryptionPropFile"</font><font color="#0000ff">&gt;</font><font color="#000000">org/springside/bookstore/plugins/xfire/wss4j/insecurity_enc.properties</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="passwordCallbackClass"</font><font color="#0000ff">&gt;</font><font color="#000000">org.springside.bookstore.plugins.xfire.wss4j.PasswordHandler</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">props</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">&lt;&#33;-&#45;</font><font color="#008000">&nbsp;&nbsp;(5)BookWebService&nbsp;使用&nbsp;WSS4J验证&nbsp;Signature模式</font><font color="#008000">&#45;-&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="bookServiceWSS4JSign"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.spring.remoting.XFireExporter"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceBean"</font><font color="#ff0000">&nbsp;ref</font><font color="#0000ff">="bookManager"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="serviceClass"</font><font color="#ff0000">&nbsp;value</font><font color="#0000ff">="org.springside.bookstore.plugins.xfire.service.BookServiceWSS4JSign"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="inHandlers"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">list</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="domInHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="wss4jInHandlerSign"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">ref&nbsp;</font><font color="#ff0000">bean</font><font color="#0000ff">="validateUserTokenHandler"</font><font color="#0000ff">/&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">list</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">bean&nbsp;</font><font color="#ff0000">id</font><font color="#0000ff">="wss4jInHandlerSign"</font><font color="#ff0000">&nbsp;class</font><font color="#0000ff">="org.codehaus.xfire.security.wss4j.WSS4JInHandler"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">property&nbsp;</font><font color="#ff0000">name</font><font color="#0000ff">="properties"</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">props</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="action"</font><font color="#0000ff">&gt;</font><font color="#000000">Signature</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="signaturePropFile"</font><font color="#0000ff">&gt;</font><font color="#000000">org/springside/bookstore/plugins/xfire/wss4j/insecurity_sign.properties</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;</font><font color="#800000">prop&nbsp;</font><font color="#ff0000">key</font><font color="#0000ff">="passwordCallbackClass"</font><font color="#0000ff">&gt;</font><font color="#000000">org.springside.bookstore.plugins.xfire.wss4j.PasswordHandler</font><font color="#0000ff">&lt;/</font><font color="#800000">prop</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">props</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">property</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">&lt;/</font><font color="#800000">bean</font><font color="#0000ff">&gt;</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><br/>
+<font color="#0000ff">&lt;/</font><font color="#800000">beans</font><font color="#0000ff">&gt;</font></p>
+
+<p>第四，配置insecurity_enc.properties和insecurity_sign.properties两个密钥库配置文件<br/>
+insecurity_enc.properties：<br/>
+<font color="#000000">org.apache.ws.security.crypto.provider</font><font color="#000000">=</font><font color="#000000">org.apache.ws.security.components.crypto.Merlin</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.type</font><font color="#000000">=</font><font color="#000000">jks</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.password</font><font color="#000000">=</font>SpringSide<br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.alias.password</font><font color="#000000">=</font>SpringSide<br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.alias</font><font color="#000000">=</font><font color="#000000">david</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.file</font><font color="#000000">=</font><font color="#000000">org/springside/bookstore/plugins/xfire/wss4j/springside_private.jks</font><br/>
+outsecurity_sign.properties：<br/>
+<font color="#000000">org.apache.ws.security.crypto.provider</font><font color="#000000">=</font><font color="#000000">org.apache.ws.security.components.crypto.Merlin</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.type</font><font color="#000000">=</font><font color="#000000">jks</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.password</font><font color="#000000">=</font>SpringSide<br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.alias</font><font color="#000000">=</font><font color="#000000">david</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.file</font><font color="#000000">=</font><font color="#000000">org/springside/bookstore/plugins/xfire/wss4j/springside_public.jks</font><br/>
+第五，使用SecureX生成了两个keystore文件<br/>
+springside_private.jks<br/>
+<font color="#000000">别名名称：&nbsp;david</font><br/>
+<font color="#000000">创建日期：&nbsp;</font><font color="#000000">2006</font><font color="#000000">&#45;</font><font color="#000000">8</font><font color="#000000">&#45;</font><font color="#000000">6</font><br/>
+<font color="#000000">输入类型：KeyEntry</font><br/>
+<font color="#000000">认证链长度：&nbsp;</font><font color="#000000">1</font><br/>
+<font color="#000000">认证&nbsp;</font><font color="#800000">[</font><font color="#800000">1</font><font color="#800000">]</font><font color="#000000">:</font><br/>
+<font color="#000000">Owner:&nbsp;CN</font><font color="#000000">=</font><font color="#000000">david</font><font color="#000000">,</font><font color="#000000">&nbsp;OU</font><font color="#000000">=</font>SpringSide<font color="#000000">,</font><font color="#000000">&nbsp;O</font><font color="#000000">=</font><font color="#000000">org</font><font color="#000000">,</font><font color="#000000">&nbsp;L</font><font color="#000000">=</font><font color="#000000">gz</font><font color="#000000">,</font><font color="#000000">&nbsp;ST</font><font color="#000000">=</font><font color="#000000">gd</font><font color="#000000">,</font><font color="#000000">&nbsp;C</font><font color="#000000">=</font><font color="#000000">cn</font><br/>
+<font color="#000000">发照者：&nbsp;CN</font><font color="#000000">=</font><font color="#000000">david</font><font color="#000000">,</font><font color="#000000">&nbsp;OU</font><font color="#000000">=</font>SpringSide<font color="#000000">,</font><font color="#000000">&nbsp;O</font><font color="#000000">=</font><font color="#000000">org</font><font color="#000000">,</font><font color="#000000">&nbsp;L</font><font color="#000000">=</font><font color="#000000">gz</font><font color="#000000">,</font><font color="#000000">&nbsp;ST</font><font color="#000000">=</font><font color="#000000">gd</font><font color="#000000">,</font><font color="#000000">&nbsp;C</font><font color="#000000">=</font><font color="#000000">cn</font><br/>
+<font color="#000000">序号：&nbsp;44d4cdcd</font><br/>
+<font color="#000000">有效期间：&nbsp;Sun&nbsp;Aug&nbsp;</font><font color="#000000">06</font><font color="#000000">&nbsp;</font><font color="#000000">00</font><font color="#000000">:</font><font color="#000000">56</font><font color="#000000">:</font><font color="#000000">45</font><font color="#000000">&nbsp;CST&nbsp;</font><font color="#000000">2006</font><font color="#000000">&nbsp;至：&nbsp;Mon&nbsp;Aug&nbsp;</font><font color="#000000">06</font><font color="#000000">&nbsp;</font><font color="#000000">00</font><font color="#000000">:</font><font color="#000000">56</font><font color="#000000">:</font><font color="#000000">45</font><font color="#000000">&nbsp;CST&nbsp;</font><font color="#000000">2007</font><br/>
+<font color="#000000">认证指纹：</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MD5：&nbsp;&nbsp;CF:</font><font color="#000000">97</font><font color="#000000">:</font><font color="#000000">13</font><font color="#000000">:0C:</font><font color="#000000">70</font><font color="#000000"><img class="emoticon" src="./icons/emoticons/biggrin.gif" height="20" width="20" align="absmiddle" alt="" border="0"/>0:4D:B6:B4:</font><font color="#000000">27</font><font color="#000000">:0F:1A:0B:CF<img class="emoticon" src="./icons/emoticons/biggrin.gif" height="20" width="20" align="absmiddle" alt="" border="0"/>9:F2</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHA1：&nbsp;8E:8E:E8:BC:</font><font color="#000000">64</font><font color="#000000">:</font><font color="#000000">39</font><font color="#000000">:C8:</font><font color="#000000">43</font><font color="#000000">:E4:F7:1B:3B:CE:</font><font color="#000000">48</font><font color="#000000">:1D:6B:A0:2B:</font><font color="#000000">58</font><font color="#000000">:B5</font><br/>
+springside_public.jks<br/>
+<font color="#000000">别名名称：&nbsp;david</font><br/>
+<font color="#000000">创建日期：&nbsp;</font><font color="#000000">2006</font><font color="#000000">&#45;</font><font color="#000000">8</font><font color="#000000">&#45;</font><font color="#000000">6</font><br/>
+<font color="#000000">输入类型：&nbsp;trustedCertEntry</font></p>
+
+<p><font color="#000000">Owner:&nbsp;CN</font><font color="#000000">=</font><font color="#000000">david</font><font color="#000000">,</font><font color="#000000">&nbsp;OU</font><font color="#000000">=</font>SpringSide<font color="#000000">,</font><font color="#000000">&nbsp;O</font><font color="#000000">=</font><font color="#000000">org</font><font color="#000000">,</font><font color="#000000">&nbsp;L</font><font color="#000000">=</font><font color="#000000">gz</font><font color="#000000">,</font><font color="#000000">&nbsp;ST</font><font color="#000000">=</font><font color="#000000">gd</font><font color="#000000">,</font><font color="#000000">&nbsp;C</font><font color="#000000">=</font><font color="#000000">cn</font><br/>
+<font color="#000000">发照者：&nbsp;CN</font><font color="#000000">=</font><font color="#000000">david</font><font color="#000000">,</font><font color="#000000">&nbsp;OU</font><font color="#000000">=</font>SpringSide<font color="#000000">,</font><font color="#000000">&nbsp;O</font><font color="#000000">=</font><font color="#000000">org</font><font color="#000000">,</font><font color="#000000">&nbsp;L</font><font color="#000000">=</font><font color="#000000">gz</font><font color="#000000">,</font><font color="#000000">&nbsp;ST</font><font color="#000000">=</font><font color="#000000">gd</font><font color="#000000">,</font><font color="#000000">&nbsp;C</font><font color="#000000">=</font><font color="#000000">cn</font><br/>
+<font color="#000000">序号：&nbsp;44d4cdcd</font><br/>
+<font color="#000000">有效期间：&nbsp;Sun&nbsp;Aug&nbsp;</font><font color="#000000">06</font><font color="#000000">&nbsp;</font><font color="#000000">00</font><font color="#000000">:</font><font color="#000000">56</font><font color="#000000">:</font><font color="#000000">45</font><font color="#000000">&nbsp;CST&nbsp;</font><font color="#000000">2006</font><font color="#000000">&nbsp;至：&nbsp;Mon&nbsp;Aug&nbsp;</font><font color="#000000">06</font><font color="#000000">&nbsp;</font><font color="#000000">00</font><font color="#000000">:</font><font color="#000000">56</font><font color="#000000">:</font><font color="#000000">45</font><font color="#000000">&nbsp;CST&nbsp;</font><font color="#000000">2007</font><br/>
+<font color="#000000">认证指纹：</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MD5：&nbsp;&nbsp;CF:</font><font color="#000000">97</font><font color="#000000">:</font><font color="#000000">13</font><font color="#000000">:0C:</font><font color="#000000">70</font><font color="#000000"><img class="emoticon" src="./icons/emoticons/biggrin.gif" height="20" width="20" align="absmiddle" alt="" border="0"/>0:4D:B6:B4:</font><font color="#000000">27</font><font color="#000000">:0F:1A:0B:CF<img class="emoticon" src="./icons/emoticons/biggrin.gif" height="20" width="20" align="absmiddle" alt="" border="0"/>9:F2</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHA1：&nbsp;8E:8E:E8:BC:</font><font color="#000000">64</font><font color="#000000">:</font><font color="#000000">39</font><font color="#000000">:C8:</font><font color="#000000">43</font><font color="#000000">:E4:F7:1B:3B:CE:</font><font color="#000000">48</font><font color="#000000">:1D:6B:A0:2B:</font><font color="#000000">58</font><font color="#000000">:B5</font><br/>
+第五，新版本SpringSide需要<br/>
+<a href="http://www.bouncycastle.org/download/bcprov-jdk15-133.jar" title="Visit page outside Confluence">http://www.bouncycastle.org/download/bcprov-jdk15-133.jar</a><br/>
+并且要配置java.security<br/>
+另外,还要使用jdk加密增强策略<br/>
+<a href="http://www.blogjava.net/openssl/archive/2006/03/08/34381.html" title="Visit page outside Confluence">http://www.blogjava.net/openssl/archive/2006/03/08/34381.html</a></p>
+
+<p>用户要使用WSS4J，需要配置Bouncycastle这个SecurityProvider，否则<br/>
+运行Enc模式的XFire认证的时候，会抛出异常：<br/>
+<b>org.apache.ws.security.WSSecurityException: An unsupported signature or encryption algorithm was used unsupported key</b><br/>
+配合java.security也是非常简单:<br/>
+在最后加入BouncycastleProvider。<br/>
+security.provider.1=sun.security.provider.Sun<br/>
+security.provider.2=com.sun.net.ssl.internal.ssl.Provider<br/>
+security.provider.3=com.sun.rsajca.Provider<br/>
+security.provider.4=com.sun.crypto.provider.SunJCE<br/>
+security.provider.5=sun.security.jgss.SunProvider<br/>
+<font color="#0000ff">security.provider.6=org.bouncycastle.jce.provider.BouncyCastleProvider</font></p>
+
+<p><font color="#ff1493"><b>[WebService Client端配置]</b></font><br/>
+<font color="#000000">1，Encrypt模式的Client是在客户端用david的公钥加密Soap里面的usernameToken，然后发送到Web服务，Web服务用david的私钥来验证。这种模式需要客户端预先知道服务器端的公钥。</font></p>
+
+<p><font color="#000000">在Encrypt模式中，需要这样配置ClientHandler：</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Service&nbsp;serviceModel&nbsp;</font><font color="#000000">=</font><font color="#000000">&nbsp;</font><font color="#0000ff">new</font><font color="#000000">&nbsp;ObjectServiceFactory().create(BookServiceWSS4JEnc.</font><font color="#0000ff">class</font><font color="#000000">);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XFireProxyFactory&nbsp;factory&nbsp;</font><font color="#000000">=</font><font color="#000000">&nbsp;</font><font color="#0000ff">new</font><font color="#000000">&nbsp;XFireProxyFactory(getXFire());</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BookService&nbsp;service&nbsp;</font><font color="#000000">=</font><font color="#000000">&nbsp;(BookService)&nbsp;factory.create(serviceModel,&nbsp;</font><font color="#000000">"</font><font color="#000000">xfire.local://BookServiceWSS4JEnc</font><font color="#000000">"</font><font color="#000000">);</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Client&nbsp;client&nbsp;</font><font color="#000000">=</font><font color="#000000">&nbsp;((XFireProxy)&nbsp;Proxy.getInvocationHandler(service)).getClient();</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">//</font><font color="#008000">挂上WSS4JOutHandler，提供认证</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client.addOutHandler(</font><font color="#0000ff">new</font><font color="#000000">&nbsp;DOMOutHandler());</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Properties&nbsp;properties&nbsp;</font><font color="#000000">=</font><font color="#000000">&nbsp;</font><font color="#0000ff">new</font><font color="#000000">&nbsp;Properties();</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configureOutProperties(properties);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client.addOutHandler(</font><font color="#0000ff">new</font><font color="#000000">&nbsp;WSS4JOutHandler(properties));</font></p>
+
+<p><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;list&nbsp;</font><font color="#000000">=</font><font color="#000000">&nbsp;service.getAllCategorys();</font><br/>
+<font color="#000000">configureOutProperties函数负责指定Client使用何种安全策略，没错，使用outsecurity_enc.properties，这个properties是跟Server端的insecurity_enc.properties一起使用的。</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">protected</font><font color="#000000">&nbsp;</font><font color="#0000ff">void</font><font color="#000000">&nbsp;configureOutProperties(Properties&nbsp;config)&nbsp;{</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config.setProperty(WSHandlerConstants.ACTION,&nbsp;WSHandlerConstants.ENCRYPT);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config.setProperty(WSHandlerConstants.USER,&nbsp;</font><font color="#000000">"</font><font color="#000000">david</font><font color="#000000">"</font><font color="#000000">);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">//</font><font color="#008000">config.setProperty(WSHandlerConstants.PW_CALLBACK_CLASS,&nbsp;PasswordHandler.class.getName());</font><br/>
+<font color="#008000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">//</font><font color="#008000">Configuration&nbsp;of&nbsp;public&nbsp;key&nbsp;used&nbsp;to&nbsp;encrypt&nbsp;message&nbsp;goes&nbsp;to&nbsp;properties&nbsp;file.</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config.setProperty(WSHandlerConstants.ENC_PROP_FILE,</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000">"</font><font color="#000000">org/springside/bookstore/plugins/xfire/outsecurity_enc.properties</font><font color="#000000">"</font><font color="#000000">);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}</font></p>
+
+<p><font color="#000000">outsecurity_enc.properties：</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.provider</font><font color="#000000">=</font><font color="#000000">org.apache.ws.security.components.crypto.Merlin</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.type</font><font color="#000000">=</font><font color="#000000">jks</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.password</font><font color="#000000">=</font>SpringSide<br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.alias</font><font color="#000000">=</font><font color="#000000">david</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.file</font><font color="#000000">=</font><font color="#000000">org/springside/bookstore/plugins/xfire/wss4j/springside_public.jks</font></p>
+
+<p><font color="#000000">2, Sign模式的Client同样也是很简单，这种模式是Client端用自己的私钥为usernameToken签名，服务器端用Client的公钥来验证签名，因此，服务器端需要预先知道客户端的公钥。</font><br/>
+<font color="#000000">对应于Encrypt模式，这里的configureOutProperties需要这样来配置：</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000ff">protected</font><font color="#000000">&nbsp;</font><font color="#0000ff">void</font><font color="#000000">&nbsp;configureOutProperties(Properties&nbsp;properties)&nbsp;{</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties.setProperty(WSHandlerConstants.ACTION,WSHandlerConstants.SIGNATURE);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">//</font><font color="#008000">&nbsp;User&nbsp;in&nbsp;keystore</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties.setProperty(WSHandlerConstants.USER,&nbsp;</font><font color="#000000">"</font><font color="#000000">david</font><font color="#000000">"</font><font color="#000000">);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">//</font><font color="#008000">&nbsp;This&nbsp;callback&nbsp;is&nbsp;used&nbsp;to&nbsp;specify&nbsp;password&nbsp;for&nbsp;given&nbsp;user&nbsp;for&nbsp;keystore</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties.setProperty(WSHandlerConstants.PW_CALLBACK_CLASS,&nbsp;PasswordHandler.</font><font color="#0000ff">class</font><font color="#000000">.getName());</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#008000">//</font><font color="#008000">&nbsp;Configuration&nbsp;for&nbsp;accessing&nbsp;private&nbsp;key&nbsp;in&nbsp;keystore</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties.setProperty(WSHandlerConstants.SIG_PROP_FILE,</font><font color="#000000">"</font><font color="#000000">org/springside/bookstore/plugins/xfire/outsecurity_sign.properties</font><font color="#000000">"</font><font color="#000000">);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties.setProperty(WSHandlerConstants.SIG_KEY_ID,</font><font color="#000000">"</font><font color="#000000">IssuerSerial</font><font color="#000000">"</font><font color="#000000">);</font><br/>
+<font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;}</font></p>
+
+
+<p><font color="#000000">outsecurity_sign.properties：</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.provider</font><font color="#000000">=</font><font color="#000000">org.apache.ws.security.components.crypto.Merlin</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.type</font><font color="#000000">=</font><font color="#000000">jks</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.password</font><font color="#000000">=</font>SpringSide<br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.alias.password</font><font color="#000000">=</font>SpringSide<br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.keystore.alias</font><font color="#000000">=</font><font color="#000000">david</font><br/>
+<font color="#000000">org.apache.ws.security.crypto.merlin.file</font><font color="#000000">=</font><font color="#000000">org/springside/bookstore/plugins/xfire/wss4j/springside_private.jks</font></p>
+
+<h3><a name="XFireWSS4jWebServiceSecurity-Feedback"></a>Feedback</h3>
+
+
+<h2><a name="XFireWSS4jWebServiceSecurity-%23%26nbsp%3Bre%3A%E5%AE%9E%E6%96%BDWebServiceSecurity%5CWSSecurity1.0%5C%E7%9A%84Encrypt%E5%92%8CSign%E6%A8%A1%E5%BC%8F%28XFireWSS4J%29%26nbsp%3B%26nbsp%3B%E5%9B%9E%E5%A4%8D%E5%88%A0%E9%99%A4%E8%AF%84%E8%AE%BA%26nbsp%3B%26nbsp%3B"></a>#&nbsp;re: 实施WebService Security[WS-Security1.0]的Encrypt和Sign模式(XFire+WSS4J)&nbsp;&nbsp;回复 删除评论&nbsp;&nbsp;</h2>
+
+<p>2006-08-08 09:17 by 江南白衣<br/>
+酷，XFire终于足够安全，不用再公司项目那样，靠防火墙过滤IP白名单了：）</p>
+
+<h2><a name="XFireWSS4jWebServiceSecurity-%23%26nbsp%3Bre%3A%E5%AE%9E%E6%96%BDWebServiceSecurity%5CWSSecurity1.0%5C%E7%9A%84Encrypt%E5%92%8CSign%E6%A8%A1%E5%BC%8F%28XFireWSS4J%29%26nbsp%3B%26nbsp%3B%E5%9B%9E%E5%A4%8D%E5%88%A0%E9%99%A4%E8%AF%84%E8%AE%BA%26nbsp%3B%26nbsp%3B%E4%BF%AE%E6%94%B9%E8%AF%84%E8%AE%BA"></a>#&nbsp;re: 实施WebService Security[WS-Security1.0]的Encrypt和Sign模式(XFire+WSS4J)&nbsp;&nbsp;回复 删除评论&nbsp;&nbsp;修改评论</h2>
+
+<p>2006-08-08 11:40 by david.turing<br/>
+理论上，Sign模式适合分发型的Webservice结构，举一个例子，Microsoft公司有一个能够计算股市走势的WebService，他当然不希望授权才能访问，于是，他要求调用方为每个Soap请求签名，这样他可以确保购买了服务的人才能享受此服务</p>
+
+<p>Encrypt模式适合集中式的WebService结构，举一个例子，中国最高人民检察院提供一个WebService服务，它希望民间团体能够向政府举证揭发贪污腐败的官员，于是，他公布了自己的keystore，其中包含了私钥，于是，民间团体可以通过Encrypt模式加密一些比较私隐的信息(Username)，Only检察院才能解密(因为他们有私钥)。</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -1,0 +1,143 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Source Repository</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="SourceRepository-WebAccess"></a>Web Access</h2>
+
+<p>Web access for the SVN repository can be found at <a href="http://svn.xfire.codehaus.org/" title="Visit page outside Confluence">http://svn.xfire.codehaus.org/</a></p>
+
+<h2><a name="SourceRepository-AnonymousSVN"></a>Anonymous SVN</h2>
+
+<p>XFire's SVN repository can be checked out with the following instruction set:</p>
+
+<p>svn checkout <a href="http://svn.codehaus.org/xfire/trunk/xfire" title="Visit page outside Confluence">http://svn.codehaus.org/xfire/trunk/xfire</a></p>
+
+<h2><a name="SourceRepository-BuildingXFire"></a>Building XFire</h2>
+
+<ol>
+	<li>Download and install <a href="http://maven.apache.org" title="Visit page outside Confluence">Maven 2.x</a> if you don't have it already.</li>
+	<li>Grab the XFire code from SVN</li>
+	<li>"cd xfire; mvn install"</li>
+</ol>
+
+
+<p>Jars will result in the xfire-*/target directories ( to build all modules you must use java 5 ) .</p>
+
+<h2><a name="SourceRepository-DeveloperSVN"></a>Developer SVN</h2>
+
+<p>XFire's SVN repository can be checked out like so with HTTPS:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">svn --username=jane --password=foo checkout https:<span class="code-comment">//svn.codehaus.org/xfire/trunk/xfire</span></pre>
+</div></div>
+<p>Or from SVN+SSH like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">svn checkout svn+ssh:<span class="code-comment">//username@svn.codehaus.org/xfire/trunk/xfire</span></pre>
+</div></div>
+<p>You will probably need to use ssh-agent or pagent for this to work.</p>
+
+<h2><a name="SourceRepository-DevelopingXFirewithEclipse"></a>Developing XFire with Eclipse</h2>
+
+<p>Since Eclipse doesn't handle multi module projects too well, you need to do some magic steps to be able to work on all the XFire modules in Eclipse...</p>
+
+<p>1. Check out XFire from SVN by hand into a directory that <b>isn't</b> in your workspace.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ mvn scm:checkout -DconnectionUrl=scm:svn:http:<span class="code-comment">//svn.codehaus.org/xfire/trunk/xfire -DcheckoutDirectory=xfire</span></pre>
+</div></div>
+<p>Or</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">svn checkout http:<span class="code-comment">//svn.codehaus.org/xfire/trunk/xfire</span></pre>
+</div></div>
+<p>Check this out to a directory <b>outside</b> your eclipse workspace - doesn't matter where.</p>
+
+<p>2. Generate eclipse files for sub modules</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ cd xfire
+$ mvn eclipse:eclipse</pre>
+</div></div>
+<p>&nbsp;and add maven repo location to eclipse environment<br/>
+&nbsp;</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ mvn eclipse:add-maven-repo -Declipse.workspace=/path/to/my/eclipse/workspace</pre>
+</div></div>
+<p>3. Import the projects. Goto File-&gt;Import, the select "Existing Project into workspace". Select the directory where you put XFire and then the projects should show up in the list below. Select the modules you want to work on and import them into your workspace. You can start with following modules : xfire-aegis, xfire-core, xfire-spring, xfire-annotations ( you can remove dependency on xfire-xmlbeans from xfire-spring project or imprt xfire-xmlbeans as well). If you imported xfire-spring project, you must run</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">$ cd xfire-spring
+$ mvn <span class="code-keyword">package</span></pre>
+</div></div>
+<p>&nbsp;<br/>
+to generate xfire configuration file ( if you skip this step, testcases will fail because xfire won't be able to parse its configuration ).</p>
+
+<p>4. If you want to use Eclipse's internal SVN functionality, you must install <a href="http://subclipse.tigris.org/" title="Visit page outside Confluence">Subclipse</a>.  Then, right click on one of the modules and select Team-&gt;Share Project. Eclipse should then pick up the SVN information.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

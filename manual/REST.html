@@ -1,0 +1,191 @@
+<html>
+    <head>
+        <title>Codehaus XFire : REST</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This page is for brainstorming how REST support should work in XFire (or possibly a new project if xfire ends up being too heavy weight).</p>
+
+<h1><a name="REST-Dan%27sFirstTake"></a>Dan's First Take</h1>
+<h2><a name="REST-CreatingaService"></a>Creating a Service</h2>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class CustomerService {
+  @RestMethod(methods={HttpMethod.GET}) 
+  Customer getCustomer(<span class="code-object">String</span> id);
+
+  @RestMethod(methods={HttpMethod.DELETE}) 
+  void deleteCustomer(<span class="code-object">String</span> id);
+
+  @RestMethod(methods={HttpMethod.POST}) 
+  @WebResult(name=<span class="code-quote">"customerId"</span>)
+  <span class="code-object">String</span> addCustomer(Customer customer); 
+
+  @RestMethod(method={HttpMethod.PUT})
+  void updateCustomer(Customer customer);
+}</pre>
+</div></div>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">enum</span> HttpMethod {
+    DELETE,
+    GET,
+    PUT,
+    POST
+}</pre>
+</div></div>
+
+<h2><a name="REST-Mappingdatatomethodparameters"></a>Mapping data to method parameters</h2>
+<p>The information to invoke our service could come from a number of places:</p>
+<ul>
+	<li>URI Path Info
+	<ul>
+		<li>@Path(2) - would select the first query parameter - i.e. "123" in "/customer/123"</li>
+		<li>@QueryParameter("customerId") - would select the query parameter with the name "customerId".</li>
+		<li>@RegexPath("someregexexpression") - would select some stuff from the uri</li>
+	</ul>
+	</li>
+	<li>HTTP Headers
+	<ul>
+		<li>@HttpHeader("customerId") - would select the HTTP header with the name "customerId"</li>
+	</ul>
+	</li>
+	<li>XML in a POST/PUT method
+	<ul>
+		<li>This can be done with JAXB, XMLBeans, etc.</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h2><a name="REST-MappingtheOperationstoURIs"></a>Mapping the Operations to URIs</h2>
+<p>This could be done in the interface a couple different ways. At the class level:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">@RestService(uri=<span class="code-quote">"/customer/"</span>)
+<span class="code-keyword">public</span> class CustomerService {
+  ...
+}</pre>
+</div></div>
+
+<p>At the method level</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class CustomerService {
+  @RestMethod(methods={HttpMethod.GET}, uri=<span class="code-quote">"/customer"</span>) 
+  Customer getCustomer(<span class="code-object">String</span> id);
+...
+}</pre>
+</div></div>
+
+<p>At the service registration level:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">CustomerService customerService = ...;
+ServiceRegistry registry = ...;
+registry.register(<span class="code-quote">"/internal-customers"</span>, customerService);
+registry.register(<span class="code-quote">"/external-customers"</span>, anotherCustomerService);</pre>
+</div></div>
+
+<h2><a name="REST-Questions"></a>Questions</h2>
+<ul>
+	<li>What is the best way to map operations to URIs?</li>
+	<li>Is there a good syntax to map URI fragments to method parameters</li>
+	<li>What about MIME?</li>
+	<li>Should this framework allow non XML responses? i.e. could it return a JPEG? - the bigger question is can XFire support that....</li>
+</ul>
+
+
+				    
+                                            <div class="tabletitle">
+                            <a name="comments">Comments:</a>
+                        </div>
+
+                        <table border="0" width="100%">
+                                                        <tr>
+                                <td >
+                                    <a name="comment-52538"></a>
+                                    <font class="smallfont"><p>I've been thinking of this same concept in <a href="http://servicemix.org/" title="Visit page outside Confluence">ServiceMix</a> to allow for direct exposure of endpoints via HTTP methods (i.e., mapping endpoints to HTTP methods). I figured that the endpoint name could be used as the endpoint portion of the URI. I'd really like to see these two concepts come together because I think that ServiceMix would then be able to support REST in a manner that is sufficiently simple but still powerful for users. </p></font>
+                                    <div align="left" class="smallfont" style="color: #666666; width: 98%; margin-bottom: 10px;">
+                                        <img src="icons/comment_16.gif" height="16" width="16" border="0" align="absmiddle"/>
+                                        Posted by bsnyder at May 22, 2006 15:27
+                                    </div>
+                                </td>
+                            </tr>
+                                                        <tr>
+                                <td  style="border-top: 1px dashed #666666">
+                                    <a name="comment-52542"></a>
+                                    <font class="smallfont"><p>Yeah, that sounds like a good idea. Hiram <a href="http://blogbucket.blogspot.com/2006/05/mapping-beans-to-rest.html" title="Visit page outside Confluence">echoed similar sentiments</a> about method names.</p></font>
+                                    <div align="left" class="smallfont" style="color: #666666; width: 98%; margin-bottom: 10px;">
+                                        <img src="icons/comment_16.gif" height="16" width="16" border="0" align="absmiddle"/>
+                                        Posted by dandiep at May 22, 2006 19:20
+                                    </div>
+                                </td>
+                            </tr>
+                                                    </table>
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

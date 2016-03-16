@@ -1,0 +1,305 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Plexus</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>A great feature of XFire is the integration with the <a href="http://docs.codehaus.org/display/PLEXUS/Home" title="Home">Plexus</a> container.</p>
+
+<h2><a name="Plexus-ExposingComponentsasServices"></a>Exposing Components as Services</h2>
+<p>To have XFire expose your component as a service is fairly easy.  If XFire sees that the &lt;serviceClass/&gt; defined in your configuration is an XFire component, it will use that component by doing a lookup() instead of trying to instantiate that object directly via the constructor.</p>
+
+<h2><a name="Plexus-ConfiguringServicesviaPlexus"></a>Configuring Services via Plexus</h2>
+<p>Instead of a services.xml file, you can use Plexus configurations to configure your components. The following example will show a small "Hello World" application that exposes a service using XFire and Plexus and is built using <a href="http://maven.apache.org/maven2/" title="Visit page outside Confluence">Maven2</a>, so you should install M2 before you start, because it will take the load of dependency handling from you.</p>
+
+<h3><a name="Plexus-Overview"></a>Overview</h3>
+<p>For the Hello World project you need following directory layout:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre> 
+helloworld/
+|-- helloworld-application
+|   |-- pom.xml
+|   `-- src
+|       |-- main
+|       |   |-- java
+|       |   |   `-- org
+|       |   |       `-- codehaus
+|       |   |           `-- xfire
+|       |   |               `-- helloworld
+|       |   |                   |-- DefaultHelloWorldService.java
+|       |   |                   `-- HelloWorldService.java
+|       |   `-- resources
+|       |       `-- META-INF
+|       |           `-- plexus
+|       |               `-- components.xml
+|       `-- test
+|           `-- java
+|-- helloworld-web
+|   |-- pom.xml
+|   `-- src
+|       `-- main
+|           `-- webapp
+|               `-- WEB-INF
+|                   |-- plexus.properties
+|                   |-- plexus.xml
+|                   `-- web.xml
+`-- pom.xml
+
+</pre>
+</div></div> 
+
+<p>As you see, the project is split up into two subprojects, helloworld-application which includes the service implementation and configuration and helloworld-web, which is only the web-application. Let's start with the different project descriptors.</p>
+
+<h3><a name="Plexus-Projectdescriptors"></a>Project descriptors</h3>
+
+<p>The root project is made up of two modules.</p>
+<div class="code"><div class="codeHeader"><b>helloworld/pom.xml</b></div><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;project&gt;</span>
+	<span class="code-tag">&lt;modelVersion&gt;</span>4.0.0<span class="code-tag">&lt;/modelVersion&gt;</span>
+	<span class="code-tag">&lt;groupId&gt;</span>org.codehaus.xfire<span class="code-tag">&lt;/groupId&gt;</span>
+	<span class="code-tag">&lt;version&gt;</span>1.0<span class="code-tag">&lt;/version&gt;</span>
+	<span class="code-tag">&lt;artifactId&gt;</span>helloworld<span class="code-tag">&lt;/artifactId&gt;</span>
+	<span class="code-tag">&lt;packaging&gt;</span>pom<span class="code-tag">&lt;/packaging&gt;</span>
+	<span class="code-tag">&lt;modules&gt;</span>
+    <span class="code-tag">&lt;module&gt;</span>helloworld-application<span class="code-tag">&lt;/module&gt;</span>
+    <span class="code-tag">&lt;module&gt;</span>helloworld-web<span class="code-tag">&lt;/module&gt;</span>
+  <span class="code-tag">&lt;/modules&gt;</span>
+<span class="code-tag">&lt;/project&gt;</span></pre>
+</div></div>
+
+
+<p>The web-app's project object model looks like this:</p>
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-application/pom.xml</b></div><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;project&gt;</span>
+	<span class="code-tag">&lt;modelVersion&gt;</span>4.0.0<span class="code-tag">&lt;/modelVersion&gt;</span>
+  <span class="code-tag">&lt;parent&gt;</span>
+    <span class="code-tag">&lt;groupId&gt;</span>org.codehaus.xfire<span class="code-tag">&lt;/groupId&gt;</span>
+		<span class="code-tag">&lt;version&gt;</span>1.0<span class="code-tag">&lt;/version&gt;</span>
+		<span class="code-tag">&lt;artifactId&gt;</span>helloworld<span class="code-tag">&lt;/artifactId&gt;</span>
+  <span class="code-tag">&lt;/parent&gt;</span>
+	<span class="code-tag">&lt;artifactId&gt;</span>helloworld-application<span class="code-tag">&lt;/artifactId&gt;</span>
+	<span class="code-tag">&lt;packaging&gt;</span>jar<span class="code-tag">&lt;/packaging&gt;</span>
+  <span class="code-tag">&lt;dependencies&gt;</span>
+          <span class="code-tag">&lt;dependency&gt;</span>
+                  <span class="code-tag">&lt;groupId&gt;</span>org.codehaus.xfire<span class="code-tag">&lt;/groupId&gt;</span>
+                  <span class="code-tag">&lt;artifactId&gt;</span>xfire-plexus<span class="code-tag">&lt;/artifactId&gt;</span>
+                  <span class="code-tag">&lt;version&gt;</span>1.0-SNAPSHOT<span class="code-tag">&lt;/version&gt;</span>
+          <span class="code-tag">&lt;/dependency&gt;</span>
+          <span class="code-tag">&lt;dependency&gt;</span>
+                  <span class="code-tag">&lt;groupId&gt;</span>plexus<span class="code-tag">&lt;/groupId&gt;</span>
+                  <span class="code-tag">&lt;artifactId&gt;</span>plexus-container-default<span class="code-tag">&lt;/artifactId&gt;</span>
+                  <span class="code-tag">&lt;version&gt;</span>1.0-alpha-5-SNAPSHOT<span class="code-tag">&lt;/version&gt;</span>
+          <span class="code-tag">&lt;/dependency&gt;</span>
+          <span class="code-tag">&lt;dependency&gt;</span>
+                  <span class="code-tag">&lt;groupId&gt;</span>plexus<span class="code-tag">&lt;/groupId&gt;</span>
+                  <span class="code-tag">&lt;artifactId&gt;</span>plexus-servlet<span class="code-tag">&lt;/artifactId&gt;</span>
+                  <span class="code-tag">&lt;version&gt;</span>1.0-beta-3-SNAPSHOT<span class="code-tag">&lt;/version&gt;</span>
+          <span class="code-tag">&lt;/dependency&gt;</span>
+  <span class="code-tag">&lt;/dependencies&gt;</span>
+<span class="code-tag">&lt;/project&gt;</span></pre>
+</div></div>
+
+<p>This subproject extends the parent project and depends on the xfire-plexus module. Normally you wouldn't need to specify the other dependencies, as Maven2 can handle transitive dependencies, but using newer versions of plexus-container-default and plexus-servlet generally leads to better results for me.</p>
+
+<p>The web-application module depends on the application module and extends the parent project:</p>
+
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-web/pom.xml</b></div><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;project&gt;</span>
+	<span class="code-tag">&lt;modelVersion&gt;</span>4.0.0<span class="code-tag">&lt;/modelVersion&gt;</span>
+	<span class="code-tag">&lt;parent&gt;</span>
+    <span class="code-tag">&lt;groupId&gt;</span>org.codehaus.xfire<span class="code-tag">&lt;/groupId&gt;</span>
+		<span class="code-tag">&lt;version&gt;</span>1.0<span class="code-tag">&lt;/version&gt;</span>
+		<span class="code-tag">&lt;artifactId&gt;</span>helloworld<span class="code-tag">&lt;/artifactId&gt;</span>
+  <span class="code-tag">&lt;/parent&gt;</span>
+	<span class="code-tag">&lt;artifactId&gt;</span>helloworld-web<span class="code-tag">&lt;/artifactId&gt;</span>
+	<span class="code-tag">&lt;packaging&gt;</span>war<span class="code-tag">&lt;/packaging&gt;</span>
+	<span class="code-tag">&lt;dependencies&gt;</span>
+		<span class="code-tag">&lt;dependency&gt;</span>
+			<span class="code-tag">&lt;groupId&gt;</span>org.codehaus.xfire<span class="code-tag">&lt;/groupId&gt;</span>
+			<span class="code-tag">&lt;artifactId&gt;</span>helloworld-application<span class="code-tag">&lt;/artifactId&gt;</span>
+			<span class="code-tag">&lt;version&gt;</span>1.0<span class="code-tag">&lt;/version&gt;</span>
+		<span class="code-tag">&lt;/dependency&gt;</span>
+	<span class="code-tag">&lt;/dependencies&gt;</span>
+	<span class="code-tag">&lt;build&gt;</span>
+    <span class="code-tag">&lt;finalName&gt;</span>helloworld<span class="code-tag">&lt;/finalName&gt;</span>
+  <span class="code-tag">&lt;/build&gt;</span>
+<span class="code-tag">&lt;/project&gt;</span></pre>
+</div></div>
+
+<p>Here we don't need to specify any dependencies, as Maven2 already knows them from the helloworld-application module.</p>
+
+<h3><a name="Plexus-TheWebServicesandtheirconfiguration"></a>The Web Services and their configuration</h3>
+<p>The first step is to define an interface for the Hello World service. This interface offers only one method for now:</p>
+
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-application/src/main/java/org/codehaus/xfire/helloworld/HelloWorldService.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.helloworld;
+
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> HelloWorldService {
+  <span class="code-object">String</span> ROLE = HelloWorldService.class.getName();
+  
+  <span class="code-object">String</span> helloWorld();
+}</pre>
+</div></div>
+
+<p>The role string in the interface is used later by plexus in order to access the component. An implementation of HelloWorldService is neccessary for execution of the webservice.</p>
+
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-application/src/main/java/org/codehaus/xfire/helloworld/DefaultHelloWorldService.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.helloworld;
+
+<span class="code-keyword">public</span> class DefaultHelloWorldService <span class="code-keyword">implements</span> HelloWorldService {
+  <span class="code-keyword">public</span> <span class="code-object">String</span> helloWorld() {
+    <span class="code-keyword">return</span> <span class="code-quote">"Hello World"</span>;
+  }
+}</pre>
+</div></div>
+
+<p>In the configuration section we define the mapping of service interface and service implementation as well </p>
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-application/src/main/resources/META-INF/plexus/components.xml</b></div><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;component-set&gt;</span>
+	<span class="code-tag">&lt;components&gt;</span>
+		<span class="code-tag">&lt;component&gt;</span>
+			<span class="code-tag">&lt;role&gt;</span>org.codehaus.xfire.helloworld.HelloWorldService<span class="code-tag">&lt;/role&gt;</span>
+			<span class="code-tag">&lt;implementation&gt;</span>org.codehaus.xfire.helloworld.DefaultHelloWorldService<span class="code-tag">&lt;/implementation&gt;</span>
+		<span class="code-tag">&lt;/component&gt;</span>
+		<span class="code-tag">&lt;component&gt;</span>
+			<span class="code-tag">&lt;role&gt;</span>org.codehaus.xfire.plexus.config.ConfigurationService<span class="code-tag">&lt;/role&gt;</span>
+			<span class="code-tag">&lt;implementation&gt;</span>org.codehaus.xfire.plexus.config.DefaultConfigurationService<span class="code-tag">&lt;/implementation&gt;</span>
+			<span class="code-tag">&lt;configuration&gt;</span>
+				<span class="code-tag">&lt;services&gt;</span>
+					<span class="code-tag">&lt;service&gt;</span>
+						<span class="code-tag">&lt;name&gt;</span>HelloWorld<span class="code-tag">&lt;/name&gt;</span>
+						<span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/helloworld<span class="code-tag">&lt;/namespace&gt;</span>
+						<span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.helloworld.HelloWorldService<span class="code-tag">&lt;/serviceClass&gt;</span>
+					<span class="code-tag">&lt;/service&gt;</span>
+				<span class="code-tag">&lt;/services&gt;</span>
+			<span class="code-tag">&lt;/configuration&gt;</span>
+			<span class="code-tag">&lt;requirements&gt;</span>
+				<span class="code-tag">&lt;requirement&gt;</span>
+					<span class="code-tag">&lt;role&gt;</span>org.codehaus.xfire.plexus.config.Configurator<span class="code-tag">&lt;/role&gt;</span>
+					<span class="code-tag">&lt;role-hint&gt;</span>annotation<span class="code-tag">&lt;/role-hint&gt;</span>
+				<span class="code-tag">&lt;/requirement&gt;</span>
+			<span class="code-tag">&lt;/requirements&gt;</span>
+		<span class="code-tag">&lt;/component&gt;</span>
+	<span class="code-tag">&lt;/components&gt;</span>
+<span class="code-tag">&lt;/component-set&gt;</span></pre>
+</div></div>
+<p>The second component definition is used for defining which components to expose as web services. In the configuration element you specify a service element for every service to expose. A service needs a name, a namespace-URI and a serviceClass. If this class is the role of a component defined elsewhere, plexus will chose the right implementation once the service is requested.</p>
+
+<h3><a name="Plexus-Thewebapplication"></a>The web application</h3>
+
+<p>This module need a web.xml file first which loads the PlexusServlet and defines the XFire-Servlet. You can later on access your service at <a href="http://localhost:8080/helloworld/services/Hello" title="Visit page outside Confluence">http://localhost:8080/helloworld/services/Hello</a></p>
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-web/src/main/webapp/WEB-INF/web.xml</b></div><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+&lt;web-app xmlns=<span class="code-quote">"http://java.sun.com/xml/ns/j2ee"</span>
+		<span class="code-keyword">xmlns:xsi</span>=<span class="code-quote">"http://www.w3.org/2001/XMLSchema-instance"</span>
+		xsi:schemaLocation=<span class="code-quote">"http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"</span>
+		version=<span class="code-quote">"2.4"</span>&gt;
+	<span class="code-tag">&lt;display-name&gt;</span>Hello World Service<span class="code-tag">&lt;/display-name&gt;</span>
+	<span class="code-tag">&lt;listener&gt;</span>
+		<span class="code-tag">&lt;listener-class&gt;</span>org.codehaus.plexus.servlet.PlexusServletContextListener<span class="code-tag">&lt;/listener-class&gt;</span>
+	<span class="code-tag">&lt;/listener&gt;</span>
+	<span class="code-tag">&lt;servlet&gt;</span>
+		<span class="code-tag">&lt;servlet-name&gt;</span>XFire<span class="code-tag">&lt;/servlet-name&gt;</span>
+		<span class="code-tag">&lt;display-name&gt;</span>XFire Servlet<span class="code-tag">&lt;/display-name&gt;</span>
+		<span class="code-tag">&lt;servlet-class&gt;</span>
+        org.codehaus.xfire.plexus.PlexusXFireServlet
+	<span class="code-tag">&lt;/servlet-class&gt;</span>
+	<span class="code-tag">&lt;/servlet&gt;</span>
+	<span class="code-tag">&lt;servlet-mapping&gt;</span>
+		<span class="code-tag">&lt;servlet-name&gt;</span>XFire<span class="code-tag">&lt;/servlet-name&gt;</span>
+		<span class="code-tag">&lt;url-pattern&gt;</span>/servlet/XFireServlet/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+	<span class="code-tag">&lt;/servlet-mapping&gt;</span>
+	<span class="code-tag">&lt;servlet-mapping&gt;</span>
+		<span class="code-tag">&lt;servlet-name&gt;</span>XFire<span class="code-tag">&lt;/servlet-name&gt;</span>
+		<span class="code-tag">&lt;url-pattern&gt;</span>/services/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+	<span class="code-tag">&lt;/servlet-mapping&gt;</span>
+<span class="code-tag">&lt;/web-app&gt;</span></pre>
+</div></div>
+
+<p>Finally, the plexus.xml defines which components should be loaded at web-application startup. This is neccessary for loading the components.xml and the enclosed service definitions.</p>
+<div class="code"><div class="codeHeader"><b>helloworld/helloworld-web/src/main/webapp/WEB-INF/plexus.xml</b></div><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;plexus&gt;</span>
+	<span class="code-tag">&lt;load-on-start&gt;</span>
+		<span class="code-tag">&lt;component&gt;</span>
+			<span class="code-tag">&lt;role&gt;</span>org.codehaus.xfire.plexus.config.ConfigurationService<span class="code-tag">&lt;/role&gt;</span>
+		<span class="code-tag">&lt;/component&gt;</span>
+	<span class="code-tag">&lt;/load-on-start&gt;</span>
+<span class="code-tag">&lt;/plexus&gt;</span></pre>
+</div></div>
+
+<h3><a name="Plexus-BuildingandRunning"></a>Building and Running</h3>
+
+<p>You can build the whole application by running <tt>m2 install</tt> in the root directory. After deploying <tt>helloworld/helloworld-web/target/helloworld.war</tt> to your servlet container, you can access the web service at <a href="http://localhost:8080/helloworld/services/Hello" title="Visit page outside Confluence">http://localhost:8080/helloworld/services/Hello</a> or get an WSDL service description at <a href="http://localhost:8080/helloworld/services/Hello?wsdl" title="Visit page outside Confluence">http://localhost:8080/helloworld/services/Hello?wsdl</a>.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -1,0 +1,215 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Spring Remoting</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This page outlines how to set up XFire for use via Spring's Remoting framework.</p>
+
+<h2><a name="SpringRemoting-SetuptheDispatcherServletinthe%7B%7Bweb.xml%7D%7D%3A"></a>Setup the DispatcherServlet in the <tt>web.xml</tt>:</h2>
+
+<p>You'll need to include the <a href="http://www.springframework.org/docs/api/org/springframework/web/servlet/DispatcherServlet.html" title="Visit page outside Confluence">DispatcherServlet</a> in your web.xml. Notice that it provides the locations of where your spring beans are.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;context-param&gt;</span>
+    <span class="code-tag">&lt;param-name&gt;</span>contextConfigLocation<span class="code-tag">&lt;/param-name&gt;</span>
+    <span class="code-tag">&lt;param-value&gt;</span>/WEB-INF/applicationContext.xml
+    classpath:org/codehaus/xfire/spring/xfire.xml<span class="code-tag">&lt;/param-value&gt;</span>
+<span class="code-tag">&lt;/context-param&gt;</span>
+
+<span class="code-tag">&lt;context-param&gt;</span>
+    <span class="code-tag">&lt;param-name&gt;</span>log4jConfigLocation<span class="code-tag">&lt;/param-name&gt;</span>
+    <span class="code-tag">&lt;param-value&gt;</span>/WEB-INF/log4j.properties<span class="code-tag">&lt;/param-value&gt;</span>
+<span class="code-tag">&lt;/context-param&gt;</span>
+
+<span class="code-tag">&lt;listener&gt;</span>
+    <span class="code-tag">&lt;listener-class&gt;</span>org.springframework.web.util.Log4jConfigListener<span class="code-tag">&lt;/listener-class&gt;</span>
+<span class="code-tag">&lt;/listener&gt;</span>
+
+<span class="code-tag">&lt;listener&gt;</span>
+    <span class="code-tag">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="code-tag">&lt;/listener-class&gt;</span>
+<span class="code-tag">&lt;/listener&gt;</span>
+
+<span class="code-tag">&lt;servlet&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>xfire<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;servlet-class&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="code-tag">&lt;/servlet-class&gt;</span>
+<span class="code-tag">&lt;/servlet&gt;</span>
+
+<span class="code-tag">&lt;servlet-mapping&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>xfire<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;url-pattern&gt;</span>/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+<span class="code-tag">&lt;/servlet-mapping&gt;</span></pre>
+</div></div>
+<p>Notice how we're including /org/codehaus/xfire/spring/xfire.xml off the classpath. This contains some standard bean definitions for the TransportManager, ServiceRegistry and some simple ServiceFactorys.</p>
+
+<h2><a name="SpringRemoting-RemoteExporter"></a>Remote Exporter</h2>
+
+<p>When using a <a href="http://www.springframework.org/docs/api/org/springframework/remoting/support/RemoteExporter.html" title="Visit page outside Confluence">RemoteExporter</a>, you should define a service interface and (at least) one implementation of that interface.</p>
+
+<h3><a name="SpringRemoting-ServiceInterface"></a>Service Interface</h3>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.spring.example;
+
+/**
+ * Provides the service contract <span class="code-keyword">for</span> the echo service.
+ *
+ * @author &lt;a href=<span class="code-quote">"mailto:poutsma@mac.com"</span>&gt;Arjen Poutsma&lt;/a&gt;
+ */
+<span class="code-keyword">public</span> <span class="code-keyword">interface</span> Echo
+{
+    <span class="code-object">String</span> echo(<span class="code-object">String</span> in);
+}</pre>
+</div></div>
+
+<h3><a name="SpringRemoting-ServiceImplementation"></a>Service Implementation</h3>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.spring.example;
+
+/**
+ * Provides a <span class="code-keyword">default</span> implementation of the echo service <span class="code-keyword">interface</span>.
+ */
+<span class="code-keyword">public</span> class EchoImpl
+        <span class="code-keyword">implements</span> Echo
+{
+    <span class="code-keyword">public</span> <span class="code-object">String</span> echo(<span class="code-object">String</span> in)
+    {
+        <span class="code-keyword">return</span> in;
+    }
+
+}</pre>
+</div></div>
+
+<h3><a name="SpringRemoting-XFireExporter"></a>XFireExporter</h3>
+
+<p>Then, you'll need to create a exporter definition for the service you want to expose. Typically, you'll do this in the servlet context configuration file. Since the dispatcher servlet is named <tt>xfire</tt>, this file should be called <tt>xfire-servlet.xml</tt>.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bean class=<span class="code-quote">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"urlMap"</span>&gt;</span>
+        <span class="code-tag">&lt;map&gt;</span>
+            <span class="code-tag">&lt;entry key=<span class="code-quote">"/EchoService"</span>&gt;</span>
+                <span class="code-tag">&lt;ref bean=<span class="code-quote">"echo"</span>/&gt;</span>
+            <span class="code-tag">&lt;/entry&gt;</span>
+        <span class="code-tag">&lt;/map&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+<span class="code-tag">&lt;/bean&gt;</span>
+
+<span class="code-tag"><span class="code-comment">&lt;!-- Declare a parent bean with all properties common to both services --&gt;</span></span>
+<span class="code-tag">&lt;bean id=<span class="code-quote">"echo"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span>&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span>&gt;</span>
+        <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.serviceFactory"</span>/&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"xfire"</span>&gt;</span>
+        <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire"</span>/&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceBean"</span>&gt;</span>
+        <span class="code-tag">&lt;ref bean=<span class="code-quote">"echoBean"</span>/&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span>&gt;</span>
+        <span class="code-tag">&lt;value&gt;</span>org.codehaus.xfire.spring.example.Echo<span class="code-tag">&lt;/value&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+<span class="code-tag">&lt;/bean&gt;</span></pre>
+</div></div>
+<p>Thus, the methods defined in the <tt>Echo</tt> interface are exposed at the path <tt>/EchoService</tt>, backed by the <tt>EchoImpl</tt> bean.</p>
+
+<p>&nbsp;The <tt>EchoImpl</tt> bean should be defined as follows, in <tt>applicationContext.xml</tt>:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bean id=<span class="code-quote">"echoBean"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.example.EchoImpl"</span>/&gt;</span></pre>
+</div></div>
+<p>If you are using <a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a> in the service interface and implementation(s), the interface class should not be specified as the <tt>serviceClass</tt> property.  In this case, either the implementation class should be specified in the <tt>serviceClass</tt> property or the <tt>serviceBean</tt> property should be specified, but both together are not necessary.  This is because the implementing class already specifies the <tt>endpointInterface</tt> in the <tt>@WebService</tt> annotation.</p>
+
+<h3><a name="SpringRemoting-RemotingClients"></a>Remoting Clients</h3>
+
+<p>With protocols like Hessian or RMI, you just need a service interface to configure a Spring remoting client. However, SOAP is a bit more complicated.</p>
+
+<p>XFire has the concept of a service model. It uses your service class and various extra information to build this service model.  Any information you use to configure your client must be used to configure your client as well. For instance, say you specify a custom a custom namespace on your service, you must also specify that on your client.</p>
+
+<p>XFire comes with a helper class to facilitate creating client using Spring: <tt>org.codehaus.xfire.spring.remoting.XFireClientFactoryBean</tt>. It is modelled after the <tt>JaxRpcPortProxyFactoryBean</tt> present in Spring, and allows you to configure a client bean in a Spring <tt>applicationContext.xml</tt>. All that needs to be specified is the service interface (or class in case of JSR 181 Annotations) and a WSDL url location for the service. Additional configuration, such as username/password or namespace, can be explicitly configured using properties.<br/>
+Example client bean for <tt>applicationContext.xml</tt>:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bean id=<span class="code-quote">"testWebService"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireClientFactoryBean"</span>&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span>&gt;</span>
+      <span class="code-tag">&lt;value&gt;</span>org.codehaus.xfire.spring.example.Echo<span class="code-tag">&lt;/value&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"wsdlDocumentUrl"</span>&gt;</span>
+      <span class="code-tag">&lt;value&gt;</span>http://localhost:8080/xfire/EchoService?WSDL<span class="code-tag">&lt;/value&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+<span class="code-tag">&lt;/bean&gt;</span></pre>
+</div></div>
+<p><em>&nbsp;&#42; Note that this may cause problems if used in the same applicationContext as the service itself (which one might try to do for running unit tests): this bean would attempt to access the WSDL before it became available, preventing the application from loading. Rather, create a separate client applicationContext, for which to use in test cases.</em></p>
+
+
+<p>Check out the <a href="Client API.html" title="Client API">Client API</a> page to learn more about options when creating clients using XFire.</p>
+
+<p>The full example is available in the <tt>./examples/spring/</tt> folder (within the XFire distribution)<em>.</em></p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

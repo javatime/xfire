@@ -1,0 +1,202 @@
+<html>
+    <head>
+        <title>Codehaus XFire : HTTP Transport</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="HTTPTransport-XFireServlet"></a>XFireServlet</h2>
+
+<p>The core of the HTTP Transport takes place in the XFireServletController. Your own servlets can delegate appropriate requests to this class or you can use one of XFire's internal servlet classes. The XFireServlet is just a thin wrapper for the controller. The XFireServletController provides an xml configuration layer on top of this.</p>
+
+<p>XFire also provides the XFireConfigurableServlet which reads the services.xml format automatically for you and the XFireSpringServlet which provides Spring integration.</p>
+
+<h2><a name="HTTPTransport-HttpServletRequest%2FHttpServletResponse"></a>HttpServletRequest/HttpServletResponse</h2>
+
+<p>The HttpServletRequest/HttpServletResponse can be accessed via the XFireServletController.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">HttpServletRequest request = XFireServletController.getRequest();
+HttpServletResponse response = XFireServletController.getResponse();</pre>
+</div></div>
+<p>This method will work all the XFire servlets (XFireServlet, XFireConfigurableServlet, XFireSpringServlet).</p>
+
+<h2><a name="HTTPTransport-ClientAuthentication"></a>Client Authentication</h2>
+
+<p>The <a href="http://jakarta.apache.org/commons/httpclient/" title="Visit page outside Confluence">Apache Jakarta HttpClient</a> is used under the covers to provide HTTP client support. There are two ways which you can override the HttpClient settings:</p>
+
+<p>1. You can set the USERNAME/PASSWORD</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// Create your client
+</span>Client client = ....;
+
+<span class="code-comment">// Or get it from your proxy
+</span>Client client = Client.getInstance(myClientProxy);
+
+client.setProperty(Channel.USERNAME, <span class="code-quote">"username"</span>);
+client.setProperty(Channel.PASSWORD, <span class="code-quote">"pass"</span>);</pre>
+</div></div>
+<p>2. You can supply your own HttpClientParms</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">client.setProperty(CommonsHttpMessageSender.HTTP_CLIENT_PARAMS, myParams);</pre>
+</div></div>
+<p>The HTTPClient javadocs provide information on how to configure the <a href="http://jakarta.apache.org/commons/httpclient/apidocs/org/apache/commons/httpclient/params/HttpClientParams.html" title="Visit page outside Confluence">HttpClientParams</a>.</p>
+
+<h2><a name="HTTPTransport-%26nbsp%3BClientconnectingtoSSLServerviaHTTPS"></a>&nbsp;Client connecting to SSL Server via HTTPS</h2>
+
+<p>If your webservice is on a HTTP<b>S</b> URL then transport-layer (as opposed to message layer) encryption via SSL will be used. (See your web container's documentation, e.g. Tomcat's, on how to enable SSL on it; this section describes how to connect to such a server, not how to set up that server.)</p>
+
+<p>If the SSL certificate of the server is "CArtel" signed (i.e. issued by Verisign, Thawte, etc.) all is well, as Java (JSSE) recognizes such certificates, because their root certs are in your JRE's lib/security/cacerts truststore. If however the server uses a self-signed certificate (or one signed by an in-house CA) you'll run into problems with messages like "ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target". (This is fairly common, particularly in development; and including e.g. a default installation of a commercial application server such as BEA's or IBM's.)</p>
+
+<p>There are several ways around this:</p>
+
+<p>1. The "traditional" solution is to add the server certificate to a truststore using the JDK keytool, and then specifiy the global Java system property javax.net.ssl.trustStore to point to that file.<br/>
+2. Particularly during development, maybe you are OK to just accept ALL (self-signed) certificates. You can do that by running the following two lines once in some startup code: (EasySSLProtocolSocketFactory is included in XFire starting with v1.2; for earlier versions download the full commons-ssl JAR like below.)</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">ProtocolSocketFactory easy = <span class="code-keyword">new</span> EasySSLProtocolSocketFactory();
+Protocol protocol = <span class="code-keyword">new</span> Protocol(<span class="code-quote">"https"</span>, easy, 8443);
+Protocol.registerProtocol(<span class="code-quote">"https"</span>, protocol);</pre>
+</div></div>
+<p>3. However, the EasySSLProtocolSocketFactory explicitly says in its JavaDoc that: "This socket factory SHOULD NOT be used for productive systems due to security reasons, unless it is a concious decision and you are perfectly aware of security implications of accepting [<b>all</b>] self-signed certificates.".&nbsp; A better way might be to accept just that one self-signed certificate, or all certificates signed by an in-houce CA. Indeed, the not-yet-commons-ssl library has a programmatic solution for this, using the following few lines: (You'll need to download not-yet-commons-ssl from <a href="http://juliusdavies.ca/commons-ssl/" title="Visit page outside Confluence">http://juliusdavies.ca/commons-ssl/</a> for this code.) &nbsp;</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// Technique similar to http://juliusdavies.ca/commons-ssl/TrustExample.java.html
+</span>HttpSecureProtocol protocolSocketFactory = <span class="code-keyword">new</span> HttpSecureProtocol();
+
+<span class="code-comment">// <span class="code-quote">"/thecertificate.cer"</span> can be PEM or DER (raw ASN.1).  Can even be several PEM certificates in one file.
+</span>TrustMaterial trustMaterial = <span class="code-keyword">new</span> TrustMaterial(getClass().getResource(<span class="code-quote">"/thecertificate.cer"</span>));
+
+<span class="code-comment">// We can use setTrustMaterial() instead of addTrustMaterial() <span class="code-keyword">if</span> we want to remove
+</span><span class="code-comment">// HttpSecureProtocol's <span class="code-keyword">default</span> trust of TrustMaterial.CACERTS.
+</span>protocolSocketFactory.addTrustMaterial(trustMaterial);
+
+<span class="code-comment">// Maybe we want to turn off CN validation (not recommended!):
+</span>protocolSocketFactory.setCheckHostname(<span class="code-keyword">false</span>);
+
+Protocol protocol = <span class="code-keyword">new</span> Protocol(<span class="code-quote">"https"</span>, (ProtocolSocketFactory) protocolSocketFactory, 8443);
+Protocol.registerProtocol(<span class="code-quote">"https"</span>, protocol);</pre>
+</div></div>
+<p>This is of course similar to 1. but avoids dealing with a global Java system property that other code may also depends on and a filename, e.g. you can the certificate in a classpath resource as well. &#45;&#45; If you don't have a .cer (same as a .pem) file of your server, the openssl tool (available from Cygwin under Windows) will fetch it.&nbsp; <a href="http://juliusdavies.ca/commons-ssl/download.html" title="Visit page outside Confluence">Not-yet-commons-ssl.jar</a> also contains a command-line tool for fetching the certificate.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">openssl s_client -showcerts -prexit -connect myhost.mydomain:port
+
+# not-yet-commons-ssl.jar can <span class="code-keyword">do</span> the same thing:
+
+java -jar not-yet-commons-ssl-0.3.7.jar -t myhost.mydomain:port</pre>
+</div></div>
+<p>This will have openssl print the certificate(s) of that web server; you can copy/paste the relevant (or certificate lines between (and including) the BEGIN/END CERTIFICATE lines into some thecertificate.cer text file. (BTW: Make sure there is a no trailing carriage return after the END line, else Java's keytool will have trouble with the file, in case you are planning to import it to a truststore.)</p>
+
+<p>Security note:  downloading the certificate directly from the SSL handshake using "openssl s_client" or "not-yet-commons-ssl.jar" is not safe.  In a dev environment it's okay.  But in a production environment it leaves you susceptible to the oft-cited man-in-the-middle.  It's safer than EasySSLSockeyProtocolFactory because you only download the certificate one time, whereas EasySSLSockeyProtocolFactory is always vulnerable, with every socket created.  But nonetheless you should try to acquire the self-signed certificate through a different medium, maybe email (with encryption?), fax, telephone, letter mail, usb-drive, etc.  Or if the self-signed cert is hosted on a properly signed "https" site, that's also okay (e.g. <a href="https://trustedsite.com/path/to/self-signed.pem" title="Visit page outside Confluence">https://trustedsite.com/path/to/self-signed.pem</a>).</p>
+
+<p>4.Currently the code&nbsp; above allows for the user to establish an HTTPS connection with the server, but it does not account for sending a client certificate for mutual authentication.&nbsp; To send a client certificate for mutual certificate authentication, you can add the code below.&nbsp; The myKeystore.key file contains your private key and the certificate provided by your CA.&nbsp; For more details on using EasySSLProtocolSocketFactory for your clients, you can visit their examples page:&nbsp;<a href="http://juliusdavies.ca/commons-ssl/ssl.html" title="Visit page outside Confluence">Examples</a></p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-object">char</span>[] keytStorePass = <span class="code-keyword">new</span> <span class="code-object">String</span>(<span class="code-quote">"changeit"</span>).toCharArray();
+KeyMaterial key = <span class="code-keyword">new</span> KeyMaterial(<span class="code-keyword">new</span> File(<span class="code-quote">"myKeystore.key"</span>), keyStorePass);
+protocolSocketFactory.setKeyMaterial(key);</pre>
+</div></div>
+
+<h2><a name="HTTPTransport-ProxySupport"></a>Proxy Support</h2>
+
+<p>Proxy support looks very similar to the username/password scenario:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// Create your client
+</span>Client client = ....;
+
+<span class="code-comment">// Or get it from your proxy
+</span>Client client = Client.getInstance(myClientProxy);
+client.setProperty(CommonsHttpMessageSender.HTTP_PROXY_HOST, <span class="code-quote">"host"</span>);
+client.setProperty(CommonsHttpMessageSender.HTTP_PROXY_PORT, <span class="code-quote">"8080"</span>);</pre>
+</div></div>
+
+<h2><a name="HTTPTransport-ProxyAuthentication"></a>Proxy Authentication</h2>
+
+<p>To use proxy authentication you need to use following code :</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// Create your client
+</span>Client client = ....;
+
+<span class="code-comment">// Or get it from your proxy
+</span>Client client = Client.getInstance(myClientProxy);
+client.setProperty(CommonsHttpMessageSender.HTTP_PROXY_HOST, <span class="code-quote">"host"</span>);
+client.setProperty(CommonsHttpMessageSender.HTTP_PROXY_PORT, <span class="code-quote">"8080"</span>);
+client.setProperty(CommonsHttpMessageSender.HTTP_PROXY_USER, <span class="code-quote">"proxyuser"</span>);
+client.setProperty(CommonsHttpMessageSender.HTTP_PROXY_PASS, <span class="code-quote">"proxypassword"</span>);</pre>
+</div></div>
+
+<h2><a name="HTTPTransport-HTTPChunking"></a>HTTP Chunking</h2>
+
+<p>You'll need to enable HTTP chunking on the client if you are sending large files which can't be cached in memory:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.transport.http.HttpTransport;
+
+Client client = ....;
+client.setProperty(HttpTransport.CHUNKING_ENABLED, <span class="code-quote">"<span class="code-keyword">true</span>"</span>);</pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

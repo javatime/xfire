@@ -1,0 +1,277 @@
+<html>
+    <head>
+        <title>Codehaus XFire : JAXB 2.0</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h1><a name="JAXB2.0-SchemaFirstDevelopment"></a>Schema First Development</h1>
+
+<p>With XFire and <a href="https://jaxb.dev.java.net/" title="Visit page outside Confluence">JAXB 2.0</a> it is very easy to do Schema First Development. This page will lead you through what it takes to develop a service. This example is contained in the <a href="Download.html" title="Download">distribution</a> under "examples/jaxb2". The build files are available there and have been left out of this guide for clarity.</p>
+
+<p>Since, this is schema first development the first thing we're going to do is develop our schema. In this case we're going to borrow our schema from <a href="http://www.webservicex.net/WS/default.aspx" title="Visit page outside Confluence">http://www.webservicex.net/WS/default.aspx</a> and their <a href="http://www.webservicex.net/WS/WSDetails.aspx?CATID=12&amp;WSID=68" title="Visit page outside Confluence">Weather Service</a>.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;s:schema elementFormDefault=<span class="code-quote">"qualified"</span> targetNamespace=<span class="code-quote">"http://www.webservicex.net"</span>
+          <span class="code-keyword">xmlns:s</span>=<span class="code-quote">"http://www.w3.org/2001/XMLSchema"</span> <span class="code-keyword">xmlns:tns</span>=<span class="code-quote">"http://www.webservicex.net"</span>&gt;
+    <span class="code-tag">&lt;s:element name=<span class="code-quote">"GetWeatherByZipCode"</span>&gt;</span>
+        <span class="code-tag">&lt;s:complexType&gt;</span>
+            <span class="code-tag">&lt;s:sequence&gt;</span>
+                <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"ZipCode"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;/s:sequence&gt;</span>
+        <span class="code-tag">&lt;/s:complexType&gt;</span>
+    <span class="code-tag">&lt;/s:element&gt;</span>
+    <span class="code-tag">&lt;s:element name=<span class="code-quote">"GetWeatherByZipCodeResponse"</span>&gt;</span>
+        <span class="code-tag">&lt;s:complexType&gt;</span>
+            <span class="code-tag">&lt;s:sequence&gt;</span>
+                &lt;s:element minOccurs=<span class="code-quote">"1"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"GetWeatherByZipCodeResult"</span>
+                           type=<span class="code-quote">"tns:WeatherForecastsType"</span>/&gt;
+            <span class="code-tag">&lt;/s:sequence&gt;</span>
+        <span class="code-tag">&lt;/s:complexType&gt;</span>
+    <span class="code-tag">&lt;/s:element&gt;</span>
+    <span class="code-tag">&lt;s:complexType name=<span class="code-quote">"WeatherForecastsType"</span>&gt;</span>
+        <span class="code-tag">&lt;s:sequence&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"1"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"Latitude"</span> type=<span class="code-quote">"s:float"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"1"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"Longitude"</span> type=<span class="code-quote">"s:float"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"1"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"AllocationFactor"</span> type=<span class="code-quote">"s:float"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"FipsCode"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"PlaceName"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"StateCode"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"Status"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"Details"</span> type=<span class="code-quote">"tns:ArrayOfWeatherData"</span>/&gt;</span>
+        <span class="code-tag">&lt;/s:sequence&gt;</span>
+    <span class="code-tag">&lt;/s:complexType&gt;</span>
+    <span class="code-tag">&lt;s:complexType name=<span class="code-quote">"ArrayOfWeatherData"</span>&gt;</span>
+        <span class="code-tag">&lt;s:sequence&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"unbounded"</span> name=<span class="code-quote">"WeatherData"</span> type=<span class="code-quote">"tns:WeatherData"</span>/&gt;</span>
+        <span class="code-tag">&lt;/s:sequence&gt;</span>
+    <span class="code-tag">&lt;/s:complexType&gt;</span>
+    <span class="code-tag">&lt;s:complexType name=<span class="code-quote">"WeatherData"</span>&gt;</span>
+        <span class="code-tag">&lt;s:sequence&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"Day"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"WeatherImage"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MaxTemperatureF"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MinTemperatureF"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MaxTemperatureC"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+            <span class="code-tag">&lt;s:element minOccurs=<span class="code-quote">"0"</span> maxOccurs=<span class="code-quote">"1"</span> name=<span class="code-quote">"MinTemperatureC"</span> type=<span class="code-quote">"s:string"</span>/&gt;</span>
+        <span class="code-tag">&lt;/s:sequence&gt;</span>
+    <span class="code-tag">&lt;/s:complexType&gt;</span>
+<span class="code-tag">&lt;/s:schema&gt;</span></pre>
+</div></div>
+<p>We'll need a service to go along with this though. Instead of writing a WSDL, we're going to first set up our build to generate POJOs via <a href="https://jaxb.dev.java.net/" title="Visit page outside Confluence">XJC</a> and then use them to write our service interface.</p>
+An error occurred: http://svn.codehaus.org/xfire/trunk/xfire/examples/jaxb2/maven.xml. The system administrator has been notified.
+<p>Once thats done we simply write our service interface. In this case we just want to do one operation, "GetWeatherByZipCode":</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> javax.jws.WebMethod;
+<span class="code-keyword">import</span> javax.jws.WebParam;
+<span class="code-keyword">import</span> javax.jws.WebService;
+
+<span class="code-keyword">import</span> net.webservicex.GetWeatherByZipCode;
+<span class="code-keyword">import</span> net.webservicex.GetWeatherByZipCodeResponse;
+
+@WebService(name=<span class="code-quote">"WeatherServiceIntf"</span>, targetNamespace=<span class="code-quote">"http:<span class="code-comment">//www.webservicex.net"</span>)
+</span><span class="code-keyword">public</span> <span class="code-keyword">interface</span> WeatherService
+{
+    @WebMethod
+    GetWeatherByZipCodeResponse GetWeatherByZipCode(@WebParam(name=<span class="code-quote">"GetWeatherByZipCode"</span>) GetWeatherByZipCode body);
+}</pre>
+</div></div>
+<p>You'll see we've written up some JSR 181 annotations which should be pretty self explanatory. We'll also need to write our service implementation:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> javax.jws.WebService;
+<span class="code-keyword">import</span> javax.jws.soap.SOAPBinding;
+
+<span class="code-keyword">import</span> net.webservicex.GetWeatherByZipCode;
+<span class="code-keyword">import</span> net.webservicex.GetWeatherByZipCodeResponse;
+<span class="code-keyword">import</span> net.webservicex.WeatherForecastsType;
+
+/**
+ * @author &lt;a href=<span class="code-quote">"mailto:dan@envoisolutions.com"</span>&gt;Dan Diephouse&lt;/a&gt;
+ */
+@WebService(endpointInterface=<span class="code-quote">"org.codehaus.xfire.jaxb.WeatherService"</span>, serviceName=<span class="code-quote">"WeatherService"</span>)
+@SOAPBinding(parameterStyle=SOAPBinding.ParameterStyle.BARE)
+<span class="code-keyword">public</span> class WeatherServiceImpl <span class="code-keyword">implements</span> WeatherService
+{
+
+    <span class="code-keyword">public</span> GetWeatherByZipCodeResponse GetWeatherByZipCode(GetWeatherByZipCode body)
+    {
+        GetWeatherByZipCodeResponse res = <span class="code-keyword">new</span> GetWeatherByZipCodeResponse();
+        <span class="code-object">String</span> zipCode = body.getZipCode();
+        
+        WeatherForecastsType weather = <span class="code-keyword">new</span> WeatherForecastsType();
+
+        weather.setLatitude(1);
+        weather.setLongitude(1);
+        weather.setPlaceName(<span class="code-quote">"Vienna, AT"</span>);
+        weather.setAllocationFactor(1);
+
+        res.setGetWeatherByZipCodeResult(weather);
+
+        <span class="code-keyword">return</span> res;
+    }
+}</pre>
+</div></div>
+<p>We could look at our request, but we aren't going to get all fancy here. We'll just return some data in a GetWeatherByZipCode response object. On this service we have some annotations as well. The SOAPBinding annotation is telling XFire we don't want our requests wrapped with the operation name by specifying the parameter style as BARE. The @WebService annotation is needed to tell XFire where the endpoint interface is. XFire uses this to generate our WSDL.</p>
+
+<p>At this point we're almost done. Now we just need to write our services.xml descriptor. This file goes in META-INF/xfire/ on the classpath:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"weatherService"</span> class=<span class="code-quote">"org.codehaus.xfire.jaxb.WeatherServiceImpl"</span>/&gt;</span>
+
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;serviceBean&gt;</span>#weatherService<span class="code-tag">&lt;/serviceBean&gt;</span>
+    <span class="code-tag">&lt;serviceFactory&gt;</span>#jaxbServiceFactory<span class="code-tag">&lt;/serviceFactory&gt;</span>
+    <span class="code-tag">&lt;schemas&gt;</span>
+      <span class="code-tag">&lt;schema&gt;</span>META-INF/xfire/WeatherForecast.xsd<span class="code-tag">&lt;/schema&gt;</span>
+    <span class="code-tag">&lt;/schemas&gt;</span>
+    <span class="code-tag">&lt;style&gt;</span>document<span class="code-tag">&lt;/style&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+
+  <span class="code-tag">&lt;bean name=<span class="code-quote">"jaxbServiceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.jaxb2.JaxbServiceFactory"</span>&gt;</span>
+    <span class="code-tag">&lt;constructor-arg ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+<p>ServiceFactories are responsible for creating a Service inside of XFire. In this case, we want to use our JAXB 2.0 ServiceFactory to create the service. Since XFire uses Spring to build up its services, we can use the Spring format to define them.  This is the &lt;bean name="jaxbServiceFactory"...&gt; portion of the services.xml.  Then in our service definition we can reference this service factory by using the # sign - hence "#jaxbServiceFactory".  We also are defining our service as a Spring bean and referencing it this way.</p>
+
+<p>The other thing to note about the services.xml file is that we are specifying where our schema is. In this case, its on the classpath as META-INF/xfire/WeatherForecast.xsd. This parameter can also be a file if you desire.</p>
+
+<p>Now, to view your service you'll need to build a war and deploy it. This is easily done by running "maven war". This will place a war in the "target" directory. Just drop this into your favorite servlet container and you should be set to go&#33;</p>
+
+<p>Access the WSDL via: <a href="http://localhost:8080/jaxb2/services/WeatherService?wsdl" title="Visit page outside Confluence">http://localhost:8080/jaxb2/services/WeatherService?wsdl</a></p>
+
+<h1><a name="JAXB2.0-CodeFirstDevelopment"></a>Code First Development</h1>
+
+<p>If you don't want to write your own schema, you can use JAXB 2.0 to do code first development. This allows you to use JAXB 2.0, <a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a> and XFire's wsdl generation together.</p>
+
+<p>Taking the <a href="Quick Start.html" title="Quick Start">Quick Start</a> example, we can change it use JAXB relatively easily. First, we may want to customize our Book object:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">@XmlType(name=<span class="code-quote">"Book"</span>, namespace=<span class="code-quote">"urn:xfire:book"</span>)
+<span class="code-keyword">public</span> class Book
+{
+    <span class="code-keyword">private</span> <span class="code-object">String</span> title;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> isbn;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> author;
+...
+}</pre>
+</div></div>
+<p>The XmlType annotation will control the name and namespace of the type in the wsdl.</p>
+
+<p>The only difference in deploying JAXB 2.0 services is that you need to change the ServiceFactory used. If you're using services.xml it will look something like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;name&gt;</span>BookService<span class="code-tag">&lt;/name&gt;</span>
+    <span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/BookService<span class="code-tag">&lt;/namespace&gt;</span>
+    <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.BookService<span class="code-tag">&lt;/serviceClass&gt;</span>
+    <span class="code-tag">&lt;serviceFactory&gt;</span>org.codehaus.xfire.jaxb2.JaxbServiceFactory<span class="code-tag">&lt;/serviceFactory&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+
+<h2><a name="JAXB2.0-JAXB2andInheritance"></a>JAXB 2 and Inheritance</h2>
+
+<p>If you have are using JAXB with polymorphic javabeans as part of your data model, you may need to let JAXB know about additional packages. For instance, say you have a service whose method returns a "Shape" class, but you sometimes respond with a "Square". You need to let JAXB know about this. This can be done via code like so:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">List searchPackages = <span class="code-keyword">new</span> ArrayList();
+searchPackages.add(<span class="code-quote">"com.acme.squares"</span>);
+
+Service service = ...;
+service.setProperty(JaxbType.SEARCH_PACKAGES, searchPackages);</pre>
+</div></div>
+<p>Or via services.xml like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;service&gt;</span>
+...
+<span class="code-tag">&lt;property name=<span class="code-quote">"jaxb.search.packages"</span>&gt;</span>
+  <span class="code-tag">&lt;list&gt;</span>
+   <span class="code-tag">&lt;entry&gt;</span>com.acme.square<span class="code-tag">&lt;/entry&gt;</span>
+  <span class="code-tag">&lt;/list&gt;</span>
+<span class="code-tag">&lt;/property&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div>
+<p>The example above does not work with 1.2.1, the syntax should look like this:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;property xmlns=<span class="code-quote">"" name="</span>properties"&gt;</span>
+        <span class="code-tag">&lt;map xmlns=""&gt;</span>
+        <span class="code-tag">&lt;entry  xmlns=<span class="code-quote">"" key="</span>jaxb.search.packages"&gt;</span>
+            <span class="code-tag">&lt;value  xmlns=""&gt;</span>
+                <span class="code-tag">&lt;list  xmlns=""&gt;</span>
+                  <span class="code-tag">&lt;value xmlns=""&gt;</span>com.acme.square<span class="code-tag">&lt;/value&gt;</span>
+                <span class="code-tag">&lt;/list&gt;</span>
+            <span class="code-tag">&lt;/value&gt;</span>
+        <span class="code-tag">&lt;/entry&gt;</span>
+        <span class="code-tag">&lt;/map&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span></pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

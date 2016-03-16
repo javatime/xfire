@@ -1,0 +1,215 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Client API Development</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>Hopefully this can be a space to share some ideas and get a feel for whats going on in the current CVS. Its not going to necessarily be easy, but I want to do it RIGHT.</p>
+
+<h2><a name="ClientAPIDevelopment-History"></a>History</h2>
+<h3><a name="ClientAPIDevelopment-ClientHandler%2FHttpClient"></a>ClientHandler/HttpClient</h3>
+<p>The ClientHandler, AbstractClientHandler, AbstractHttpClient, etc were the first stab at the client. It allows very raw access to the StAX stream. The only binding that interacted with it was XMLBeans. xfire-xmlbeans also has some classes in the generator package which generate a client class which uses the SoapHttpClient to interact with services. </p>
+
+<p>The sucky things about this is:</p>
+<ul>
+	<li>Its real hard to create a client from an existing service. (see proxy use case)</li>
+	<li>It doesn't use the XFire Transport layer</li>
+</ul>
+
+
+<h3><a name="ClientAPIDevelopment-Ralf%27sDynamicClient"></a>Ralf's Dynamic Client</h3>
+<p>JIRA issue: <a href="http://jira.codehaus.org/browse/XFIRE-56" title="Visit page outside Confluence">http://jira.codehaus.org/browse/XFIRE-56</a><br/>
+My comments: <a href="http://jira.codehaus.org/secure/ViewProfile.jspa?name=dandiep" title="Visit page outside Confluence">http://jira.codehaus.org/secure/ViewProfile.jspa?name=dandiep</a></p>
+
+<p>Sample Usage without exceptions:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">EchoInterface service = (EchoInterface) SoapInvocatorFactory.createStub(EchoInterface.class);
+<span class="code-object">String</span> echo = service.echo(<span class="code-quote">"hello"</span>);
+assertEquals(echo,<span class="code-quote">"hello"</span>);</pre>
+</div></div>
+
+<p>Sample Usage with exceptions &lt;internal exception are thrown as SoapExceptions if wanted&gt;:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">IBadService service = (IBadService) SoapInvocatorFactory.createStub(IBadService.class);
+<span class="code-keyword">try</span> {
+  service.badMethod();            
+}
+<span class="code-keyword">catch</span>(MyException e){
+  assertEquals(e.getMessage(),<span class="code-quote">"bad bad"</span>);
+}</pre>
+</div></div>
+
+<p>The config file &lt;xfire-soapclient.xml&gt;:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;config&gt;</span>
+    <span class="code-tag"><span class="code-comment">&lt;!-- base url --&gt;</span></span>
+    <span class="code-tag">&lt;entry name=<span class="code-quote">"baseURL"</span> value=<span class="code-quote">"http://127.0.0.1:8080/XFireTest/services/"</span>/&gt;</span>
+    <span class="code-tag"><span class="code-comment">&lt;!-- should internal exceptions be thrown or not (default: false) --&gt;</span></span>
+    <span class="code-tag">&lt;entry name=<span class="code-quote">"throwInternalExceptions"</span> value=<span class="code-quote">"true"</span>/&gt;</span>
+    <span class="code-tag">&lt;node name=<span class="code-quote">"http"</span>&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- http 1.0 or 1.1 --&gt;</span></span>
+        <span class="code-tag">&lt;entry name=<span class="code-quote">"protocol"</span> value=<span class="code-quote">"1.1"</span>/&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!--  timeout in ms --&gt;</span></span>
+        <span class="code-tag">&lt;entry name=<span class="code-quote">"timeout"</span> value=<span class="code-quote">"1000"</span>/&gt;</span>
+        <span class="code-tag"><span class="code-comment">&lt;!-- content charset (UTF-8)--&gt;</span></span>
+        <span class="code-tag">&lt;entry name=<span class="code-quote">"content-charset"</span> value=<span class="code-quote">"UTF-8"</span>/&gt;</span>
+    <span class="code-tag">&lt;/node&gt;</span>
+    <span class="code-tag">&lt;node name=<span class="code-quote">"services"</span>&gt;</span>
+        <span class="code-tag">&lt;node name=<span class="code-quote">"org.codehaus.xfire.demo.java.EchoInterface"</span>&gt;</span>
+            <span class="code-tag">&lt;entry name=<span class="code-quote">"serviceName"</span> value=<span class="code-quote">"Echo"</span>/&gt;</span>
+            <span class="code-tag">&lt;entry name=<span class="code-quote">"urn"</span> value=<span class="code-quote">"urn:Echo"</span>/&gt;</span>
+            <span class="code-tag">&lt;entry name=<span class="code-quote">"soapVersion"</span> value=<span class="code-quote">"1.2"</span>/&gt;</span>
+        <span class="code-tag">&lt;/node&gt;</span>
+    <span class="code-tag">&lt;/node&gt;</span>
+<span class="code-tag">&lt;/node&gt;</span></pre>
+</div></div>
+
+<p>The (current) Restrictions:</p>
+
+<ul>
+	<li>Service must implement a interface, because java reflection proxy throw otherwise nullpointer exception</li>
+	<li>works with aegis style services (pojo impl + interface)</li>
+</ul>
+
+
+<p>The good:</p>
+
+<ul>
+	<li>Client need only the service interface,the client api and his dependent apis (stax,yom)</li>
+	<li>no stub generation needed</li>
+</ul>
+
+
+<h3><a name="ClientAPIDevelopment-org.codehaus.xfire.client.Client"></a>org.codehaus.xfire.client.Client</h3>
+<p>This class is meant to be the next version of the client stuff. The Good:</p>
+<ul>
+	<li>Uses XFire Transports</li>
+	<li>Allows In/Out/Fault Handlers</li>
+</ul>
+
+
+<p>The bad:</p>
+<ul>
+	<li>It requires you to use the XFire Service. I.e. you need to go through and use an ObjectServiceFactory to create the service and the ServiceInfo model. People find this confusing so we either need to simplify this or find another way.</li>
+</ul>
+
+
+<p>Things can be proxied right now:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">Service service = ...;
+XFireProxyFactory factory = <span class="code-keyword">new</span> XFireProxyFactory();
+MyServiceIntf client = (MyServiceIntf) factory.create(service, <span class="code-object">String</span> url);</pre>
+</div></div>
+
+<h2><a name="ClientAPIDevelopment-UsesCases"></a>Uses Cases</h2>
+
+<h3><a name="ClientAPIDevelopment-1.ProxyanXFireService"></a>1. Proxy an XFire Service</h3>
+<p>Say I have all the service classes on the classpath. I should be able to do something like:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">XFireProxyFactory factory = <span class="code-keyword">new</span> XFireProxyFactory();
+MyServiceIntf client = (MyServiceIntf) factory.create(MyServiceIntf.class, <span class="code-object">String</span> url);
+
+client.doFoo(...);</pre>
+</div></div>
+<p>The Spring remoting use case falls under here too. The unit tests show that this type of thing is possible, but it requires a ServiceBean to be set up.</p>
+
+<h3><a name="ClientAPIDevelopment-2.CreateaclientFromWSDL"></a>2. Create a client From WSDL</h3>
+<p>We should be able to take a WSDL, generate a client and then the binding should be able to generate the POJOs. We could possibly leverage the Axis WSDL2Java code. Or a multitude of others.</p>
+
+<h3><a name="ClientAPIDevelopment-3.DynamicClient"></a>3. Dynamic Client</h3>
+<p>I'm not sure I understand how this differes from use case #1. Ralf, can you ellaborate?</p>
+
+<h2><a name="ClientAPIDevelopment-Design"></a>Design</h2>
+
+<h3><a name="ClientAPIDevelopment-ServiceModel"></a>Service Model</h3>
+<p>It should be possible to interrogate a WSDL and build up a ServiceInfo model, which will provide metadata about a service.</p>
+
+<h3><a name="ClientAPIDevelopment-TransportLayer"></a>Transport Layer</h3>
+<p>The client should use the Transport layer defined by XFire. Granted some changes need to be need. If you see any flaws, bring them up and we'll correct them.</p>
+
+<h3><a name="ClientAPIDevelopment-Bindings"></a>Bindings</h3>
+<p>Ideally the client should work with all the bindings.</p>
+
+<h2><a name="ClientAPIDevelopment-Tasks%3F"></a>Tasks?</h2>
+<ul>
+	<li>Code which looks at the wsdl and does schema-&gt;code generation for a particular binding. This would just be a thin wrapper around JAXB, XmlBeans, etc.</li>
+	<li>WSDL-&gt;Service interface class which contains the operations on the service. Would utilize the DTOs built above.</li>
+	<li>Investigate ways to do the above better. I'm sure people have better ideas than mine</li>
+</ul>
+
+
+<h2><a name="ClientAPIDevelopment-%3F"></a>?</h2>
+<p>What does everyone else think????</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

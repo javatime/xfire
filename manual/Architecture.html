@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Architecture</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="Architecture-XFireInternals"></a>XFire Internals</h2>
+
+<p>XFire is a component based framework. A quick look at the components and you will have a pretty good understanding of how  everything fits together. First a rundown of how things look when  a service is invoked, then there will be a table of components.</p>
+
+<p>Users will most likely be accessing the services through Transports. A transport (like HTTP) passes off the SOAP message to the XFire component.</p>
+
+<p>The transport determines the service that is being invoked and passes a MessageContext and service name off to the XFire class.  The XFire class looks up the Service from the ServiceRegistry and then invokes the Handler.</p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Component </th>
+<th class='confluenceTh'> Description </th>
+</tr>
+<tr>
+<td class='confluenceTd'> XFire </td>
+<td class='confluenceTd'> This is point of access for transports. Here you can invoke a service by providing an XML SOAP document and get the response programmatically. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Service </td>
+<td class='confluenceTd'> This is a description of a SOAP service. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Invoker </td>
+<td class='confluenceTd'> An Invoker allows you to controller the mechanism by which the underlying object that services a request is created. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> ServiceRegistry </td>
+<td class='confluenceTd'> A registry of all the services within the system. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Handler </td>
+<td class='confluenceTd'> A processing module within XFire. This could do anything from processing an incoming XML stream to accessing your database. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> TransportManager </td>
+<td class='confluenceTd'> Manages the transports within XFire. Custom transports should be registered here. It also has the ability to turn off/on transports for certain services. </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Transport </td>
+<td class='confluenceTd'> An encapsulation of a transport mechanism, such as HTTP or JMS. A transport is responsible for managing incoming and outgoing communications using a particular wire protocol. </td>
+</tr>
+</tbody></table>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

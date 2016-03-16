@@ -1,0 +1,222 @@
+<html>
+    <head>
+        <title>Codehaus XFire : JSR 181 Service</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This guide leads you through the steps of writing a simple service using JSR 181 annotations. JSR 181 annotations allow you to customize your service and the resulting WSDL relatively easily. This guide assumes you're already familiar with the concepts of getting up and running with XFire outlined in the <a href="Quick Start.html" title="Quick Start">Quick Start</a> guide. The full example can be found in "examples/jsr181" in the <a href="Download.html" title="Download">distribution</a>. </p>
+
+<p>First one needs to write the service class. In this example we will allow our users to add Customers to our database and also list them.  There will also be some authorization, which comes in the form of the UserToken class. Often authorization information is put in the soap header, so we've declared that all the UserTokens are headers via the @WebParam(header=true) annotation.</p>
+
+<p>Here is the customer service:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.demo;
+
+<span class="code-keyword">import</span> java.util.ArrayList;
+<span class="code-keyword">import</span> java.util.Collection;
+<span class="code-keyword">import</span> java.util.List;
+
+<span class="code-keyword">import</span> javax.jws.WebMethod;
+<span class="code-keyword">import</span> javax.jws.WebParam;
+<span class="code-keyword">import</span> javax.jws.WebResult;
+<span class="code-keyword">import</span> javax.jws.WebService;
+
+@WebService
+<span class="code-keyword">public</span> class CustomerService
+{
+    <span class="code-keyword">private</span> List&lt;Customer&gt; customers = <span class="code-keyword">new</span> ArrayList&lt;Customer&gt;();
+    
+    <span class="code-keyword">public</span> CustomerService()
+    {
+    }
+
+    @WebMethod
+    @WebResult(name=<span class="code-quote">"Customers"</span>)
+    <span class="code-keyword">public</span> Collection&lt;Customer&gt; getCustomers(@WebParam(name=<span class="code-quote">"UserToken"</span>, header=<span class="code-keyword">true</span>) UserToken auth)
+    {
+        authorize(auth);
+        
+        <span class="code-keyword">return</span> customers;
+    }
+    
+    <span class="code-keyword">private</span> void authorize(UserToken auth)
+    {
+        <span class="code-object">System</span>.out.println(auth.getUsername());
+        <span class="code-object">System</span>.out.println(auth.getPassword());
+    }
+
+    @WebMethod
+    <span class="code-keyword">public</span> <span class="code-object">String</span> addCustomer(@WebParam(name=<span class="code-quote">"UserToken"</span>, header=<span class="code-keyword">true</span>) UserToken auth, 
+                              @WebParam(name=<span class="code-quote">"customer"</span>) Customer customer)
+    {
+        authorize(auth);
+        
+        customers.add(customer);
+        
+        <span class="code-keyword">return</span> "";
+    }
+}</pre>
+</div></div>
+
+<p>The authorization token:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.demo;
+
+<span class="code-keyword">public</span> class UserToken
+{
+    <span class="code-keyword">private</span> <span class="code-object">String</span> username;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> password;
+    
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getPassword()
+    {
+        <span class="code-keyword">return</span> password;
+    }
+    <span class="code-keyword">public</span> void setPassword(<span class="code-object">String</span> password)
+    {
+        <span class="code-keyword">this</span>.password = password;
+    }
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getUsername()
+    {
+        <span class="code-keyword">return</span> username;
+    }
+    <span class="code-keyword">public</span> void setUsername(<span class="code-object">String</span> username)
+    {
+        <span class="code-keyword">this</span>.username = username;
+    }
+}</pre>
+</div></div>
+
+<p>The customer object:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.codehaus.xfire.demo;
+
+<span class="code-keyword">public</span> class Customer
+{
+    <span class="code-keyword">private</span> <span class="code-object">String</span> name;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> email;
+    <span class="code-keyword">private</span> <span class="code-object">String</span> phone;
+    
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getEmail()
+    {
+        <span class="code-keyword">return</span> email;
+    }
+    <span class="code-keyword">public</span> void setEmail(<span class="code-object">String</span> email)
+    {
+        <span class="code-keyword">this</span>.email = email;
+    }
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getName()
+    {
+        <span class="code-keyword">return</span> name;
+    }
+    <span class="code-keyword">public</span> void setName(<span class="code-object">String</span> name)
+    {
+        <span class="code-keyword">this</span>.name = name;
+    }
+    <span class="code-keyword">public</span> <span class="code-object">String</span> getPhone()
+    {
+        <span class="code-keyword">return</span> phone;
+    }
+    <span class="code-keyword">public</span> void setPhone(<span class="code-object">String</span> phone)
+    {
+        <span class="code-keyword">this</span>.phone = phone;
+    }
+}</pre>
+</div></div>
+
+<p>And finally our configuration xml:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+	<span class="code-tag">&lt;service&gt;</span>
+		<span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.CustomerService<span class="code-tag">&lt;/serviceClass&gt;</span>
+		<span class="code-tag"><span class="code-comment">&lt;!--  serviceFactory&gt;</span>jsr181<span class="code-tag">&lt;/serviceFactory --&gt;</span></span>
+		<span class="code-tag">&lt;serviceFactory&gt;</span>#jsr181ServiceFactory<span class="code-tag">&lt;/serviceFactory&gt;</span>
+		
+	<span class="code-tag">&lt;/service&gt;</span>
+	
+	&lt;bean id=<span class="code-quote">"config"</span>
+	class=<span class="code-quote">"org.codehaus.xfire.aegis.type.Configuration"</span>&gt;
+	<span class="code-tag">&lt;property name=<span class="code-quote">"defaultExtensibleElements"</span> value=<span class="code-quote">"false"</span> /&gt;</span>
+	<span class="code-tag">&lt;property name=<span class="code-quote">"defaultExtensibleAttributes"</span> value=<span class="code-quote">"false"</span> /&gt;</span>
+	<span class="code-tag">&lt;property name=<span class="code-quote">"defaultNillable"</span> value=<span class="code-quote">"false"</span> /&gt;</span>
+	<span class="code-tag">&lt;property name=<span class="code-quote">"defaultMinOccurs"</span> value=<span class="code-quote">"1"</span> /&gt;</span>
+<span class="code-tag">&lt;/bean&gt;</span>
+
+<span class="code-tag">&lt;bean name=<span class="code-quote">"jsr181ServiceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.annotations.AnnotationServiceFactory"</span>&gt;</span>
+    <span class="code-tag">&lt;constructor-arg ref=<span class="code-quote">"xfire.transportManager"</span> index=<span class="code-quote">"0"</span>/&gt;</span>
+    <span class="code-tag">&lt;constructor-arg ref=<span class="code-quote">"config"</span> index=<span class="code-quote">"1"</span> type=<span class="code-quote">"org.codehaus.xfire.aegis.type.Configuration"</span> /&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+	
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

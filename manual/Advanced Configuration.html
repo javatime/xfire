@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Advanced Configuration</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="AdvancedConfiguration-UsinganotherServiceFactory"></a>Using another Service Factory</h2>
+<p>These examples show the XFireExporter in action, but this can work just as well with the ServiceBean class since XFireExporter extends ServiceBean.</p>
+
+<h3><a name="AdvancedConfiguration-Annotations"></a>Annotations</h3>
+<p>If you want to export <a href="JSR 181 Annotations.html" title="JSR 181 Annotations">annotated</a> beans, the only thing you have to is to use a different ServiceFactory. First you'll need to define an AnnotationServiceFactory. Here is one that works on Java 1.5:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;bean id=<span class="code-quote">"xfire.annotationServiceFactory"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.annotations.AnnotationServiceFactory"</span>&gt;
+        <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.commonsAnnotations"</span>/&gt;</span>
+        <span class="code-tag">&lt;/constructor-arg&gt;</span>
+        <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"1"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+        <span class="code-tag">&lt;/constructor-arg&gt;</span>
+        <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"2"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.aegisBindingProvider"</span>/&gt;</span>
+        <span class="code-tag">&lt;/constructor-arg&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span>
+
+    &lt;bean id=<span class="code-quote">"xfire.commonsAnnotations"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations"</span>/&gt;</pre>
+</div></div>
+
+<p>And here is one that works on Java 1.4 via Commons Attributes:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;bean id=<span class="code-quote">"xfire.annotationServiceFactory"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.annotations.AnnotationServiceFactory"</span>&gt;
+        <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.commonsAnnotations"</span>/&gt;</span>
+        <span class="code-tag">&lt;/constructor-arg&gt;</span>
+        <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"1"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+        <span class="code-tag">&lt;/constructor-arg&gt;</span>
+        <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"2"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.aegisBindingProvider"</span>/&gt;</span>
+        <span class="code-tag">&lt;/constructor-arg&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span>
+
+    &lt;bean id=<span class="code-quote">"xfire.commonsAnnotations"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.annotations.commons.CommonsWebAttributes"</span>/&gt;</pre>
+</div></div>
+<p>Then you'll need to use it when exporting your service:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span>
+<span class="code-tag">&lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-//SPRING//DTD BEAN//EN"</span> <span class="code-quote">"http://www.springframework.org/dtd/spring-beans.dtd"</span>&gt;</span>
+
+<span class="code-tag">&lt;beans&gt;</span>
+  <span class="code-tag">&lt;bean name=<span class="code-quote">"/Echo"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span>&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceBean"</span> ref=<span class="code-quote">"echo"</span>/&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span>&gt;</span><span class="code-tag">&lt;value&gt;</span>org.codehaus.xfire.spring.Echo<span class="code-tag">&lt;/value&gt;</span><span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span>&gt;</span><span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.annotationServiceFactory"</span>/&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span>
+
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"echo"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.EchoImpl"</span>/&gt;</span>
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+
+<h3><a name="AdvancedConfiguration-XMLBeans"></a>XMLBeans</h3>
+<p>If you want to use XMLBeans and Spring, you'll need to declare a ServiceFactory for XMLBeans:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;bean id=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span>
+       class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XmlBeansServiceFactory"</span>
+       singleton=<span class="code-quote">"true"</span>&gt;
+       <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span>&gt;</span>
+           <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+       <span class="code-tag">&lt;/constructor-arg&gt;</span>
+ <span class="code-tag">&lt;/bean&gt;</span></pre>
+</div></div>
+<p>or, if you wish to use setter-injection, you need to also declare the XMLBeansBindingProvider.  Declare it using:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;bean id=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span>
+        class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XmlBeansServiceFactory"</span>
+        singleton=<span class="code-quote">"true"</span>&gt;
+        <span class="code-tag">&lt;property name=<span class="code-quote">"transportManager"</span>&gt;</span>
+            <span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+        <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span></pre>
+</div></div>
+
+<p>Then, you would declare your bean with a reference to this ServiceFactory instead of the default one.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bean name=<span class="code-quote">"/Echo"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span>&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceBean"</span>&gt;</span><span class="code-tag">&lt;ref bean=<span class="code-quote">"echo"</span>/&gt;</span><span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span>&gt;</span><span class="code-tag">&lt;value&gt;</span>org.codehaus.xfire.spring.Echo<span class="code-tag">&lt;/value&gt;</span><span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span>&gt;</span><span class="code-tag">&lt;ref bean=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span>/&gt;</span><span class="code-tag">&lt;/property&gt;</span>
+  <span class="code-tag">&lt;/bean&gt;</span></pre>
+</div></div>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

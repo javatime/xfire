@@ -1,0 +1,236 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Spring, XBean, Servlets and more</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="Spring%2CXBean%2CServletsandmore-Overview"></a>Overview</h2>
+
+<p>You've probably skipped over the rest of the user's guide and landed here because you're only interested in Spring configuration, right? If so, read the <a href="Quick Start.html" title="Quick Start">Quick Start</a> section before you dive into how to leverage Spring container management. It outlines, from start to finish, writing, configuring and exposing a simple SOAP Web service. More importantly, although the section doesn't say it, it is actually using the Spring framework under the hood, making it a very good starting point.</p>
+
+<h2><a name="Spring%2CXBean%2CServletsandmore-UsingXBeanandSpring"></a>Using XBean and Spring</h2>
+
+<p>XFire uses a great project called <a href="http://xbean.org" title="Visit page outside Confluence">XBean</a> under the covers for its <a href="XML Configuration.html" title="XML Configuration">XML Configuration</a>. XBean allows us to create a custom syntax and be able to intermix it with the spring syntax. Before you continue you should make sure you have Spring 1.2.4+. Now lets take a look at some examples.</p>
+
+<p>Here is an example of how to declare a simple service:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;name&gt;</span>Echo<span class="code-tag">&lt;/name&gt;</span>
+    <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.test.Echo<span class="code-tag">&lt;/serviceClass&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+<p>&nbsp;</p>
+
+<p>And you can easily load it via XBean's Classpath application context:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> junit.framework.TestCase;
+
+<span class="code-keyword">import</span> org.apache.xbean.spring.context.ClassPathXmlApplicationContext;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.ServiceRegistry;
+
+<span class="code-keyword">public</span> class XBeanExampleTest
+    <span class="code-keyword">extends</span> TestCase
+{
+    <span class="code-keyword">public</span> void testLoading()
+        <span class="code-keyword">throws</span> Exception
+    {
+        ClassPathXmlApplicationContext context = 
+            <span class="code-keyword">new</span> ClassPathXmlApplicationContext(<span class="code-keyword">new</span> <span class="code-object">String</span>[] {
+                <span class="code-quote">"/org/codehaus/xfire/spring/examples/simple.xml"</span>, 
+                <span class="code-quote">"/org/codehaus/xfire/spring/xfire.xml"</span> });
+
+        ServiceRegistry reg = (ServiceRegistry) context.getBean(<span class="code-quote">"xfire.serviceRegistry"</span>);
+        assertTrue(reg.hasService(<span class="code-quote">"Echo"</span>));
+    }
+}</pre>
+</div></div>
+<p>&nbsp;</p>
+
+<p>As you can see, that registered our service easily enough. From here we can also intermix the Spring and XFire syntax:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;beans xmlns=<span class="code-quote">"http://xfire.codehaus.org/config/1.0"</span>&gt;</span>
+
+  <span class="code-tag">&lt;service&gt;</span>
+    <span class="code-tag">&lt;name&gt;</span>Echo<span class="code-tag">&lt;/name&gt;</span>
+    <span class="code-tag">&lt;serviceBean&gt;</span>#echoBean<span class="code-tag">&lt;/serviceBean&gt;</span>
+  <span class="code-tag">&lt;/service&gt;</span>
+
+  <span class="code-tag">&lt;bean id=<span class="code-quote">"echoBean"</span> class=<span class="code-quote">"org.codehaus.xfire.services.Echo"</span>/&gt;</span>
+  
+<span class="code-tag">&lt;/beans&gt;</span></pre>
+</div></div>
+<p>&nbsp;</p>
+
+<p>To set properties on your Service you can do this:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;service&gt;
+  ... define your normal attributes ...
+  &lt;properties&gt;
+    &lt;property key="mtom-enabled"&gt;true&lt;/property&gt;
+    &lt;property key="myProperty"&gt;myValue&lt;/property&gt;
+  &lt;properties&gt;
+&lt;/service&gt;
+</pre>
+</div></div>
+<h2><a name="Spring%2CXBean%2CServletsandmore-UsingXFirewithoutXBean%3ATheServiceBean"></a>Using XFire without XBean: The ServiceBean</h2>
+
+<p>The above examples with XBean are really just using the ServiceBean class behind the scenes. If you don't want to use the XBean ApplicationContext you can easily configure your service via the ServiceBean class:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;bean name=<span class="code-quote">"echoService"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.ServiceBean"</span>&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceBean"</span> ref=<span class="code-quote">"echo"</span>/&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span> value=<span class="code-quote">"org.codehaus.xfire.test.Echo"</span>/&gt;</span>
+    <span class="code-tag">&lt;property name=<span class="code-quote">"inHandlers"</span>&gt;</span>
+      <span class="code-tag">&lt;list&gt;</span>
+        <span class="code-tag">&lt;ref bean=<span class="code-quote">"addressingHandler"</span>/&gt;</span>
+      <span class="code-tag">&lt;/list&gt;</span>
+    <span class="code-tag">&lt;/property&gt;</span>
+<span class="code-tag">&lt;/bean&gt;</span>
+
+<span class="code-tag">&lt;bean id=<span class="code-quote">"echo"</span> class=<span class="code-quote">"org.codehaus.xfire.test.EchoImpl"</span>/&gt;</span>
+
+<span class="code-tag">&lt;bean id=<span class="code-quote">"addressingHandler"</span> class=<span class="code-quote">"org.codehaus.xfire.addressing.AddressingInHandler"</span>/&gt;</span></pre>
+</div></div>
+<p>&nbsp;</p>
+
+<p>You'll also want to import some standard XFire bean definitions from the classpath:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>  &lt;import resource="classpath:org/codehaus/xfire/spring/xfire.xml"/&gt; 
+</pre>
+</div></div>
+<p>This file contains things like definitions for the TransportManager, ServiceRegistry, and some simple ServiceFactorys.</p>
+
+<p>If you're doing services over HTTP, you'll want to take a look at the XFireSpringServlet to expose these services.</p>
+
+<p>To set properties on your Service you can do this:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;bean class="org.codehaus.xfire.spring.ServiceBean"&gt;
+  ... define your normal attributes ...
+  &lt;property name="properties"&gt;
+    &lt;map&gt;
+      &lt;entry&gt;
+        &lt;key&gt;&lt;value&gt;mtom-enabled&lt;/value&gt;&lt;/key&gt;
+        &lt;value&gt;true&lt;/value&gt;
+      &lt;/entry&gt;
+      &lt;entry&gt;
+        &lt;key&gt;&lt;value&gt;myProperty&lt;/value&gt;&lt;/key&gt;
+        &lt;value&gt;myValue&lt;/value&gt;
+      &lt;/entry&gt;
+    &lt;/map&gt;
+  &lt;property&gt;
+&lt;/bean&gt;
+</pre>
+</div></div>
+<h2><a name="Spring%2CXBean%2CServletsandmore-ConfiguringtheXFireSpringServlet"></a>Configuring the XFireSpringServlet</h2>
+
+<p>The XFireSpringServlet to expose your services over HTTP if you are not using the XFireConfigurableServlet and you are not using any of the Spring remoting features. Here is an example on how to use it:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml">&lt;!DOCTYPE web-app
+    PUBLIC <span class="code-quote">"-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"</span>
+    <span class="code-quote">"http://java.sun.com/dtd/web-app_2_3.dtd"</span>&gt;
+    
+<span class="code-tag">&lt;web-app&gt;</span>
+  <span class="code-tag">&lt;servlet&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>XFireServlet<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;display-name&gt;</span>XFire Servlet<span class="code-tag">&lt;/display-name&gt;</span>
+    <span class="code-tag">&lt;servlet-class&gt;</span>
+        org.codehaus.xfire.spring.XFireSpringServlet
+    <span class="code-tag">&lt;/servlet-class&gt;</span>
+  <span class="code-tag">&lt;/servlet&gt;</span>
+
+  <span class="code-tag">&lt;servlet-mapping&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>XFireServlet<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;url-pattern&gt;</span>/servlet/XFireServlet/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+  <span class="code-tag">&lt;/servlet-mapping&gt;</span>
+
+  <span class="code-tag">&lt;servlet-mapping&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>XFireServlet<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;url-pattern&gt;</span>/services/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+  <span class="code-tag">&lt;/servlet-mapping&gt;</span>
+<span class="code-tag">&lt;/web-app&gt;</span></pre>
+</div></div>
+<p>&nbsp;</p>
+
+<p>The servlet gets at the application context like so:</p>
+<div class="preformatted"><div class="preformattedContent">
+<pre>ApplicationContext appContext =
+  WebApplicationContextUtils.getRequiredWebApplicationContext(servletConfig.getServletContext());
+</pre>
+</div></div>
+<p>&nbsp;</p>
+
+<p>If you need to provide your own XFire instance another way, extend XFireServlet and override the getXFire method.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

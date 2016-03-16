@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Embedding XFire</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>One of XFire's core strengths is how embeddable it is. It is possible for a project to embed xfire and provide soap services without end users having to specify any XFire specific information. All configuration can be programatically driven, and it is possible to define your own service files to define services and any other configuration information.</p>
+
+<p>This document will outline a number of typical scenarios for embedding. The first and most basic of these is the need to expose a java class as a service programatically.</p>
+
+<p>The steps involved in this are:</p>
+<ul class="alternate" type="square">
+	<li>Create an ObjectServiceFactory</li>
+	<li>Register the bean</li>
+	<li>Expose xfire</li>
+</ul>
+
+
+<h2><a name="EmbeddingXFire-Details"></a>Details</h2>
+<p>The ObjectServiceFactory is responsible for creating service objects. It's an implementation of ServiceFactory that is used for POJO (javabean) style classes. The factory will introspect the specified class and expose all the methods available to it. By default, methods inherited from java.lang.Object are excluded (eg, hashCode, toString, and so on, since it doesn't really make sense to incur the overhead of a remote call for them.)</p>
+
+<p>So let's create the factory:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">//first we create a XFire instance, using the <span class="code-keyword">default</span> implementation
+</span><span class="code-comment">//you can register your own implementation via XFireFactory.registerFactory()
+</span>XFire xfire = XFireFactory.newInstance().getXFire();
+<span class="code-comment">//the <span class="code-keyword">default</span> transport manager handles a number of transport mechanisms,
+</span><span class="code-comment">//which is good enough <span class="code-keyword">for</span> our needs
+</span>ServiceFactory factory = <span class="code-keyword">new</span> ObjectServiceFactory(xfire.getTransportManager());</pre>
+</div></div>
+<p>Having created the factory, the next step is to create a service for our POJO. If our POJO is a service interface, then we need to specify the implementation class. The implementation class must adhere to the javabean contract and have a no-arg constructor.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">//note that we'd like to specify our own service name, so we use the overloaded
+</span><span class="code-comment">//create method instead of the simpler one that just takes in a class name
+</span>Service service = factory.create(Hello.class, <span class="code-quote">"hi"</span>, <span class="code-keyword">null</span>, <span class="code-keyword">null</span>);
+<span class="code-comment">//<span class="code-keyword">if</span> Hello.class is an <span class="code-keyword">interface</span>, then we need to specify the implementation class
+</span>service.setProperty(ObjectInvoker.SERVICE_IMPL_CLASS, HelloImpl.class);</pre>
+</div></div>
+
+<p>So at this point, we have a factory with a service object. The next step is to register this service and allow external clients to call it. For our example, we'll expose this service in a web application. XFire provides a good base servlet to subclass. The servlet we create will set up xfire, register our service, and expose it. Having done that, it will delegate requests to the xfire controller to process service requests. Putting together the code above with the rest of servlet code, we have:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> org.codehaus.xfire.service.binding.ObjectServiceFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.binding.ObjectInvoker;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.Service;
+<span class="code-keyword">import</span> org.codehaus.xfire.transport.http.XFireServlet;
+
+<span class="code-keyword">public</span> class SOAPServlet <span class="code-keyword">extends</span> XFireServlet
+{
+  <span class="code-keyword">public</span> void init() <span class="code-keyword">throws</span> ServletException
+  {
+    <span class="code-keyword">super</span>.init();
+    ObjectServiceFactory factory = <span class="code-keyword">new</span> ObjectServiceFactory(getXFire().getTransportManager(), <span class="code-keyword">null</span>);
+    <span class="code-comment">//we don't want to expose compareTo
+</span>    factory.addIgnoredMethods(<span class="code-quote">"java.lang.Comparable"</span>);
+    Service service = factory.create(Hello.class,<span class="code-quote">"hi"</span>, <span class="code-keyword">null</span>, <span class="code-keyword">null</span>);
+    service.setProperty(ObjectInvoker.SERVICE_IMPL_CLASS, HelloImpl.class);
+    <span class="code-comment">//we register the service with the controller that handles soap requests
+</span>    getController().getServiceRegistry().register(service);
+  }
+}</pre>
+</div></div>
+
+<p>Having defined the servlet that handles soap requests, all that remains is to register it in the web application's web.xml:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;servlet&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>soap<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;servlet-class&gt;</span>SOAPServlet<span class="code-tag">&lt;/servlet-class&gt;</span>
+  <span class="code-tag">&lt;/servlet&gt;</span>
+  <span class="code-tag">&lt;servlet-mapping&gt;</span>
+    <span class="code-tag">&lt;servlet-name&gt;</span>soap<span class="code-tag">&lt;/servlet-name&gt;</span>
+    <span class="code-tag">&lt;url-pattern&gt;</span>/soap/*<span class="code-tag">&lt;/url-pattern&gt;</span>
+  <span class="code-tag">&lt;/servlet-mapping&gt;</span></pre>
+</div></div>
+
+<p>Once the servlet is deployed, you can verify that the service is correctly processing incoming requests by requesting the WSDL, which can be accessed at <b>/soap/hi?wsdl</b></p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

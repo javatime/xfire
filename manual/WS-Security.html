@@ -1,0 +1,443 @@
+<html>
+    <head>
+        <title>Codehaus XFire : WS-Security</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>WS-Security support is now included in the 1.1 release. XFire uses <a href="http://ws.apache.org/wss4j" title="Visit page outside Confluence">WSS4J</a> to provide WS-Security support. In addition to the documentation here, you may find their site helpful as well. XFire also includes some WS-Security examples in the distribution which you can try out.</p>
+
+<h2><a name="WS-Security-EnablingWSSecurity"></a>Enabling WS-Security</h2>
+
+<p>Before enabling WS-Security module, you must  make sure that you have installed Unlimited Strength Jurisdiction Policy Files for your SDK version ( bottom of the page <a href="http://java.sun.com/j2se/1.5.0/download.jsp" title="Visit page outside Confluence">http://java.sun.com/j2se/1.5.0/download.jsp</a> or <a href="http://java.sun.com/j2se/1.4.2/download.html" title="Visit page outside Confluence">http://java.sun.com/j2se/1.4.2/download.html</a>), and the Bouncy Castle security provider from <a href="http://BouncyCastle.org" title="Visit page outside Confluence">http://BouncyCastle.org</a> ( Here is short description of instalation process :&nbsp;<a href="http://docs.safehaus.org/display/PENROSE/Installing+Security+Provider" title="Visit page outside Confluence">http://docs.safehaus.org/display/PENROSE/Installing+Security+Provider</a> ) . If you don't, you will probably receive an exception message about invalid algorithm or key size.</p>
+
+<p>To enable WS-Security support you must add two handlers to the incoming (inhandlers) and/or outgoing (outhandlers) handler chains ( If your client sends secured data but does not expect to get such response, its enough to only add security handlers to the client's outHandlers and if your server takes secured messages but does not send such, you can add handlers only to the server's inHandlers chain). These handlers must be added to the inHandlers:<br/>
+<em>org.codehaus.xfire.security.wss4j.WSS4JInHandler</em> &#45; Performs the WS-Security related functions<br/>
+<em>org.codehaus.xfire.util.dom.DOMInHandler</em> &#45; Converts from StAX to DOM format for WS-Security</p>
+
+<p><b>Note:</b> DOMInHandler requires XML Transformer support which is included in Xalan 2.7.0.&nbsp; This library is not included with XFire by default.</p>
+
+<p>and the handlers below to outHandlers:<br/>
+<em>org.codehaus.xfire.security.wss4j.WSS4JOutHandler</em> &#45; Performs the WS-Security related functions<br/>
+<em>org.codehaus.xfire.util.dom.DOMOutHandler</em> &#45; Converts from DOM to StAX format for WS-Security</p>
+
+<p><b>Server side configuration :</b><br/>
+<div class="preformatted"><div class="preformattedContent">
+<pre>&lt;tns:inHandlers&gt;
+ &lt;tns:handler handlerClass="org.codehaus.xfire.util.dom.DOMInHandler" /&gt;
+ &lt;bean id="org.codehaus.xfire.security.wss4j.WSS4JInHandler" class="org.codehaus.xfire.security.wss4j.WSS4JInHandler"&gt;
+   &lt;!-- security configuration goes here  --&gt;
+   ....
+ &lt;/bean&gt;
+&lt;/tns:inHandlers&gt;
+
+&lt;tns:outHandlers&gt;
+ &lt;tns:handler handlerClass="org.codehaus.xfire.util.dom.DOMOutHandler" /&gt;
+ &lt;bean id="org.codehaus.xfire.security.wss4j.WSS4JOutHandler" class="org.codehaus.xfire.security.wss4j.WSS4JOutHandler"&gt;
+   &lt;!--  security configuration goes here --&gt;
+   ....
+&lt;/bean&gt;
+&lt;/tns:outHandlers&gt;
+</pre>
+</div></div><br clear="all" /></p>
+
+<p><b>Client side configuration :</b><br/>
+<div class="preformatted"><div class="preformattedContent">
+<pre>Service serviceModel = new ObjectServiceFactory().create( .. )
+// Create service client
+IBook service = (IBook) new XFireProxyFactory().create( ...);
+Client client = Client.getInstance(service);
+client.addOutHandler(new DOMOutHandler());
+Properties outProperties = new Properties();
+// CONFIGURE OUTGOING SECURITY HERE (outProperties) &lt;--
+client.addOutHandler(new WSS4JOutHandler(outProperties));
+client.addInHandler(new DOMInHandler());
+Properties inProperties = new Properties();
+// CONFIGURE INCOMMING SECURITY HERE (inProperties) &lt;--
+client.addInHandler(new WSS4JInHandler(inProperties));
+// Execute service
+</pre>
+</div></div><br clear="all" /></p>
+
+<h2><a name="WS-Security-Buildingkeys"></a>Building keys</h2>
+
+<p>You can generate a key pair for the development environment via the following steps.&nbsp; Keep in mind these will not be signed by an external authority like Verisign.</p>
+
+<p>1. Creating private key with given alias and password like "myAlias"/"myAliasPassword" in keystore (protected by password for<br/>
+security reasons)<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">keytool -genkey -alias myAlias -keypass myAliasPassword -keystore privatestore.jks \
+  -storepass keyStorePassword -dname <span class="code-quote">"cn=myAlias"</span> -keyalg RSA</pre>
+</div></div><br clear="all" /></p>
+
+<p>In this instance we are using the RSA algorithm.</p>
+
+<p>2. Self-sign our certificate (in production environment this will be done by a company like Verisign).<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">keytool -selfcert -alias myAlias -keystore privatestore.jks -storepass keyStorePassword -keypass myAliasPassword</pre>
+</div></div><br clear="all" /></p>
+
+<p>3. Export the public key from our private keystore to file named key.rsa<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">keytool -export -alias myAlias -file key.rsa -keystore privatestore.jks -storepass keyStorePassword</pre>
+</div></div><br clear="all" /></p>
+
+<p>4. Import the public key to new keystore:<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java">keytool -<span class="code-keyword">import</span> -alias myAlias  -file key.rsa -keystore publicstore.jks -storepass keyStorePassword</pre>
+</div></div><br clear="all" /></p>
+
+<p>So now we have two keystores containing our keys - a public one (publicstore.jks) and a private one (privatestore.jks). Both of them have keystore password set to keyStorePass (this not recommended for production but ok for development) and alias set to myAlias.  The file key.rsa can removed from filesystem, since it used only temporarily.&nbsp; Storing keys in keystores is strongly advised because a keystore is protected by a password.</p>
+
+<p>A more detailed description of key generation can be found  here:<br/>
+<a href="http://www.churchillobjects.com/c/11201e.html" title="Visit page outside Confluence">http://www.churchillobjects.com/c/11201e.html</a><br/>
+<a href="http://java.sun.com/j2se/1.4.2/docs/tooldocs/windows/keytool.html" title="Visit page outside Confluence">http://java.sun.com/j2se/1.4.2/docs/tooldocs/windows/keytool.html</a></p>
+
+<p>How to create a production certificate can be found here:<br/>
+<a href="http://support.globalsign.net/en/objectsign/java.cfm" title="Visit page outside Confluence">http://support.globalsign.net/en/objectsign/java.cfm</a></p>
+
+<h2><a name="WS-Security-UserTokenAuthentication"></a>User Token Authentication</h2>
+
+<p>This WS-Security scenario adds username and password values to the message header. A password can be sent as plain text or in hashed form (depending on "passwordType" property).&nbsp;</p>
+
+<p><b>Client side configuration :</b><br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">protected</span> void configureOutProperties(Properties config)
+{
+    <span class="code-comment">// Action to perform : user token
+</span>    config.setProperty(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
+    <span class="code-comment">// Password type : plain text
+</span>    config.setProperty(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+    <span class="code-comment">// <span class="code-keyword">for</span> hashed password use:
+</span>    <span class="code-comment">//properties.setProperty(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_DIGEST);
+</span>    <span class="code-comment">// User name to send
+</span>    config.setProperty(WSHandlerConstants.USER, <span class="code-quote">"serveralias"</span>);
+    <span class="code-comment">// Callback used to retrive password <span class="code-keyword">for</span> given user.
+</span>    config.setProperty(WSHandlerConstants.PW_CALLBACK_CLASS, PasswordHandler.class.getName());
+}</pre>
+</div></div><br clear="all" /></p>
+
+<p><em>The PasswordHandler</em> class is responsible for finding the password for given user name and must implement the <em>org.apache.ws.security.WSPasswordCallback</em> interface.</p>
+
+<p>You can also specify an existing handler instance, using the WSHandlerConstants.PW_CALLBACK_REF property on the client/service instance or MessageContext ( e.g. client.setProperty(new <em>PasswordHandler()))</em>.</p>
+
+<p>The WSHandlerConstants.PASSWORD_TYPE property determines how the password will be sent.&nbsp; If it is set to WSConstants.PW_TEXT, the password will be sent as plain text.&nbsp; If  the value is WSConstants.PW_DIGEST, a password digest will be sent. If no value is set, a digest is used by default..</p>
+
+<p><b>Server side configuration :</b><br/>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag"><span class="code-comment">&lt;!--  =============  User Token with Plain Pasword  ============= --&gt;</span></span>
+<span class="code-tag">&lt;service&gt;</span>
+
+  <span class="code-tag"><span class="code-comment">&lt;!--  --&gt;</span></span>
+  <span class="code-tag">&lt;name&gt;</span>BookServiceUTPP<span class="code-tag">&lt;/name&gt;</span>
+  <span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/BookService<span class="code-tag">&lt;/namespace&gt;</span>
+  <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.BookService<span class="code-tag">&lt;/serviceClass&gt;</span>
+  <span class="code-tag">&lt;inHandlers&gt;</span>
+    <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"org.codehaus.xfire.util.dom.DOMInHandler"</span> /&gt;</span>
+    <span class="code-tag">&lt;bean class=<span class="code-quote">"org.codehaus.xfire.security.wss4j.WSS4JInHandler"</span> xmlns=""&gt;</span>
+      <span class="code-tag">&lt;property name=<span class="code-quote">"properties"</span>&gt;</span>
+      
+      <span class="code-tag">&lt;map xmlns="" &gt;</span>
+        <span class="code-tag">&lt;entry key=<span class="code-quote">"passwordCallbackRef"</span> xmlns=""&gt;</span>
+           <span class="code-tag">&lt;bean xmlns=<span class="code-quote">"" class="</span>org.codehaus.xfire.demo.PasswordHandler<span class="code-quote">" id="</span>passHandler<span class="code-quote">" name="</span>passHandler"/&gt;</span>
+       <span class="code-tag">&lt;/entry&gt;</span>
+      <span class="code-tag">&lt;entry key=<span class="code-quote">"action"</span> value=<span class="code-quote">"UsernameToken"</span> /&gt;</span>
+ <span class="code-tag">&lt;/map&gt;</span>
+      
+        <span class="code-tag">&lt;!--  props&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"action"</span>&gt;</span>UsernameToken<span class="code-tag">&lt;/prop&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"passwordCallbackClass"</span>&gt;</span>org.codehaus.xfire.demo.PasswordHandler<span class="code-tag">&lt;/prop&gt;</span>
+        <span class="code-tag">&lt;/props --&gt;</span>
+      <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span>
+    <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"org.codehaus.xfire.demo.ValidateUserTokenHandler"</span> /&gt;</span>
+  <span class="code-tag">&lt;/inHandlers&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div><br clear="all" /></p>
+
+<p>The <em>"action"</em> property contains an action to perform.<br/>
+The <em>"passwordCallbackClass"</em> property contains the handler class name which will process the password sent with the SOAP message. If the password is in plain form, the callback class can authenticate the user or just ignore the password and let the XFire handler perform the authentication with a data set on the MessageContext by security handler. In the case of a hashed password, the callback class MUST return the same password as used on client side.&nbsp; If a null value is returned or the password doesn't match the orignal password, an exception will be thrown. Security processing ( like username/password from usertoken header ) can be retrieved from MessageContext with the following code :<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class ValidateUserTokenHandler
+    <span class="code-keyword">extends</span> AbstractHandler
+{
+
+   <span class="code-keyword">public</span> void invoke(MessageContext context)
+        <span class="code-keyword">throws</span> Exception
+    {
+        Vector result = (Vector) context.getProperty(WSHandlerConstants.RECV_RESULTS);
+        <span class="code-keyword">for</span> (<span class="code-object">int</span> i = 0; i &lt; result.size(); i++)
+        {
+            WSHandlerResult res = (WSHandlerResult) result.get(i);
+            <span class="code-keyword">for</span> (<span class="code-object">int</span> j = 0; j &lt; res.getResults().size(); j++)
+            {
+                WSSecurityEngineResult secRes = (WSSecurityEngineResult) res.getResults().get(j);
+                <span class="code-object">int</span> action  = secRes.getAction();
+                <span class="code-comment">// USER TOKEN
+</span>                <span class="code-keyword">if</span>( (action &amp;  WSConstants.UT )&gt;0   ){
+                WSUsernameTokenPrincipal principal = (WSUsernameTokenPrincipal) secRes
+                        .getPrincipal();
+                <span class="code-comment">// Set user property to user from UT to allow response encryption
+</span>                context.setProperty(WSHandlerConstants.ENCRYPTION_USER,principal.getName());
+                <span class="code-object">System</span>.out.print(<span class="code-quote">"User : "</span> + principal.getName() + <span class="code-quote">" password : "</span>
+                        + principal.getPassword() + <span class="code-quote">"\n"</span>);
+                }
+                <span class="code-comment">// SIGNATURE
+</span>                <span class="code-keyword">if</span>( ( action &amp; WSConstants.SIGN ) &gt; 0 ){
+                    X509Certificate cert = secRes.getCertificate();
+                    X500Name principal = (X500Name) secRes.getPrincipal();
+                    <span class="code-comment">// Do something whith cert
+</span>                    <span class="code-object">System</span>.out.print(<span class="code-quote">"Signature <span class="code-keyword">for</span> : "</span>  + principal.getCommonName());
+                }
+            }
+        }
+    }
+}</pre>
+</div></div><br clear="all" /></p>
+
+<h2><a name="WS-Security-Timestamps"></a>Timestamps</h2>
+
+<p>Timestamps specify how long the security data remains valid.</p>
+
+<p><b>Client side configuration:</b><br/>
+&nbsp;<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">protected</span> void configureOutProperties(Properties properties)
+{
+    properties.setProperty(WSHandlerConstants.ACTION,WSHandlerConstants.TIMESTAMP);
+    <span class="code-comment">// How <span class="code-object">long</span> ( in seconds ) message is valid since send.
+</span>    properties.setProperty(WSHandlerConstants.TTL_TIMESTAMP,<span class="code-quote">"15"</span>);
+    <span class="code-comment">// <span class="code-keyword">if</span> you want to use millisecond precision use <span class="code-keyword">this</span>
+</span>    <span class="code-comment">//properties.setProperty(WSHandlerConstants.TIMESTAMP_PRECISION,<span class="code-quote">"<span class="code-keyword">true</span>"</span>);
+</span>}</pre>
+</div></div><br clear="all" /></p>
+
+<p><em>The WSHandlerConstants.TTL_TIMESTAMP</em>&nbsp;  property specifies the number of seconds or milliseconds for which the message is considered valid .</p>
+
+<p><em>The WSHandlerConstants.TIMESTAMP_PRECISION</em> property determines the time unit for the time stamp ( seconds or miliseconds).&nbsp; If not specified, seconds are used.</p>
+
+<p><b>Server side configuration:</b>&nbsp;<br/>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag"><span class="code-comment">&lt;!--  ============= TimeStamp  ============= --&gt;</span></span>
+<span class="code-tag">&lt;service&gt;</span>
+  <span class="code-tag">&lt;name&gt;</span>BookServiceTS<span class="code-tag">&lt;/name&gt;</span>
+  <span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/BookService<span class="code-tag">&lt;/namespace&gt;</span>
+  <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.BookService<span class="code-tag">&lt;/serviceClass&gt;</span>
+
+  <span class="code-tag">&lt;inHandlers&gt;</span>
+    <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"org.codehaus.xfire.util.dom.DOMInHandler"</span> /&gt;</span>
+    <span class="code-tag">&lt;bean class=<span class="code-quote">"org.codehaus.xfire.security.wss4j.WSS4JInHandler"</span> xmlns=""&gt;</span>
+      <span class="code-tag">&lt;property name=<span class="code-quote">"properties"</span>&gt;</span>
+        <span class="code-tag">&lt;props&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"action"</span>&gt;</span>Timestamp<span class="code-tag">&lt;/prop&gt;</span>
+        <span class="code-tag">&lt;/props&gt;</span>
+      <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span>
+  <span class="code-tag">&lt;/inHandlers&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div><br clear="all" /></p>
+
+<h2><a name="WS-Security-Encryption"></a>Encryption</h2>
+
+<p>Allows one to encrypt the message body ( or only&nbsp; its part ) using the given crypthography algorithm.&nbsp; For performance reasons, message data is encrypted using a symmetric key and then the symmetic key is encrypted with the receiver's public key.</p>
+
+<p><b>Client side configuration:</b><br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">protected</span> void configureOutProperties(Properties properties)
+{
+    properties.setProperty(WSHandlerConstants.ACTION, WSHandlerConstants.ENCRYPT);
+    properties.setProperty(WSHandlerConstants.USER, <span class="code-quote">"serveralias"</span>);
+    <span class="code-comment">//Configuration of <span class="code-keyword">public</span> key used to encrypt message goes to properties file.
+</span>    properties.setProperty(WSHandlerConstants.ENC_PROP_FILE,
+                           <span class="code-quote">"org/codehaus/xfire/client/outsecurity_enc.properties"</span>);
+}</pre>
+</div></div><br clear="all" /></p>
+
+<p><em>WSHandlerConstants.ENC_PROP_FILE</em> &#45; contains path to file with details of encryption configuration.<br/>
+<em>WSHandlerConstants.ENC_SYM_ALGO</em> &#45; specify symmetric algorithm used to encrypt message data. Allowed values are :&nbsp; <em>&nbsp; WSConstants.TRIPLE_DES,WSConstants.AES_128</em> ( default )<em>, WSConstants.AES_256, and WSConstants.AES_192</em></p>
+
+<p>The file can look like the following :<br/>
+<div class="preformatted"><div class="preformattedContent">
+<pre>org.apache.ws.security.crypto.provider=org.apache.ws.security.components.crypto.Merlin
+org.apache.ws.security.crypto.merlin.keystore.type=jks
+org.apache.ws.security.crypto.merlin.keystore.password=keystorePass
+org.apache.ws.security.crypto.merlin.alias.password=aliaspass
+org.apache.ws.security.crypto.merlin.keystore.alias=alias
+org.apache.ws.security.crypto.merlin.file=META-INF/xfire/myPublicstore.jks
+</pre>
+</div></div><br clear="all" /></p>
+
+<p>&nbsp;<br/>
+<em>org.apache.ws.security.crypto.provider</em> &#45;&nbsp; implementation class for security provider ( must be&nbsp; set to <em>org.apache.ws.security.components.crypto.Merlin</em> )<br/>
+<em>org.apache.ws.security.crypto.merlin.keystore.type</em> &#45;  keystore type ( jks/pkcs12 )<br/>
+org.apache.ws.security.crypto.merlin.keystore.password - keystore passphrase<br/>
+<em>org.apache.ws.security.crypto.merlin.keystore.alias</em> &#45; alias of key inside keystore<br/>
+<em>org.apache.ws.security.crypto.merlin.alias.password &#45;&nbsp;</em> password for private key inside keystore stored under given alias ( not used for encryption )<br/>
+<em>org.apache.ws.security.crypto.merlin.file</em> &#45; path to keystore</p>
+
+<p><b>Server side configuration:</b><br/>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag"><span class="code-comment">&lt;!--  ============= Encryption   ============= --&gt;</span></span>
+<span class="code-tag">&lt;service&gt;</span>
+  <span class="code-tag">&lt;name&gt;</span>BookServiceENC<span class="code-tag">&lt;/name&gt;</span>
+  <span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/BookService<span class="code-tag">&lt;/namespace&gt;</span>
+  <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.BookService<span class="code-tag">&lt;/serviceClass&gt;</span>
+
+  <span class="code-tag">&lt;inHandlers&gt;</span>
+    <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"org.codehaus.xfire.util.dom.DOMInHandler"</span> /&gt;</span>
+    <span class="code-tag">&lt;bean class=<span class="code-quote">"org.codehaus.xfire.security.wss4j.WSS4JInHandler"</span> xmlns=""&gt;</span>
+      <span class="code-tag">&lt;property name=<span class="code-quote">"properties"</span>&gt;</span>
+        <span class="code-tag">&lt;props&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"action"</span>&gt;</span>Encrypt<span class="code-tag">&lt;/prop&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"decryptionPropFile"</span>&gt;</span>META-INF/xfire/insecurity_enc.properties<span class="code-tag">&lt;/prop&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"passwordCallbackClass"</span>&gt;</span>org.codehaus.xfire.demo.PasswordHandler<span class="code-tag">&lt;/prop&gt;</span>
+        <span class="code-tag">&lt;/props&gt;</span>
+      <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span>
+  <span class="code-tag">&lt;/inHandlers&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div><br clear="all" /></p>
+
+<h2><a name="WS-Security-Signature"></a>Signature</h2>
+
+<p>Allows one to send along with the message a digital signature of it, which assures that no one modified the message content between the sender and receiver.&nbsp; This action creates a digest of the message and encrypts it with sender private key.&nbsp; The receiver must have the sender's public key to verify this signature.</p>
+
+<p><b>Client side configuration:</b><br/>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">protected</span> void configureOutProperties(Properties properties)
+{
+    properties.setProperty(WSHandlerConstants.ACTION,WSHandlerConstants.SIGNATURE);
+    <span class="code-comment">// User in keystore
+</span>    properties.setProperty(WSHandlerConstants.USER, <span class="code-quote">"client-344-839"</span>);
+    <span class="code-comment">// This callback is used to specify password <span class="code-keyword">for</span> given user <span class="code-keyword">for</span> keystore
+</span>    properties.setProperty(WSHandlerConstants.PW_CALLBACK_CLASS, org.codehaus.xfire.demo.PasswordHandler.class.getName());
+    <span class="code-comment">// Configuration <span class="code-keyword">for</span> accessing <span class="code-keyword">private</span> key in keystore
+</span>    properties.setProperty(WSHandlerConstants.SIG_PROP_FILE,<span class="code-quote">"org/codehaus/xfire/client/outsecurity_sign.properties"</span>);
+    properties.setProperty(WSHandlerConstants.SIG_KEY_ID,<span class="code-quote">"IssuerSerial"</span>);
+
+}</pre>
+</div></div><br clear="all" /></p>
+
+<p><em>WSHandlerConstants.SIG_KEY_ID</em> specify what key identifier should be used ( possible values are : "IssuerSerial" ( recommended ) and "DirectReference" ).<br/>
+<em>WSHandlerConstants.SIG_PROP_FILE</em> contains path to file with details of signature configuration.</p>
+
+<p>Configuration file can look like:<br/>
+<div class="preformatted"><div class="preformattedContent">
+<pre>org.apache.ws.security.crypto.provider=org.apache.ws.security.components.crypto.Merlin
+org.apache.ws.security.crypto.merlin.keystore.type=jks
+org.apache.ws.security.crypto.merlin.keystore.password=keystorePass
+org.apache.ws.security.crypto.merlin.alias.password=aliaspass
+org.apache.ws.security.crypto.merlin.keystore.alias=alias
+org.apache.ws.security.crypto.merlin.file=META-INF/xfire/myPrivatestore.jks
+</pre>
+</div></div><br clear="all" /></p>
+
+<p>&nbsp;<br/>
+Inserting a certicate in the signing message : <a href="http://ws.apache.org/wss4j/cert.html" title="Visit page outside Confluence">http://ws.apache.org/wss4j/cert.html</a></p>
+
+<p><b>Server side configuration:</b><br/>
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag"><span class="code-comment">&lt;!--  ============= Signature  ============= --&gt;</span></span>
+<span class="code-tag">&lt;service&gt;</span>
+  <span class="code-tag">&lt;name&gt;</span>BookServiceSign<span class="code-tag">&lt;/name&gt;</span>
+  <span class="code-tag">&lt;namespace&gt;</span>http://xfire.codehaus.org/BookService<span class="code-tag">&lt;/namespace&gt;</span>
+  <span class="code-tag">&lt;serviceClass&gt;</span>org.codehaus.xfire.demo.BookService<span class="code-tag">&lt;/serviceClass&gt;</span>
+
+  <span class="code-tag">&lt;inHandlers&gt;</span>
+    <span class="code-tag">&lt;handler handlerClass=<span class="code-quote">"org.codehaus.xfire.util.dom.DOMInHandler"</span> /&gt;</span>
+    <span class="code-tag">&lt;bean class=<span class="code-quote">"org.codehaus.xfire.security.wss4j.WSS4JInHandler"</span> xmlns=""&gt;</span>
+      <span class="code-tag">&lt;property name=<span class="code-quote">"properties"</span>&gt;</span>
+        <span class="code-tag">&lt;props&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"action"</span>&gt;</span>Signature<span class="code-tag">&lt;/prop&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"signaturePropFile"</span>&gt;</span>META-INF/xfire/insecurity_sign.properties<span class="code-tag">&lt;/prop&gt;</span>
+          <span class="code-tag">&lt;prop key=<span class="code-quote">"passwordCallbackClass"</span>&gt;</span>org.codehaus.xfire.demo.PasswordHandler<span class="code-tag">&lt;/prop&gt;</span>
+        <span class="code-tag">&lt;/props&gt;</span>
+      <span class="code-tag">&lt;/property&gt;</span>
+    <span class="code-tag">&lt;/bean&gt;</span>
+  <span class="code-tag">&lt;/inHandlers&gt;</span>
+<span class="code-tag">&lt;/service&gt;</span></pre>
+</div></div><br clear="all" /></p>
+
+<p>The file insecurity_sign.properties:<br/>
+<div class="preformatted"><div class="preformattedContent">
+<pre>org.apache.ws.security.crypto.provider=org.apache.ws.security.components.crypto.Merlin
+org.apache.ws.security.crypto.merlin.keystore.type=jks
+org.apache.ws.security.crypto.merlin.keystore.password=keystorePass
+org.apache.ws.security.crypto.merlin.keystore.alias=alias
+org.apache.ws.security.crypto.merlin.file=META-INF/xfire/myPublicstore.jks
+</pre>
+</div></div><br clear="all" /></p>
+
+<h2><a name="WS-Security-UsingWSSecuritywithJSR181Annotations"></a>Using WS-Security with JSR 181 Annotations</h2>
+
+<p><a href="http://arsenalist.com/2007/01/18/implementing-ws-security-with-jsr181-annotations-using-wss4j-in-xfire/" title="Visit page outside Confluence">This blog entry</a> shows how to configure WS-Security using JSR 181 Annotations and InHandlers.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

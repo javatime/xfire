@@ -1,0 +1,475 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Dependency Guide</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>Its helpful to know what supporting libraries you need to use XFire, so we've tried to create a concise table here. All these jars can be found on the <a href="http://ibiblio.org/maven" title="Visit page outside Confluence">Maven Ibiblio site</a> except for the StAX jars, which can be found on the <a href="http://dist.codehaus.org/stax" title="Visit page outside Confluence">Codehaus distribution site</a>.</p>
+
+<p>You can see your <a href="Maven Guide.html" title="Maven Guide">Maven Guide</a> for information on Maven integration.</p>
+
+<p>Also, note that currently XFire requires Java 1.4&#43; as StAX depends on Java 1.4. Future releases may include Java 1.3 support.</p>
+
+<p><b>X = Required</b><br/>
+<b>O = Optional</b></p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Dependency </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Basic Usage </th>
+<th class='confluenceTh'> Basic + XML Config </th>
+<th class='confluenceTh'> Notes </th>
+<th class='confluenceTh'> LICENSE&nbsp; </th>
+</tr>
+<tr>
+<td class='confluenceTd'> xfire-all </td>
+<td class='confluenceTd'> 1.1 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;MIT </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://java.sun.com/products/javabeans/glasgow/jaf.html" title="Visit page outside Confluence">activation framework</a> </td>
+<td class='confluenceTd'> 1.0.2&#43; </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> 1.1&#43; is CDDL </td>
+</tr>
+<tr>
+<td class='confluenceTd'> commons-codec </td>
+<td class='confluenceTd'> 1.3 </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> Only needed for XFire clients using HTTP </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> commons-httpclient </td>
+<td class='confluenceTd'> 3.0 </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> Only needed for XFire clients using HTTP </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> commons-logging </td>
+<td class='confluenceTd'> 1.0.4 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> javamail </td>
+<td class='confluenceTd'> 1.4 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> (Used for soap attachments) </td>
+<td class='confluenceTd'> CDDL </td>
+</tr>
+<tr>
+<td class='confluenceTd'> jaxen </td>
+<td class='confluenceTd'> 1.1-beta-8 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> If you use AbstractXFireTest only </td>
+<td class='confluenceTd'> &nbsp;ASL 1.1 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> jdom </td>
+<td class='confluenceTd'> 1.0 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;ASL 1.1 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> jetty </td>
+<td class='confluenceTd'> 5.x <br clear="all" /> </td>
+<td class='confluenceTd'> O <br clear="all" /> </td>
+<td class='confluenceTd'> O <br clear="all" /> </td>
+<td class='confluenceTd'> Needed for XFireHttpServer <br clear="all" /> </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> junit </td>
+<td class='confluenceTd'> 3.8.1 </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> If you use AbstractXFireTest only </td>
+<td class='confluenceTd'> &nbsp;CPL 1.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> servletapi </td>
+<td class='confluenceTd'> 2.3 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> For servlet use only. </td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+<tr>
+<td class='confluenceTd'> spring </td>
+<td class='confluenceTd'> 1.2.4&#43; </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> stax-api </td>
+<td class='confluenceTd'> 1.0.1 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> wsdl4j </td>
+<td class='confluenceTd'> 1.5.2 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;CPL 1.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://ibiblio.org/maven2/org/apache/xbean/xbean-spring/2.6/xbean-spring-2.6.jar" title="Visit page outside Confluence">xbean-spring</a> </td>
+<td class='confluenceTd'> 2.6 </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> From the <a href="http://xbean.org/" title="Visit page outside Confluence">XBean</a> project. </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 </td>
+</tr>
+<tr>
+<td class='confluenceTd'> woodstox </td>
+<td class='confluenceTd'> 3.0.1 </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'> X </td>
+<td class='confluenceTd'>&nbsp;</td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://www.apache.org/dist/maven-repository/org/apache/ws/commons/XmlSchema/1.1/XmlSchema-1.1.jar" title="Visit page outside Confluence">XmlSchema</a> </td>
+<td class='confluenceTd'> 1.1 </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> Only needed for dynamic XFire clients. This is from the Apache WS Commons. </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> <a href="http://www.ibiblio.org/maven/xfire/jars/xfire-jsr181-api-1.0-M1.jar" title="Visit page outside Confluence">xfire-jsr181-api</a> </td>
+<td class='confluenceTd'> 1.0-M1 </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> O </td>
+<td class='confluenceTd'> Needed for JSR181 Annotations </td>
+<td class='confluenceTd'> &nbsp;MIT </td>
+</tr>
+</tbody></table>
+
+<h1><a name="DependencyGuide-SelectingaStaxImplementation%28IMPORTANT%5C%21%29"></a>Selecting a Stax Implementation (IMPORTANT&#33;)</h1>
+
+<p>Stax is the XML api that powers XFire and allows it to process XML efficiently. There are many different Stax implementations out there - the reference implementation (RI), <a href="http://woodstox.codehaus.org" title="Visit page outside Confluence">Woodstox</a>, <a href="http://fi.dev.java.net" title="Visit page outside Confluence">FastInfoset</a>, and there is one included in the JWSDP. Regardless of which you one choose you <b>must have the stax-api jar on your classpath</b>.</p>
+
+<p>In addition we highly recommend that you use Woodstox as your Stax implementation. It is about 30-40% faster then the RI and works more reliably. To ensure you are using Woodstox and not the RI make sure the stax-1.1.x-dev jar is off your classpath and the wstx-2.0.3 jar is on it.</p>
+
+<h1><a name="DependencyGuide-OptionalModules"></a>Optional Modules</h1>
+
+
+<h2><a name="DependencyGuide-Generator"></a>Generator</h2>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'> &nbsp;License </th>
+</tr>
+<tr>
+<td class='confluenceTd'> jaxb-xjc </td>
+<td class='confluenceTd'> 2.0 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;CDDL </td>
+</tr>
+<tr>
+<td class='confluenceTd'> [mlSchema </td>
+<td class='confluenceTd'> 1.1 </td>
+<td class='confluenceTd'> Required. This is from the Apache WS Commons. </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+</tbody></table>
+<p>Additional you will need the dependencies for JAXB or XMLBeans.</p>
+
+<h2><a name="DependencyGuide-JAXB"></a>JAXB</h2>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'> License&nbsp; </th>
+</tr>
+<tr>
+<td class='confluenceTd'> jaxb-xjc </td>
+<td class='confluenceTd'> 2.0 </td>
+<td class='confluenceTd'> Required at build. </td>
+<td class='confluenceTd'> &nbsp;CDDL </td>
+</tr>
+<tr>
+<td class='confluenceTd'> jaxb-impl </td>
+<td class='confluenceTd'> 2.0 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;CDDL </td>
+</tr>
+<tr>
+<td class='confluenceTd'> jaxb-api </td>
+<td class='confluenceTd'> 2.0 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;CDDL </td>
+</tr>
+</tbody></table>
+
+<h2><a name="DependencyGuide-XMLBeans"></a>XMLBeans</h2>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'> &nbsp;License </th>
+</tr>
+<tr>
+<td class='confluenceTd'> xmlbeans </td>
+<td class='confluenceTd'> 2.0.0&#43; </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;CDDL </td>
+</tr>
+</tbody></table>
+
+<h2><a name="DependencyGuide-Castor"></a>Castor</h2>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> &nbsp;Project </th>
+<th class='confluenceTh'> Version <br clear="all" /> </th>
+<th class='confluenceTh'> Required/Optional <br clear="all" /> </th>
+<th class='confluenceTh'> License <br clear="all" /> </th>
+</tr>
+<tr>
+<td class='confluenceTd'> castor-xml <br clear="all" /> </td>
+<td class='confluenceTd'> 1.0M4 <br clear="all" /> </td>
+<td class='confluenceTd'> Required <br clear="all" /> </td>
+<td class='confluenceTd'> ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> castor-srcgen-ant-task <br clear="all" /> </td>
+<td class='confluenceTd'> 1.0M4 <br clear="all" /> </td>
+<td class='confluenceTd'> Required for src gen at build <br clear="all" /> </td>
+<td class='confluenceTd'> ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> xercesImpl <br clear="all" /> </td>
+<td class='confluenceTd'> 2.7.1 <br clear="all" /> </td>
+<td class='confluenceTd'> Required <br clear="all" /> </td>
+<td class='confluenceTd'> ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> stax-utils <br clear="all" /> </td>
+<td class='confluenceTd'> snapshot-20040917 <br clear="all" /> </td>
+<td class='confluenceTd'> Required <br clear="all" /> </td>
+<td class='confluenceTd'> BSD <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> dom4j <br clear="all" /> </td>
+<td class='confluenceTd'> 1.6 <br clear="all" /> </td>
+<td class='confluenceTd'> Required <br clear="all" /> </td>
+<td class='confluenceTd'> BSD <br clear="all" /> </td>
+</tr>
+</tbody></table>
+<p>Important: Castor currently requires the use of the Stax RI (stax-1.1.x-dev).</p>
+
+<h2><a name="DependencyGuide-JIBX"></a>JIBX</h2>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'> &nbsp;License </th>
+</tr>
+</tbody></table>
+
+<p>TODO: add JIBX dependencies</p>
+
+<h2><a name="DependencyGuide-Spring"></a>Spring</h2>
+
+<p>All the Java Binding dependencies, plus:</p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'> License&nbsp; </th>
+</tr>
+<tr>
+<td class='confluenceTd'> springframework </td>
+<td class='confluenceTd'> 1.2.x </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> aopalliance </td>
+<td class='confluenceTd'> 1.0 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> commons-beanutils </td>
+<td class='confluenceTd'> 1.7.0 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;ASL 2.0 <br clear="all" /> </td>
+</tr>
+</tbody></table>
+
+<h2><a name="DependencyGuide-Plexus"></a>Plexus</h2>
+
+<p>All the Java Binding dependencies, plus:</p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'> License </th>
+</tr>
+<tr>
+<td class='confluenceTd'> classworlds </td>
+<td class='confluenceTd'> 1.1-alpha-1 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;ASL 1.1 <br clear="all" /> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> plexus-container-default </td>
+<td class='confluenceTd'> 1.0-alpha-2 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;MIT </td>
+</tr>
+<tr>
+<td class='confluenceTd'> plexus-utils </td>
+<td class='confluenceTd'> 1.0-alpha-2 </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;MIT </td>
+</tr>
+<tr>
+<td class='confluenceTd'> plexus-servlet </td>
+<td class='confluenceTd'> 1.0-beta-2-SNAPSHOT </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> &nbsp;MIT </td>
+</tr>
+<tr>
+<td class='confluenceTd'> xfire-plexus </td>
+<td class='confluenceTd'> 1.0-M4 </td>
+<td class='confluenceTd'> Required </td>
+<td class='confluenceTd'> &nbsp;MIT </td>
+</tr>
+</tbody></table>
+
+<h2><a name="DependencyGuide-Pico"></a>Pico</h2>
+
+<p>All the Java Binding dependencies, plus:</p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Project </th>
+<th class='confluenceTh'> Version </th>
+<th class='confluenceTh'> Required/Optional </th>
+<th class='confluenceTh'>&nbsp;</th>
+</tr>
+<tr>
+<td class='confluenceTd'> picocontainer </td>
+<td class='confluenceTd'> 1.2-SNAPSHOT </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> BSD </td>
+</tr>
+<tr>
+<td class='confluenceTd'> nanocontainer </td>
+<td class='confluenceTd'> 1.0-SNAPSHOT </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> BSD </td>
+</tr>
+<tr>
+<td class='confluenceTd'> nanocontainer-nanowar </td>
+<td class='confluenceTd'> 1.0-SNAPSHOT </td>
+<td class='confluenceTd'> Required. </td>
+<td class='confluenceTd'> BSD <br clear="all" /> </td>
+</tr>
+</tbody></table>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

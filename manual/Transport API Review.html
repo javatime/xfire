@@ -1,0 +1,403 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Transport API Review</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h1><a name="TransportAPIReview-OverviewofAPIs"></a>Overview of APIs</h1>
+
+<p>Generally many of the various frameworks share the same principles. </p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Description</th>
+<th class='confluenceTh'>Axis2</th>
+<th class='confluenceTh'>Celtix</th>
+<th class='confluenceTh'>ServiceMix/JBI</th>
+<th class='confluenceTh'>Tuscany</th>
+<th class='confluenceTh'>XFire</th>
+</tr>
+<tr>
+<td class='confluenceTd'>A representation of the message</td>
+<td class='confluenceTd'>MessageContext</td>
+<td class='confluenceTd'>JAX WS MessageContext</td>
+<td class='confluenceTd'>NormalizedMessage</td>
+<td class='confluenceTd'>Message</td>
+<td class='confluenceTd'>InMessage/OutMessage</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Allowable representations of mmessage</td>
+<td class='confluenceTd'>AXIOM</td>
+<td class='confluenceTd'>Stream, Object, Source, SAAJ</td>
+<td class='confluenceTd'>Source</td>
+<td class='confluenceTd'>Object</td>
+<td class='confluenceTd'>Stream (sometimes), StAX streams, Objects</td>
+</tr>
+<tr>
+<td class='confluenceTd'>A representation of the message exchange pattern</td>
+<td class='confluenceTd'>OperationContext</td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li></li>
+</ul>
+</td>
+<td class='confluenceTd'>Exchange</td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li></li>
+</ul>
+</td>
+<td class='confluenceTd'>MessageExchange</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Transport API for sending/receiving messages</td>
+<td class='confluenceTd'>TransportSender, TransportListener</td>
+<td class='confluenceTd'>ClientTransport, ServerTransport</td>
+<td class='confluenceTd'>DeliveryChannel</td>
+<td class='confluenceTd'>MessageChannel (kind of?)</td>
+<td class='confluenceTd'>Transport + Channel</td>
+</tr>
+<tr>
+<td class='confluenceTd'>A interceptor chain to manipulate messages</td>
+<td class='confluenceTd'>Handlers &amp; Phases</td>
+<td class='confluenceTd'>Stream, Logical, and Protocol Handlers</td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li></li>
+</ul>
+</td>
+<td class='confluenceTd'> MessageHandler, Interceptor</td>
+<td class='confluenceTd'>Handlers &amp; Phases</td>
+</tr>
+<tr>
+<td class='confluenceTd'>Session Handling</td>
+<td class='confluenceTd'>SessionContext</td>
+<td class='confluenceTd'> ? </td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li></li>
+</ul>
+</td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li></li>
+</ul>
+</td>
+<td class='confluenceTd'> Session </td>
+</tr>
+</tbody></table>
+<ul>
+	<li>A way to deal with synchronous and asynchronous transports</li>
+</ul>
+
+
+<h1><a name="TransportAPIReview-Axis2"></a>Axis2</h1>
+<p><a href="http://ws.apache.org/axis2/1_0/api/index.html" title="Visit page outside Confluence">Javadocs</a></p>
+
+<p><b>Transports and Messages</b><br/>
+Transports will create a MessageContext with an AXIOM soap envelope then send it off to the AxisEngine. Messages go through the processing pipeline. Messages are sent out via a TransportSender class which extends the Handler class. To send the message the invoke method is called with the appropriate MessageContext.</p>
+
+<p>The correlation to a MessageExchange in JBI would be the OperationContext in Axis 2. The OperationContext holds references to the various MessageContexts involved in the message exchange pattern.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class OperationContext {
+
+  <span class="code-keyword">public</span> MessageContext getMessageContext(<span class="code-object">String</span> messageLabel) <span class="code-keyword">throws</span> AxisFault {}
+}</pre>
+</div></div>
+
+<p><b>Handlers</b><br/>
+Additionally there are ServiceContext and SessionContext classes.</p>
+
+<p>For the interceptor chain, Axis2 has the concept of Handlers, Phases and flows. There are multiple flows - in, out, and fault. Fore each flow there are many different phases. Handlers can associate themselves with a phase and they can specify that they want to run before/after specific handlers within the phase.</p>
+
+<p>Pros:</p>
+<ul>
+	<li>Well layered approach with the Contexts</li>
+	<li>Good seperation of the Messages &amp; exchange pattern</li>
+	<li>Flexible way to order handlers</li>
+</ul>
+
+
+<p>Cons:</p>
+<ul>
+	<li>The biggest con is that everything has to be an AXIOM object, making byte or object or straight up stream manipulation hard.</li>
+	<li>Transport API is kind of vague</li>
+	<li>MessageContext seems to have a lot of methods on it:
+	<ul>
+		<li>It maintains state for the flow which I personally (Dan) don't like</li>
+		<li>It holds a property letting you know whether it is a REST invocation or not. This seems like it should be at the Transport level.</li>
+	</ul>
+	</li>
+</ul>
+
+
+<h1><a name="TransportAPIReview-Celtix"></a>Celtix</h1>
+<p><a href="http://celtix.objectweb.org/docs/api/index.html" title="Visit page outside Confluence">Javadocs</a></p>
+
+<p><b>Handlers</b><br/>
+Celtix has several different types of MessageContexts which extend the JAX-WS MessageContext: InputStreamMessageContext, OutputStreamMessageContext, ObjectMessageContext, GenericMessageContext. Celtix reuses the JAX-WS handler concept and recognizes several different kind of handlers: protocol, logical, and stream handlers. Stream handlers can work with the Input/Output streams. LogicalHandlers work with the payload in Source form. And ProtocolHandlers can work with SAAJ SOAPMessages.</p>
+
+<p><b>Transport API</b><br/>
+Celtix has several different classes associated with the transport layer:</p>
+<ul>
+	<li>ClientTransport: An api to send and receive back Messages from a Client. This is a one shot interface created for a specific MEP. Provides invoke, invokeOneWay, and invokeAsync operations. They take OutputStreamMessageContexts and return (most of the time) InputStreamMessageContexts.</li>
+	<li>ServerTransport: Activates/deactivates the server transport. Also provides the ability to "rebase" messages - allowing you to do things like piggy back a WS-RM sequence acknowledgement on a one way request.</li>
+	<li>ServerTransportCallback: When a ServerTransport is activated a ServerTransportCallback is provided. This gets called whenever there is a new message on that transport.</li>
+	<li>TransportFactory: Creates a Server/ClientTransport for a particular EPR</li>
+</ul>
+
+
+<p>Celtix really reuses the concept of WS-Addressing endpoint references within its API. Whenever you create a transport you must supply an EPR. This will then set up your ReplyTo/FaultTo streams automatically.</p>
+
+<p>Pros:</p>
+<ul>
+	<li>Unlike most of the other APIs its pretty straightforward to have a messageContext that has a payload of an object that isn't XML</li>
+	<li>There is a straightforward way to work with the underlying byte streams</li>
+	<li>Has the ability to "rebase"</li>
+	<li>Creates transports with EndpointReferences, setting up the ReplyTo/FaultTo automagically</li>
+</ul>
+
+
+<p>Cons:</p>
+<ul>
+	<li>Handlers phases are hard coded and executed in serial. This makes it impossible to do things like write bytes, write xml, then write bytes again. Or to really do streaming xml type things.</li>
+	<li>Only one representation of the message is valid at a time - streams, then source, then saaj.</li>
+	<li>There is no concept of a MessageExchange</li>
+	<li>The Transport API has different Client and Server classes</li>
+</ul>
+
+
+<h1><a name="TransportAPIReview-ServiceMix%2FJBI"></a>ServiceMix/JBI</h1>
+<p><a href="http://java.sun.com/integration/1.0/docs/sdk/api/index.html" title="Visit page outside Confluence">JBI Javadocs</a> <br/>
+<a href="http://servicemix.goopen.org/maven/servicemix-core/apidocs/" title="Visit page outside Confluence">ServiceMix Javadocs</a></p>
+
+<p>Central to JBI is the concept of a NormalizedMessage. The NormalizedMessage holds a reference to the message as a Source object.</p>
+
+<ul class="alternate" type="square">
+	<li>DeliveryChannel</li>
+	<li>MessageExchange, InOut, In, etc</li>
+</ul>
+
+
+<p><b>Pros:</b></p>
+<ul>
+	<li>NormalizedMessage and MessageExchange patterns are very clean</li>
+	<li>Has an attachment API (although not quite sufficient to use with a SOAP stack, needs a few more details)</li>
+</ul>
+
+
+<p><b>Cons:</b></p>
+<ul>
+	<li>No interceptor API</li>
+	<li>No way to deal with POJOs &amp; other types of data, like CSV text</li>
+</ul>
+
+
+<h1><a name="TransportAPIReview-Tuscany"></a>Tuscany</h1>
+<p>Tuscany's Message class holds a simple object containing the Body of the message. It also provides a callback channel for synchronous/correlated responses.</p>
+
+<p>TODO: what is getRelatedCallbackMessage for? It seems like maybe its for a correlated response.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> Message {
+    <span class="code-object">Object</span> getBody();
+    void setBody(<span class="code-object">Object</span> body);
+    <span class="code-keyword">public</span> void setTargetInvoker(TargetInvoker invoker);
+
+    /**
+     * Sets the target invoker to dispatch to when the message passes through the request side of the invocation chain
+     */
+    <span class="code-keyword">public</span> TargetInvoker getTargetInvoker();
+    <span class="code-keyword">public</span> MessageChannel getCallbackChannel();
+    <span class="code-keyword">public</span> Message getRelatedCallbackMessage();
+}</pre>
+</div></div>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> MessageChannel {
+    void send(Message message);
+}</pre>
+</div></div>
+
+<p>The MessageChannel class is as close to defining a Transport API as Tuscany comes currently. It does however, define some interception patterns:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> Interceptor {
+    /**
+     * <span class="code-object">Process</span> a synchronous wire.
+     */
+    Message invoke(Message msg);
+
+    /**
+     * Sets the next interceptor.
+     */
+    void setNext(Interceptor next);
+}</pre>
+</div></div>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> MessageHandler {
+    <span class="code-object">boolean</span> processMessage(Message message);
+}</pre>
+</div></div>
+
+<p>TODO: fill in more details on how these classes are used!</p>
+
+<p><b>Pros:</b></p>
+<ul>
+	<li>Simple</li>
+	<li>Message interface which can hold anything</li>
+</ul>
+
+
+<p><b>Cons:</b> <br/>
+(warning: I am not a tuscany expert - DD)</p>
+<ul>
+	<li>Handlers seems to assume request/response? What about other MEPs?</li>
+	<li>Why two different interceptors - MessageHandler and Interceptor?</li>
+</ul>
+
+
+<h1><a name="TransportAPIReview-XFire"></a>XFire</h1>
+<p><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></p>
+
+<p>The XFire model focuses on the idea of Transports and Channels. Channels provide a means of communication on a Transport. When a request comes in, a Channel is opened and a message is sent to the ChannelReceiver. This starts an invocation flow within XFire sending a message down the in pipeline.</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> Channel
+{
+    void open() <span class="code-keyword">throws</span> Exception;
+    
+    void send(MessageContext context, OutMessage message) 
+        <span class="code-keyword">throws</span> XFireException;
+    
+    void receive(MessageContext context, InMessage message);
+
+    void setEndpoint(ChannelEndpoint receiver);
+
+    ChannelEndpoint getEndpoint();
+    
+    void close();
+    
+    Transport getTransport();
+
+    <span class="code-object">String</span> getUri();
+    
+    <span class="code-object">boolean</span> isAsync();
+}</pre>
+</div></div>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> Transport
+    <span class="code-keyword">extends</span> ChannelFactory, HandlerSupport
+{
+    <span class="code-object">boolean</span> isUriSupported(<span class="code-object">String</span> uri);
+    
+    <span class="code-object">String</span>[] getSupportedBindings();
+    
+    void dispose();
+
+    Binding findBinding(MessageContext context, Service service);
+}</pre>
+</div></div>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">interface</span> ChannelFactory
+{
+    Channel createChannel() <span class="code-keyword">throws</span> Exception;
+
+    Channel createChannel(<span class="code-object">String</span> uri) <span class="code-keyword">throws</span> Exception;
+    
+    void close(Channel c);
+}</pre>
+</div></div>
+
+<p>Typically transports will want to handle soap messages. To do there is typicall a raw transport class, like HttpTransport, and a Soap transport class which extends it - like SoapHttpTransport. A soap transport will then register additional handlers to parse the soap message, set the soap version, etc.</p>
+
+<p>Messages in XFire are represented by the InMessage and OutMessage classes. The InMessage has an XMLStreamReader associated with it. The OutMessage takes a MessageSerializer which is a callback to write the message to an XMLStreamWriter at the appropriate time. The InMessage/OutMessage API is mostly focused around StAX, but can be used to hold objects as well in its Body property.</p>
+
+<p>There is also the concept of a MessageExchange in XFire. These holds references to the various messages in the MessageExchange pattern. It also holds a reference to an OperationInfo instance which contains the metadata about the operation being invoked. This class correlates highly with the WSDL operation concept.</p>
+
+<p>Handlers are XFire's way to Intercept messages. They provide an invoke method which takes a MessageContext. Handlers can be registered in the in, out, and fault flows of a service &amp; client. Within each flow there are a number of phases a Handler can participate in.</p>
+
+<p><b>Pros:</b></p>
+<ul>
+	<li>Allows very efficient use of xml, parsing can occur in any phase at any time, its up to which ever handlers you want to use.</li>
+	<li>Allows you to manipulate streams as well as work with StAX</li>
+	<li>Clean way to handle soap transports</li>
+	<li>Provides an Attachment API</li>
+</ul>
+
+
+<p><b>Cons:</b></p>
+<ul>
+	<li>API for working with streams &amp; objects is not as clean as it could be</li>
+	<li>Message classes have SOAP specific information on them, like the SOAP version and headers</li>
+	<li>Phase API could be a bit cleaner</li>
+</ul>
+
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

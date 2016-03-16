@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <title>Codehaus XFire : Spring QuickStart Guide</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>There are a number of simple steps involved in setting up the Spring/XFire integration. The end result of this guide is that you will be able to trivially register any beans you want exposed as services within your Spring configuration file.</p>
+
+<p>Note that for the sake of simplicity, the Spring examples shown here use the improved XML format of Spring 2.0. It should be trivial to figure out more verbose Spring 1.x syntax to match, if required.</p>
+
+<p>There are roughly 3 areas of configuration. First we need to tell Spring all about XFire and its objects that should be managed, then we need to specify the servlet that will handle and map all incoming requests, and finally we register our service beans.</p>
+
+<h2><a name="SpringQuickStartGuide-SpringConfiguration"></a>Spring Configuration</h2>
+<p>XFire comes with a spring xml file that can be imported to set up the main objects required and wire them up.  Once we're imported this file, we can override any of the defaults to customise the configuration. Finally, we specify how urls are handled by XFire.</p>
+
+<h3><a name="SpringQuickStartGuide-Defaults"></a>Defaults</h3>
+<p>The first step is to import this bundled resource in your applicationContext.xml file (or equivelant):</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;<span class="code-keyword">import</span> resource=<span class="code-quote">"classpath:org/codehaus/xfire/spring/xfire.xml"</span>/&gt;</pre>
+</div></div>
+<p>This file will set up a default instance of XFire, along with the other objects it interacts with, such as TransportManager, ObjectServiceFactory, and so on. All objects defined in this file have ID's that are prefixed with 'xfire.', so when we reference them below, you'll know where to look to find the default bean definition.</p>
+
+<h3><a name="SpringQuickStartGuide-CustomisingXFire"></a>Customising XFire</h3>
+<p>Having imported the defaults, we'd now like to configure certain non-default features. </p>
+
+<h4><a name="SpringQuickStartGuide-Annotations%28JSR181%29"></a>Annotations (JSR-181)</h4>
+<p>For this example, we will register <a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a> support. This enables us to simply annotate our bean classes as web services.</p>
+
+<p>As that document shows, we can simply add a few lines in our Spring configuration file to enable annotation support:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;bean id=<span class="code-quote">"webAnnotations"</span> class=<span class="code-quote">"org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations"</span>/&gt;
+&lt;bean id=<span class="code-quote">"handlerMapping"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.Jsr181HandlerMapping"</span>&gt;
+  &lt;property name=<span class="code-quote">"typeMappingRegistry"</span> ref=<span class="code-quote">"xfire.typeMappingRegistry"</span> /&gt;
+  &lt;property name=<span class="code-quote">"xfire"</span> ref=<span class="code-quote">"xfire"</span> /&gt;
+  &lt;property name=<span class="code-quote">"webAnnotations"</span> ref=<span class="code-quote">"webAnnotations"</span> /&gt;
+&lt;/bean&gt;</pre>
+</div></div>
+
+<h4><a name="SpringQuickStartGuide-URLHandlers"></a>URL Handlers</h4>
+<p>We'd also like to specify URL handling. This objects allows us to specify how incoming URLs map to services. It allows us to either point to specific bean instances or prototypes (where a new service object is created for every request). For our simple example, we just specify the default:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;bean class=<span class="code-quote">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;
+  &lt;property name=<span class="code-quote">"urlMap"</span>&gt;
+    &lt;map&gt;
+      &lt;entry key=<span class="code-quote">"/"</span>&gt;
+        &lt;ref bean=<span class="code-quote">"handlerMapping"</span>/&gt;
+      &lt;/entry&gt;
+    &lt;/map&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;</pre>
+</div></div>
+
+<p>When this handler mapping is used, all annotated beans will be automatically exported at a certain url prefix (by default: /services/). Thus, the annotatedEcho bean will available at /services/EchoService. Make sure your annotated beans are declared after the Jsr181HandlerMapping declaration.</p>
+
+<h2><a name="SpringQuickStartGuide-WebConfiguration"></a>Web Configuration</h2>
+<p>Having configured the Spring side of things, the next step is to configure the web application with the appropriate servlet and URL mappings. Since our example uses a simple url mapping, we only need to define one mapping. Obviously if we had a variety of url mappings, we would need to specify a matching servlet mapping.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;servlet&gt;
+  &lt;servlet-name&gt;SOAPServlet&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;org.codehaus.xfire.spring.XFireSpringServlet&lt;/servlet-class&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+  &lt;servlet-name&gt;SOAPServlet&lt;/servlet-name&gt;
+  &lt;url-pattern&gt;/services/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</pre>
+</div></div>
+
+<h2><a name="SpringQuickStartGuide-Serviceconfiguration"></a>Service configuration</h2>
+<p>Now that XFire has been configured fully, the last remaining part is registering the services themselves. Here is where all the setup earlier pays off, as services can be registered as simply as:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">&lt;bean class=<span class="code-quote">"com.acme.foo.EchoBean"</span>/&gt;</pre>
+</div></div>
+
+<p>If you need more advanced configuration and finer control over the exposed service, you can use the bundled ServiceBean. More documentation can be found at <a href="Spring, XBean, Servlets and more.html" title="Spring, XBean, Servlets and more">Spring, XBean, Servlets and more</a> under the ServiceBean section.</p>
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <title>Codehaus XFire : WS-RM Plan</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <h2><a name="WS-RMPlan-TransportsandChannels"></a>Transports and Channels</h2>
+<p>Channels and Transports provide the basic unit of communication in XFire. A Channel simply sends messages (via send()) and listens for messages (via receive()). If you want to send a message to a particular URL you do:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java">TransportManager tm = ...;
+Transport t = tm.getTransportForUri(<span class="code-quote">"http:<span class="code-comment">//foo"</span>);
+</span>
+OutMessage msg = ...; <span class="code-comment">// create an outmessage yourself
+</span>Channel c = t.createChannel(); <span class="code-comment">// create an anonymous endpoint
+</span>MessageContext context = <span class="code-keyword">new</span> MessageContext();
+c.send(msg, context);</pre>
+</div></div>
+
+<p>Each transport is responsible for creating its own protocol specific listener, for example a servlet in the case of HTTP. This listener then passes whatever messages it receives to the channel via Channel.receive(MessageContext,InMessage). Channels simply delegate their receive() to a ChannelEndpoint which application specific handling of what to do with the message. The default endpoint is aptly named DefaultEndpoint and will be covered in the next section.</p>
+
+<h3><a name="WS-RMPlan-MessageSerializer"></a>MessageSerializer</h3>
+<p>Each OutMessage has a MessageSerializer. A message serializer takes the message body (message.getBody()) and writes it to an XMLStreamWriter that the Channel provides. The semantics of MessageSerializers should be such that they can be invoked multiple times.  </p>
+
+<h3><a name="WS-RMPlan-Channels%2FTransportswithoutServices"></a>Channels/Transports without Services</h3>
+<p>Its important to note that Channels and transports are completely independent of XFire's Services. So I can use a channel to send a receive messages and never even create a service. So for testing, lets not even create a service. We'll want to just use the Channel to send and receive messages.</p>
+
+<h2><a name="WS-RMPlan-DefaultEndpointandtheprocessingflow"></a>DefaultEndpoint and the processing flow</h2>
+<p>DefaultEndpoint takes a message, creates a default message exchange called InMessageExchange and creates a message pipeline. The message pipeline at first consists of the global in handlers from XFire.getInHandlers() and the transport handlers from Transport.getInHandlers. Later on when the service is resolved, the service's handlers get added into the pipeline.  Once the operation is resolved, if there is an out message to be set an Out pipeline is created and added to the MessageContext.</p>
+
+<h3><a name="WS-RMPlan-PhasesandHandlers"></a>Phases and Handlers</h3>
+<p>See <a href="Processing Pipeline.html" title="Processing Pipeline">Processing Pipeline</a> for now.</p>
+
+<h3><a name="WS-RMPlan-SOAPProcessing"></a>SOAP Processing</h3>
+<p>SOAPTransport.createTransport() adds SOAP support to a particular transport. It does so by adding three additional handlers:</p>
+<ol>
+	<li>ReadHeaderHandler - this handler reads in the soap headers. It stops reading the XML stream the moment the whitespace stops after the &lt;Body&gt; tag. If it encounters a &lt;Fault&gt; in the Body, an XFireFault is thrown.</li>
+	<li>ValidateHeadersHandler - Ensure that all the necessary headers are understood by the receiving handlers.</li>
+	<li>SoapSerializerHandler - Services provide a MessageSerializer of their own which is responsible for serializing the soap body. But what about the message headers? This is written out by the SoapSerializer. What the SoapSerializerHandler does is replace the outMessage.MessageSerializer with new SoapSerializer(outMsg.getMessageSerializer()).</li>
+</ol>
+
+
+<h2><a name="WS-RMPlan-MessageExchanges"></a>MessageExchanges</h2>
+
+<h2><a name="WS-RMPlan-WSRMArchitecturePlan"></a>WS-RM Architecture Plan</h2>
+<p>There will be two transports involved in this. First, the low-level transport like HTTP, UDP or TCP. We'll use UdpTransport for the examples below. Second, there is the WS-RM Transport - WSRMTransport.</p>
+
+<p>The high-level ws-rm document outlines the basic sequence which I'll refer to:</p>
+<ol>
+	<li>App gets ready to send its message</li>
+	<li>WS-RM sends CreateSequence</li>
+	<li>Receive CreateSequence Response</li>
+	<li>Send app message (initial transmission in spec) which has WS-RM sequence headers</li>
+	<li>Receive acknowledgements</li>
+	<li>If acknowledgement is missing after X amount of time, resend message</li>
+	<li>TerminateSequence when done</li>
+</ol>
+
+
+<p>The server side correlate:</p>
+<ol>
+	<li>WS-RM receives CreateSequence</li>
+	<li>WS-RM sends CreateSequence Response</li>
+	<li>Receive InMessage which has WS-RM sequence headers</li>
+	<li>Send acknowledgements</li>
+	<li>Pass off application message to Service, unless out of order</li>
+	<li>Receive TerminateSequence when done</li>
+</ol>
+
+
+<h3><a name="WS-RMPlan-Transport%2FChannellayer"></a>Transport/Channel layer</h3>
+<p>Ideally I'd like to be able to do:</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java">WSRMTransport transport = <span class="code-keyword">new</span> WSRMTransport(<span class="code-keyword">new</span> UdpTransport());</pre>
+</div></div>
+
+<p>When an application does WSRMChannel.send() it will handle the sequence processing and ultimately use UdpChannel to send its messages. When UdpTransport receives its messages, we'll need them to delegate on up to the WSRMTransport. To do this we'll need to create a new ChannelEndpoint which does this.</p>
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// Simply pass messages up to the WSRM channel
+</span><span class="code-keyword">public</span> class WSRMDelegateEndpoint
+{
+  WSRMChannel channel;
+  <span class="code-keyword">public</span> WSRMDelegateEndpoint(WSRMChannel channel) {
+    <span class="code-keyword">this</span>.channel = channel;
+  }
+  <span class="code-keyword">public</span> void onReceive(MessageContext context, InMessage msg)
+  {
+    channel.receive(context, msg);
+  }
+}</pre>
+</div></div>
+
+
+<h2><a name="WS-RMPlan-Dan%27sTODO"></a>Dan's TODO</h2>
+<ul>
+	<li>Make sure WS-A MessageID/RelatesTo functions as needed</li>
+	<li>Make sure fault handling in XFire is appropriate for WS-RM</li>
+</ul>
+
+
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>

@@ -1,0 +1,718 @@
+<html>
+    <head>
+        <title>Codehaus XFire : XMLBeans & Annotations Tutorial</title>
+           <link rel="stylesheet" href="http://codehaus.org/codehaus-style.css" type="text/css">
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    </head>
+
+    <body>
+<table width="100%" id="layout" style="padding:0px;margin0px;" cellpadding="0" cellspacing="0">
+			<tr>
+			  <td id="leftColumn" valign="top" style="padding-top: 0px;">
+ <span id="Content"><h1><a name="Navigation-CodehausXFire"></a>Codehaus XFire</h1>
+
+<ul>
+	<li><a href="Home.html" title="Home">Home</a></li>
+	<li><a href="http://jira.codehaus.org/secure/BrowseProject.jspa?id=10750" title="Visit page outside Confluence">Bug/Issue Reporting</a></li>
+	<li><a href="Download.html" title="Download">Download</a></li>
+	<li><a href="Eclipse Plugin.html" title="Eclipse Plugin">Eclipse Plugin</a></li>
+	<li><a href="FAQ.html" title="FAQ">FAQ</a></li>
+	<li><a href="Get Involved.html" title="Get Involved">Get Involved</a></li>
+	<li><a href="License.html" title="License">License</a></li>
+	<li><a href="News.html" title="News">News</a></li>
+	<li><a href="Performance.html" title="Performance">Performance</a></li>
+	<li><a href="Stack Comparison.html" title="Stack Comparison">Stack Comparison</a></li>
+	<li><a href="Support.html" title="Support">Support/Mailing&nbsp;Lists</a></li>
+	<li><a href="XFire Team.html" title="XFire Team">Team</a></li>
+	<li><a href="Who uses XFire.html" title="Who uses XFire">Who uses XFire</a></li>
+	<li><a href="XFire and Celtix Merge.html" title="XFire and Celtix Merge">XFire and Celtix Merge</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Documentation"></a>Documentation</h1>
+
+<ul>
+	<li><a href="Articles.html" title="Articles">Articles</a></li>
+	<li><a href="http://envoisolutions.com/xfire/api/" title="Visit page outside Confluence">Javadocs</a></li>
+	<li><a href="User's Guide.html" title="User's Guide">User's Guide</a></li>
+	<li><a href="http://xfire.codehaus.org/XFire+1.2.5+Release+Notes" title="Visit page outside Confluence">Release Notes</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Quicklinks"></a>Quicklinks</h1>
+
+<ul>
+	<li><a href="Aegis Binding.html" title="Aegis Binding">Aegis Binding</a></li>
+	<li><a href="Bindings.html" title="Bindings">Bindings</a></li>
+	<li><a href="Client API.html" title="Client API">Client</a></li>
+	<li><a href="JAXB 2.0.html" title="JAXB 2.0">JAXB 2.0</a></li>
+	<li><a href="JSR 181 Annotations.html" title="JSR 181 Annotations">JSR 181 Annotations</a></li>
+	<li><a href="Spring.html" title="Spring">Spring</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Developers"></a>Developers</h1>
+
+<ul>
+	<li><a href="Developer Space.html" title="Developer Space">Developer Space</a></li>
+	<li><a href="Source Repository.html" title="Source Repository">Source Repository</a></li>
+	<li><a href="Building.html" title="Building">Building</a></li>
+	<li><a href="Architecture.html" title="Architecture">Architecture</a></li>
+	<li><a href="Interesting Projects.html" title="Interesting Projects">Interesting Projects</a></li>
+	<li><a href="http://jira.codehaus.org/browse/XFIRE?report=com.atlassian.jira.plugin.system.project:roadmap-panel;jsessionid=aK1v8CLUmmyg3ULf8F" title="Visit page outside Confluence">Roadmap</a></li>
+	<li><a href="Release Process.html" title="Release Process">Release Process</a></li>
+	<li><a href="JAX-WS.html" title="JAX-WS">JAX&#45;WS</a></li>
+</ul>
+
+
+<h1><a name="Navigation-Sponsors"></a><a href="Sponsors.html" title="Sponsors">Sponsors</a></h1></span>
+                        </td>
+				<td id="rightColumn" valign="top">
+				    <p>This tutorial offers a 7-step approach to creating XFire web services that utilize JSR 181 annotations and Apache XMLBeans.</p>
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step1%3ADependencies"></a>Step 1: Dependencies </h1>
+<h2><a name="XMLBeans%26AnnotationsTutorial-SampleIVYConfigFile"></a>Sample IVY Config File</h2>
+
+<p>One of the first steps in getting XFire working is simply setting up the initial JAR dependencies.  For those of you already familiar with <a href="http://maven.apache.org/" title="Visit page outside Confluence">maven</a> or <a href="http://jayasoft.org/" title="Visit page outside Confluence">ivy</a>, this dependency list below should look familiar.  While there may be a few extra JAR files listed below that are not required to use XFire, the overall list and JAR revisions should help you get started.</p>
+
+<p>Check the <a href="http://xfire.codehaus.org/Dependency+Guide" title="Visit page outside Confluence">XFire dependency guide</a> for more information.</p>
+
+<table cellpadding='5' width='85%' cellspacing='8px' class='noteMacro' border="0" align='center'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="./icons/emoticons/warning.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Be Careful</b><br />
+<p>Note the use of the nightly XFire build below (xfire-all-1.0-SNAPSHOT.jar).  You may wish to use a specific release for your project.  I pull the nightly XFire snapshot down for my development environment only.</p></td></tr></table> 
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;dependencies&gt;</span>
+		<span class="code-tag"><span class="code-comment">&lt;!--  WEBAPP Jars --&gt;</span></span>
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"log4j"</span> name=<span class="code-quote">"log4j"</span> rev=<span class="code-quote">"1.2.9"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"springframework"</span> name=<span class="code-quote">"springframework"</span> rev=<span class="code-quote">"1.2.6"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span>&gt;
+			<span class="code-tag">&lt;artifact name=<span class="code-quote">"spring"</span> type=<span class="code-quote">"jar"</span>/&gt;</span>
+		<span class="code-tag">&lt;/dependency&gt;</span>
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-codec"</span> name=<span class="code-quote">"commons-codec"</span> rev=<span class="code-quote">"1.3"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-beanutils"</span> name=<span class="code-quote">"commons-beanutils"</span> rev=<span class="code-quote">"1.7.0"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-collections"</span> name=<span class="code-quote">"commons-collections"</span> rev=<span class="code-quote">"2.1"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-digester"</span> name=<span class="code-quote">"commons-digester"</span> rev=<span class="code-quote">"1.5"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-discovery"</span> name=<span class="code-quote">"commons-discovery"</span> rev=<span class="code-quote">"0.2"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-httpclient"</span> name=<span class="code-quote">"commons-httpclient"</span> rev=<span class="code-quote">"3.0"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-el"</span> name=<span class="code-quote">"commons-el"</span> rev=<span class="code-quote">"1.0"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-fileupload"</span> name=<span class="code-quote">"commons-fileupload"</span> rev=<span class="code-quote">"1.0"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-logging"</span> name=<span class="code-quote">"commons-logging"</span> rev=<span class="code-quote">"1.0.4"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+                  <span class="code-tag">&lt;dependency org=<span class="code-quote">"commons-validator"</span> name=<span class="code-quote">"commons-validator"</span> rev=<span class="code-quote">"1.1.4"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+                  <span class="code-tag">&lt;dependency org=<span class="code-quote">"oro"</span> name=<span class="code-quote">"oro"</span> rev=<span class="code-quote">"2.0.8"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"jstl"</span> name=<span class="code-quote">"jstl"</span> rev=<span class="code-quote">"1.1.2"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"javamail"</span> name=<span class="code-quote">"mailapi"</span> rev=<span class="code-quote">"1.3.2"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+                   <span class="code-tag">&lt;dependency org=<span class="code-quote">"xbean"</span> name=<span class="code-quote">"xbean-spring"</span> rev=<span class="code-quote">"2.0"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"jaxen"</span> name=<span class="code-quote">"jaxen"</span> rev=<span class="code-quote">"1.1-beta-8"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"jdom"</span> name=<span class="code-quote">"jdom"</span> rev=<span class="code-quote">"1.0"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+                   <span class="code-tag">&lt;dependency org=<span class="code-quote">"wsdl4j"</span> name=<span class="code-quote">"wsdl4j"</span> rev=<span class="code-quote">"1.4"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		&lt;!-- 
+		Stax is the XML api that powers XFire and allows it to process XML efficiently. 
+		There are many different Atax implementations out there - the reference
+		implementation (RI), Woodstox, FastInfoset, and there is one included in the JWSDP. 
+		Regardless of which you one choose you must have the stax-api jar on your classpath. 
+		In addition we highly recommend that you use Woodstox as your Stax implementation. 
+		It is about 30-40% faster then the RI and works more reliably. To ensure you are 
+		using Woodstox and not the RI make sure the stax-1.1.x-dev jar is off your 
+		classpath and the wstx-2.0.3 jar is on it.
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"wstx"</span> name=<span class="code-quote">"wstx"</span> rev=<span class="code-quote">"2.0.3"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		 --&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"woodstox"</span> name=<span class="code-quote">"wstx-lgpl"</span> rev=<span class="code-quote">"2.8"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"stax"</span> name=<span class="code-quote">"stax"</span> rev=<span class="code-quote">"api-1.0"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xfire"</span> name=<span class="code-quote">"xfire-all"</span> rev=<span class="code-quote">"1.0-SNAPSHOT"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"acegisecurity"</span> name=<span class="code-quote">"acegisecurity"</span> rev=<span class="code-quote">"0.9.0"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span>&gt;
+			<span class="code-tag">&lt;artifact name=<span class="code-quote">"acegi-security"</span> type=<span class="code-quote">"jar"</span> /&gt;</span>
+		<span class="code-tag">&lt;/dependency&gt;</span>
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xfire"</span> name=<span class="code-quote">"xfire-jsr181-api"</span> rev=<span class="code-quote">"1.0-M1"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xfire"</span> name=<span class="code-quote">"jaxb-api"</span> rev=<span class="code-quote">"20051106"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xfire"</span> name=<span class="code-quote">"jaxb-impl"</span> rev=<span class="code-quote">"20051106"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xfire"</span> name=<span class="code-quote">"jaxb-xjc"</span> rev=<span class="code-quote">"20051106"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xfire"</span> name=<span class="code-quote">"XmlSchema"</span> rev=<span class="code-quote">"20051110"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"activation"</span> name=<span class="code-quote">"activation"</span> rev=<span class="code-quote">"1.0.2"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+                  <span class="code-tag">&lt;dependency org=<span class="code-quote">"xmlbeans"</span> name=<span class="code-quote">"xmlpublic"</span> rev=<span class="code-quote">"2.1.0"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xmlbeans"</span> name=<span class="code-quote">"xbean"</span> rev=<span class="code-quote">"2.1.0"</span> conf=<span class="code-quote">"client,bundle,runtime-&gt;</span>default"</span> /&gt;
+		<span class="code-tag">&lt;dependency org=<span class="code-quote">"xmlbeans"</span> name=<span class="code-quote">"xbean_xpath"</span> rev=<span class="code-quote">"2.1.0"</span> conf=<span class="code-quote">"bundle,runtime-&gt;</span>default"</span> /&gt;
+<span class="code-tag">&lt;/dependencies&gt;</span></pre>
+</div></div>
+
+
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step2%3AStartwithXSD"></a>Step 2: Start with XSD</h1>
+
+<p>If you subscribe to XML-driven development or <a href="http://www-128.ibm.com/developerworks/rational/library/3100.html" title="Visit page outside Confluence">MDA</a> or <a href="http://www.agilemodeling.com/essays/amdd.htm" title="Visit page outside Confluence">AMDD</a>, then I recommend starting your application with (3) XSD files: </p>
+
+<ul>
+	<li><img src="XMLBeans &amp; Annotations Tutorial_attachments/xsd_pic.jpg" align="absmiddle" border="0" /> Common.xsd
+	<ul class="alternate" type="square">
+		<li>Common.xsd simply stores types used in both request and response <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;complexType name=<span class="code-quote">"UserToken"</span>&gt;</span>
+  <span class="code-tag">&lt;sequence&gt;</span>
+    <span class="code-tag">&lt;element name=<span class="code-quote">"username"</span> type=<span class="code-quote">"string"</span> maxOccurs=<span class="code-quote">"1"</span> minOccurs=<span class="code-quote">"1"</span>/&gt;</span>
+    <span class="code-tag">&lt;element name=<span class="code-quote">"password"</span> type=<span class="code-quote">"string"</span> maxOccurs=<span class="code-quote">"1"</span> minOccurs=<span class="code-quote">"1"</span>/&gt;</span>
+  <span class="code-tag">&lt;/sequence&gt;</span>
+<span class="code-tag">&lt;/complexType&gt;</span></pre>
+</div></div></li>
+	</ul>
+	</li>
+	<li><img src="XMLBeans &amp; Annotations Tutorial_attachments/xsd_pic.jpg" align="absmiddle" border="0" /> Request.xsd</li>
+	<li><img src="XMLBeans &amp; Annotations Tutorial_attachments/xsd_pic.jpg" align="absmiddle" border="0" /> Response.xsd</li>
+</ul>
+
+
+<table cellpadding='5' width='85%' cellspacing='8px' class='tipMacro' border="0" align='center'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="./icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Handy Hint</b><br />
+<p>Don't forget that Eclipse has a great XSD editor (which created the XSD visuals you see below).</p></td></tr></table>
+
+<p>Below are some instructions outlining the intent behind creating these (3) separate XSD files, which are used to then generate <a href="http://dev2dev.bea.com/pub/a/2004/11/Configuring_XMLBeans.html" title="Visit page outside Confluence">XMLBeans</a> in Step 3 of this process.</p>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'> Request.xsd </th>
+<th class='confluenceTh'> Response.xsd </th>
+</tr>
+<tr>
+<td class='confluenceTd'> Description </td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li>1 request element: <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;element name=<span class="code-quote">"request"</span> type=<span class="code-quote">"tns:Request"</span>&gt;</span>
+<span class="code-tag">&lt;/element&gt;</span></pre>
+</div></div></li>
+	<li>1 Request complex type: <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;complexType name=<span class="code-quote">"Request"</span> abstract=<span class="code-quote">"true"</span>&gt;</span>
+<span class="code-tag">&lt;/complexType&gt;</span></pre>
+</div></div></li>
+	<li>All SOAP requests extend Request <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;complexType name=<span class="code-quote">"GetContactTypes"</span>&gt;</span>
+<span class="code-tag">&lt;complexContent&gt;</span>
+<span class="code-tag">&lt;extension base=<span class="code-quote">"tns:Request"</span>&gt;</span>....<span class="code-tag">&lt;/extension&gt;</span>
+<span class="code-tag">&lt;/complexContent&gt;</span>
+<span class="code-tag">&lt;/complexType&gt;</span></pre>
+</div></div> </li>
+</ul>
+</td>
+<td class='confluenceTd'><ul class="alternate" type="square">
+	<li>1 response element: <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;element name=<span class="code-quote">"response"</span> type=<span class="code-quote">"tns:Response"</span>&gt;</span>
+<span class="code-tag">&lt;/element&gt;</span></pre>
+</div></div></li>
+	<li>1 Response complex type: <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;complexType name=<span class="code-quote">"Response"</span> abstract=<span class="code-quote">"true"</span>&gt;</span>
+...
+<span class="code-tag">&lt;/complexType&gt;</span></pre>
+</div></div></li>
+	<li>All SOAP responses extend Response <br clear="all" />
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;complexType name=<span class="code-quote">"GetContactTypesResponse"</span>&gt;</span>
+<span class="code-tag">&lt;complexContent&gt;</span>
+<span class="code-tag">&lt;extension base=<span class="code-quote">"tns:Response"</span>&gt;</span>...<span class="code-tag">&lt;/extension&gt;</span>
+<span class="code-tag">&lt;/complexContent&gt;</span>
+<span class="code-tag">&lt;/complexType&gt;</span></pre>
+</div></div> </li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class='confluenceTd'> <img src="XMLBeans &amp; Annotations Tutorial_attachments/xsd_pic.jpg" align="absmiddle" border="0" /> Image </td>
+<td class='confluenceTd'> <a href='http://docs.codehaus.org/download/attachments/44565/request_xsd.JPG' target='request_xsd.JPG' onClick='window.open("http://docs.codehaus.org/download/attachments/44565/request_xsd.JPG", "request_xsd.JPG", "height=388,width=399,menubar=no,status=no,toolbar=no"); return false;'><img src='/download/thumbnails/44565/request_xsd.JPG' align="absmiddle" border="0" /></a> </td>
+<td class='confluenceTd'> <a href='http://docs.codehaus.org/download/attachments/44565/response_xsd.JPG' target='response_xsd.JPG' onClick='window.open("http://docs.codehaus.org/download/attachments/44565/response_xsd.JPG", "response_xsd.JPG", "height=386,width=391,menubar=no,status=no,toolbar=no"); return false;'><img src='/download/thumbnails/44565/response_xsd.JPG' align="absmiddle" border="0" /></a> </td>
+</tr>
+<tr>
+<td class='confluenceTd'> Notes </td>
+<td class='confluenceTd'> <em>preview :: this will create the following XMLBean class structure</em> 
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>RequestDocument.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-comment">// Some comments here
+</span><span class="code-keyword">public</span> <span class="code-keyword">abstract</span> <span class="code-keyword">interface</span> 
+request.RequestDocument <span class="code-keyword">implements</span> XMLObject {
+    request.Request getRequest();
+}</pre>
+</div></div> 
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>RequestDocumentImpl.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> class RequestDocumentImpl 
+<span class="code-keyword">implements</span> request.RequestDocument</pre>
+</div></div>
+<div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>GetContactTypes.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">public</span> <span class="code-keyword">abstract</span> <span class="code-keyword">interface</span> 
+request.GetContactTypes <span class="code-keyword">implements</span> Request</pre>
+</div></div></td>
+<td class='confluenceTd'>&nbsp;</td>
+</tr>
+</tbody></table>
+
+<table cellpadding='5' width='85%' cellspacing='8px' class='warningMacro' border="0" align='center'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="./icons/emoticons/forbidden.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Warning</b><br />
+<p>Because I was unable to deploy the service as document/literal <b>wrapped</b> service, you should create a separate XSD element per exposed method on your webservice implementation class</p></td></tr></table> 
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step3%3AGenerateXMLBeans"></a>Step 3: Generate XMLBeans</h1>
+
+<p>If your XSDs are placed in <b>META-INF/xfire/</b>, then the following Ant task will generate XMLBeans from the XSD files:</p>
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>&nbsp;</th>
+<th class='confluenceTh'> Ant Task </th>
+<th class='confluenceTh'>&nbsp;</th>
+</tr>
+<tr>
+<td class='confluenceTd'> Task XML </td>
+<td class='confluenceTd'> <div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;target name=<span class="code-quote">"&gt;</span>step3.gen.xmlbeans.from.schema"</span> description=<span class="code-quote">"Generate XMLBeans"</span>&gt;
+&lt;taskdef name=<span class="code-quote">"xmlbean"</span> classname=<span class="code-quote">"org.apache.xmlbeans.impl.tool.XMLBean"</span> 
+classpathref=<span class="code-quote">"all.app.path"</span> /&gt;
+ <span class="code-tag">&lt;echo message=<span class="code-quote">"About to generate XMLBeans from XSDs"</span>/&gt;</span>
+ &lt;xmlbean srcgendir=<span class="code-quote">"src"</span> destfile=<span class="code-quote">"build\appXMLBeans-1.0.jar"</span> 
+classpath=<span class="code-quote">"classes"</span> debug=<span class="code-quote">"true"</span> verbose=<span class="code-quote">"true"</span>&gt;
+<span class="code-tag">&lt;fileset *dir=<span class="code-quote">"/META-INF/xfire/"</span>* includes=<span class="code-quote">"*.xsd"</span>/&gt;</span>
+ <span class="code-tag">&lt;/xmlbean&gt;</span> <span class="code-tag">&lt;/target&gt;</span></pre>
+</div></div> </td>
+<td class='confluenceTd'> <img src="XMLBeans &amp; Annotations Tutorial_attachments/xmlbeans-project-logo.gif" align="absmiddle" border="0" /> </td>
+</tr>
+</tbody></table>
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step4%3ASetupEclipsetoSupportAnnotations"></a>Step 4: Setup Eclipse to Support Annotations</h1>
+
+<ul>
+	<li>Install JDK 1.5 and Add in JDT-APT to your Eclipse install <a href="http://www.eclipse.org/jdt/apt/main.html" title="Visit page outside Confluence">JDT-APT</a></li>
+</ul>
+
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Set JDK Compliance to 5.0</th>
+<th class='confluenceTh'>Allow Annotations</th>
+</tr>
+<tr>
+<td class='confluenceTd'><a href='http://docs.codehaus.org/download/attachments/44565/annotation_setup.JPG' target='annotation_setup.JPG' onClick='window.open("http://docs.codehaus.org/download/attachments/44565/annotation_setup.JPG", "annotation_setup.JPG", "height=559,width=655,menubar=no,status=no,toolbar=no"); return false;'><img src='/download/thumbnails/44565/annotation_setup.JPG' align="absmiddle" border="0" /></a></td>
+<td class='confluenceTd'><a href='http://docs.codehaus.org/download/attachments/44565/annotation_setup_2.JPG' target='annotation_setup_2.JPG' onClick='window.open("http://docs.codehaus.org/download/attachments/44565/annotation_setup_2.JPG", "annotation_setup_2.JPG", "height=559,width=655,menubar=no,status=no,toolbar=no"); return false;'><img src='/download/thumbnails/44565/annotation_setup_2.JPG' align="absmiddle" border="0" /></a></td>
+</tr>
+</tbody></table>
+
+<table cellpadding='5' width='85%' cellspacing='8px' class='infoMacro' border="0" align='center'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="./icons/emoticons/information.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Useful Information</b><br />
+<p>JDT-APT currently runs on top of Eclipse 3.1.1. It is not currently part of Eclipse itself, but rather is a separate plugin along with a modified version of the JDT plugin. We are in the process of porting to Eclipse 3.2, which is currently in development. </p></td></tr></table> 
+
+
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step5%3ACreateyourannotatedservice"></a>Step 5: Create your annotated service</h1>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Web Service Interface</th>
+</tr>
+<tr>
+<td class='confluenceTd'><div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>ServiceInterface.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">import</span> javax.jws.WebMethod;
+<span class="code-keyword">import</span> javax.jws.WebService;
+<span class="code-keyword">import</span> javax.jws.WebResult;
+<span class="code-keyword">import</span> org.codehaus.xfire.fault.XFireFault;
+<span class="code-keyword">import</span> org.company.service.request.RequestDocument;
+<span class="code-keyword">import</span> org.company.service.response.ResponseDocument;
+
+@WebService(name=<span class="code-quote">"ServiceInterface"</span>, targetNamespace=<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>)
+</span><span class="code-keyword">public</span> <span class="code-keyword">interface</span> ServiceInterface  {
+    
+    @WebMethod(operationName = <span class="code-quote">"GetXYZ"</span>)
+    @WebResult(name = <span class="code-quote">"response"</span>, targetNamespace = <span class="code-quote">"http:<span class="code-comment">//www.company.org/service/response"</span>)
+</span>	<span class="code-keyword">public</span> ResponseDocument getXYZ(RequestDocument request) <span class="code-keyword">throws</span> XFireFault;
+}</pre>
+</div></div></td>
+</tr>
+<tr>
+</tr>
+</tbody></table>
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'>Web Service Implementation</th>
+</tr>
+<tr>
+<td class='confluenceTd'><div class="code" style="border-style: solid; "><div class="codeHeader" style="border-bottom-style: solid; "><b>ServiceImpl.java</b></div><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.company.service.server;
+
+<span class="code-keyword">import</span> javax.jws.WebService;
+<span class="code-keyword">import</span> javax.jws.soap.SOAPBinding;
+<span class="code-keyword">import</span> javax.jws.soap.SOAPBinding.ParameterStyle;
+<span class="code-keyword">import</span> javax.jws.soap.SOAPBinding.Style;
+<span class="code-keyword">import</span> javax.jws.soap.SOAPBinding.Use;
+<span class="code-keyword">import</span> javax.xml.namespace.QName;
+<span class="code-keyword">import</span> org.apache.commons.logging.Log;
+<span class="code-keyword">import</span> org.apache.commons.logging.LogFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.fault.XFireFault;
+<span class="code-keyword">import</span> org.company.service.request.GetXYZ;
+<span class="code-keyword">import</span> org.company.service.request.RequestDocument;    <span class="code-comment">// XMLBeans generated
+</span><span class="code-keyword">import</span> org.company.service.response.GetXYZResponse;    <span class="code-comment">// XMLBeans generated
+</span><span class="code-keyword">import</span> org.company.service.response.ResponseDocument;  <span class="code-comment">// XMLBeans generated 
+</span><span class="code-keyword">import</span> org.company.service.service.XYZService;         <span class="code-comment">// XMLBeans generated
+</span>
+@WebService(serviceName = <span class="code-quote">"ServiceInterface"</span>, 
+targetNamespace = <span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, 
+</span>endpointInterface = <span class="code-quote">"org.company.service.server.ServiceInterface"</span>)
+@SOAPBinding(style = Style.DOCUMENT, use = Use.LITERAL, 
+parameterStyle = ParameterStyle.BARE)
+<span class="code-keyword">public</span> class ServiceImpl <span class="code-keyword">implements</span> ServiceInterface {
+
+	<span class="code-keyword">private</span> XYZService xyzService; <span class="code-comment">// injected by Spring
+</span>	<span class="code-keyword">protected</span> <span class="code-keyword">final</span> Log log = LogFactory.getLog(getClass());
+	
+	<span class="code-keyword">public</span> ResponseDocument getProvidersUsingVendor(RequestDocument request)
+			<span class="code-keyword">throws</span> XFireFault {
+	         GetXYZ xyzRequest = (GetXYZ) request.getRequest();
+		GetXYZResponse xyzResponse = getXYZService().getXYZ(xyzRequest);
+		ResponseDocument responseDoc = ResponseDocument.Factory.newInstance();
+		responseDoc.setResponse(xyzResponse);
+		<span class="code-keyword">return</span> responseDoc;
+	}
+...
+}</pre>
+</div></div></td>
+</tr>
+</tbody></table>
+
+<table cellpadding='5' width='85%' cellspacing='8px' class='tipMacro' border="0" align='center'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="./icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Handy Hint</b><br /><br/>
+Note how the use of XMLBeans and how the RequestDocument is cast to the GetXYZ type</td></tr></table> 
+
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step6%3AWireupSpring"></a>Step 6: Wire up Spring</h1>
+
+<p>If you notice in the ServiceImpl class above, I'm using Spring to do some dependency injection.  If you want to do this (sharing your XFire application context with the Spring application context loaded by your web application's org.springframework.web.context.ContextLoaderListener for example, then strip out everything from META-INF/xfire/services.xml and put it in your own Spring config file loaded by the ContextLoaderListener declared in your web application.</p>
+
+<p>In your WEB-INF/web.xml, load Spring like this (using the <b>classpath:</b> notation in order to load xfire.xml from your XFire JAR deployed in WEB-INF/lib)</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag"><span class="code-comment">&lt;!-- context parameters --&gt;</span></span>	 
+	<span class="code-tag">&lt;context-param&gt;</span>
+    	<span class="code-tag">&lt;param-name&gt;</span>contextConfigLocation<span class="code-tag">&lt;/param-name&gt;</span>
+      	    <span class="code-tag">&lt;param-value&gt;</span>
+      		/WEB-INF/MyService-acegi-base.xml
+	         	/WEB-INF/MyService-authentication.xml
+	        	/WEB-INF/MyService-authorization.xml
+	        	/WEB-INF/MyService-dao.xml
+	        	/WEB-INF/MyService-sqlmap.xml
+	        	/WEB-INF/MyService-datasource.xml
+		/WEB-INF/MyService-servlet.xml
+		/WEB-INF/MyService-xfire.xml			
+		classpath:org/codehaus/xfire/spring/xfire.xml
+      	    <span class="code-tag">&lt;/param-value&gt;</span>
+   	<span class="code-tag">&lt;/context-param&gt;</span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- listeners --&gt;</span></span>
+   	<span class="code-tag">&lt;listener&gt;</span>
+    	    <span class="code-tag">&lt;listener-class&gt;</span>org.springframework.web.context.ContextLoaderListener<span class="code-tag">&lt;/listener-class&gt;</span>
+   	<span class="code-tag">&lt;/listener&gt;</span></pre>
+</div></div>
+
+<p>Then declare your XFire spring beans in another Spring XML config file (such as the /WEB-INF/MyService-xfire.xml referenced above).</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag">&lt;?xml version=<span class="code-quote">"1.0"</span> encoding=<span class="code-quote">"UTF-8"</span>?&gt;</span> 
+<span class="code-tag">&lt;!DOCTYPE beans PUBLIC <span class="code-quote">"-//SPRING//DTD BEAN//EN"</span> <span class="code-quote">"http://www.springframework.org/dtd/spring-beans.dtd"</span>&gt;</span>
+
+<span class="code-tag">&lt;beans&gt;</span>
+
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  Simple Web Service                          --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+
+	<span class="code-tag">&lt;bean id=<span class="code-quote">"BookService"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.ServiceBean"</span> &gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span> value=<span class="code-quote">"org.codehaus.xfire.demo.BookService"</span>/&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"namespace"</span> value=<span class="code-quote">"http://xfire.codehaus.org/BookService"</span>/&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span>
+
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  Illustration of simple service using        --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  JSR 181 annotations                         --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+
+	<span class="code-tag">&lt;bean id=<span class="code-quote">"CustomerService"</span> class=<span class="code-quote">"org.codehaus.xfire.spring.ServiceBean"</span> &gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceClass"</span> value=<span class="code-quote">"org.codehaus.xfire.demo.CustomerService"</span>/&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span> value=<span class="code-quote">"jsr181"</span>/&gt;</span>	
+	<span class="code-tag">&lt;/bean&gt;</span>
+	
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  BASIC BEAN DEFINITIONS                      --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>	
+
+	<span class="code-tag">&lt;bean id=<span class="code-quote">"webService"</span> class=<span class="code-quote">"org.company.service.server.ServiceImpl"</span>&gt;</span>  
+		<span class="code-tag">&lt;property name=<span class="code-quote">"xyzService"</span> ref=<span class="code-quote">"xyzService"</span>/&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span>
+
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  FACTORIES                                   --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+
+	<span class="code-tag">&lt;bean name=<span class="code-quote">"xfire.jaxbServiceFactory"</span> class=<span class="code-quote">"org.codehaus.xfire.jaxb2.JaxbServiceFactory"</span>&gt;</span>
+	  <span class="code-tag">&lt;constructor-arg ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span>	 
+ 		
+         &lt;bean id=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span>
+	       class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XmlBeansServiceFactory"</span>
+	       singleton=<span class="code-quote">"true"</span>&gt;
+                 <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span> ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+         <span class="code-tag">&lt;/bean&gt;</span>	 
+
+         &lt;bean id=<span class="code-quote">"xfire.annotationServiceFactory"</span>
+                class=<span class="code-quote">"org.codehaus.xfire.annotations.AnnotationServiceFactory"</span>&gt;
+            <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span> ref=<span class="code-quote">"webAnnotations"</span>/&gt;</span>
+            <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"1"</span> ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>
+            <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"2"</span> ref=<span class="code-quote">"xfire.aegisBindingProvider"</span>/&gt;</span>
+         <span class="code-tag">&lt;/bean&gt;</span>	 
+    
+	&lt;bean id=<span class="code-quote">"xfire.xmlBeansAnnotationServiceFactory"</span>
+               class=<span class="code-quote">"org.codehaus.xfire.annotations.AnnotationServiceFactory"</span>&gt;
+            <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span> ref=<span class="code-quote">"webAnnotations"</span>/&gt;</span>                  <span class="code-tag"><span class="code-comment">&lt;!-- WebAnnotations   --&gt;</span></span>
+            <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"1"</span> ref=<span class="code-quote">"xfire.transportManager"</span>/&gt;</span>          <span class="code-tag"><span class="code-comment">&lt;!-- TransportManager --&gt;</span></span>
+            <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"2"</span> ref=<span class="code-quote">"xmlbeans.aegisBindingProvider"</span>/&gt;</span>   <span class="code-tag"><span class="code-comment">&lt;!-- BindingProvider  --&gt;</span></span>
+         <span class="code-tag">&lt;/bean&gt;</span>    
+    
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  REGISTRIES + PROVIDERS                      --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>    
+    
+         <span class="code-tag">&lt;bean id=<span class="code-quote">"xmlbeansTypeRegistry"</span> class=<span class="code-quote">"org.codehaus.xfire.xmlbeans.XmlBeansTypeRegistry"</span>/&gt;</span>
+ 	
+         <span class="code-tag">&lt;bean id=<span class="code-quote">"xmlbeans.aegisBindingProvider"</span> class=<span class="code-quote">"org.codehaus.xfire.aegis.AegisBindingProvider"</span>&gt;</span>
+           <span class="code-tag">&lt;constructor-arg index=<span class="code-quote">"0"</span> ref=<span class="code-quote">"xmlbeansTypeRegistry"</span>/&gt;</span>
+         <span class="code-tag">&lt;/bean&gt;</span> 
+ 
+ 	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ANNOTATION FACADES                           --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>   
+ 
+	 <span class="code-tag">&lt;bean id=<span class="code-quote">"webAnnotations"</span> class=<span class="code-quote">"org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations"</span>/&gt;</span>    
+    
+ 	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- WEB SERVICE TEMPLATES                        --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>     
+	
+	&lt;bean id=<span class="code-quote">"xfireServiceTemplate"</span> 
+                 class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span> abstract=<span class="code-quote">"true"</span>&gt;
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"xfire.serviceFactory"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"xfire"</span> ref=<span class="code-quote">"xfire"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"style"</span> value=<span class="code-quote">"document"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"use"</span> value=<span class="code-quote">"literal"</span> /&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span>
+
+	&lt;bean id=<span class="code-quote">"xfireXMLBeansServiceTemplate"</span> 
+                 class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span> abstract=<span class="code-quote">"true"</span>&gt;
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"xfire.xmlbeansServiceFactory"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"xfire"</span> ref=<span class="code-quote">"xfire"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"style"</span> value=<span class="code-quote">"document"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"use"</span> value=<span class="code-quote">"literal"</span> /&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span>
+	
+	&lt;bean id=<span class="code-quote">"xfireXMLBeansAnnotationsServiceTemplate"</span> 
+                class=<span class="code-quote">"org.codehaus.xfire.spring.remoting.XFireExporter"</span> abstract=<span class="code-quote">"true"</span>&gt;
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceFactory"</span> ref=<span class="code-quote">"xfire.xmlBeansAnnotationServiceFactory"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"xfire"</span> ref=<span class="code-quote">"xfire"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"style"</span> value=<span class="code-quote">"document"</span> /&gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"use"</span> value=<span class="code-quote">"literal"</span> /&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span>		  
+	
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  EXPORTED SERVICES                           --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- ============================================ --&gt;</span></span>
+
+	<span class="code-tag">&lt;bean id=<span class="code-quote">"MyXFireService"</span> parent=<span class="code-quote">"xfireXMLBeansAnnotationsServiceTemplate"</span> &gt;</span>
+		<span class="code-tag">&lt;property name=<span class="code-quote">"serviceBean"</span> ref=<span class="code-quote">"webService"</span>/&gt;</span>
+                  &lt;!-- 
+                      Interface specification is no longer required when using 
+                      xfire-jsr181-api-1.0-M1.jar instead of wsm-1.0-alpha.jar
+		    
+                      <span class="code-tag">&lt;property name=<span class="code-quote">"serviceInterface"</span> value=<span class="code-quote">"org.company.service.server.ServiceInterface"</span>/&gt;</span>	
+                  --&gt;
+		<span class="code-tag">&lt;property name=<span class="code-quote">"schemas"</span>&gt;</span>
+		   <span class="code-tag">&lt;list&gt;</span>
+		     <span class="code-tag">&lt;value&gt;</span>/META-INF/xfire/Common.xsd<span class="code-tag">&lt;/value&gt;</span>
+		     <span class="code-tag">&lt;value&gt;</span>/META-INF/xfire/Request.xsd<span class="code-tag">&lt;/value&gt;</span>
+		     <span class="code-tag">&lt;value&gt;</span>/META-INF/xfire/Response.xsd<span class="code-tag">&lt;/value&gt;</span>
+		   <span class="code-tag">&lt;/list&gt;</span>
+		<span class="code-tag">&lt;/property&gt;</span>
+	<span class="code-tag">&lt;/bean&gt;</span></pre>
+</div></div>
+
+<h1><a name="XMLBeans%26AnnotationsTutorial-Step7%3ADeploytheWebService%26GeneratetheClient"></a>Step 7: Deploy the Web Service &amp; Generate the Client</h1>
+
+
+<table class='confluenceTable'><tbody>
+<tr>
+<th class='confluenceTh'> Ant Task </th>
+</tr>
+<tr>
+<td class='confluenceTd'> <div class="code"><div class="codeContent">
+<pre class="code-xml"><span class="code-tag"><span class="code-comment">&lt;!-- =================================================================== --&gt;</span></span>
+         <span class="code-tag"><span class="code-comment">&lt;!--  TARGET : download.wsdl                                             --&gt;</span></span>
+         <span class="code-tag"><span class="code-comment">&lt;!--         : Downloads the web service wsdl	                           --&gt;</span></span>
+         <span class="code-tag"><span class="code-comment">&lt;!-- =================================================================== --&gt;</span></span>
+	<span class="code-tag">&lt;target name=<span class="code-quote">"download.wsdl"</span>&gt;</span>
+	 &lt;get src=<span class="code-quote">"http://localhost:8080/services/ServiceInterface"</span> 
+	    dest=<span class="code-quote">"dist/yourapp-1.0.wsdl"</span> 
+	    verbose=<span class="code-quote">"true"</span>
+	    usetimestamp=<span class="code-quote">"true"</span>/&gt;
+	<span class="code-tag">&lt;/target&gt;</span>
+	
+	<span class="code-tag"><span class="code-comment">&lt;!-- =================================================================== --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--  TARGET : step7.gen.client.from.wsdl                                --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!--         : Client Generation from WSDL                               --&gt;</span></span>
+	<span class="code-tag"><span class="code-comment">&lt;!-- =================================================================== --&gt;</span></span>
+	<span class="code-tag">&lt;target name=<span class="code-quote">"&gt;</span>step7.gen.client.from.wsdl"</span> depends=<span class="code-quote">"download.wsdl"</span>&gt;
+		
+		<span class="code-tag">&lt;taskdef name=<span class="code-quote">"wsgen"</span> classname=<span class="code-quote">"org.codehaus.xfire.gen.WsGenTask"</span> classpathref=<span class="code-quote">"wsgen.path"</span> /&gt;</span>
+
+		<span class="code-tag"><span class="code-comment">&lt;!-- Run the client generator --&gt;</span></span>
+		&lt;wsgen outputDirectory=<span class="code-quote">"src"</span>
+			 	       wsdl=<span class="code-quote">"dist/yourapp-1.0.wsdl"</span>
+			 	       package=<span class="code-quote">"org.company.service.wsclient"</span> 
+			 	       binding=<span class="code-quote">"xmlbeans"</span>  /&gt;		
+	<span class="code-tag">&lt;/target&gt;</span></pre>
+</div></div></td>
+</tr>
+</tbody></table>
+
+<p>The generated client code will look something like this:</p>
+
+<div class="code"><div class="codeContent">
+<pre class="code-java"><span class="code-keyword">package</span> org.company.service.wsclient;
+
+<span class="code-keyword">import</span> java.net.MalformedURLException;
+<span class="code-keyword">import</span> javax.xml.namespace.QName;
+<span class="code-keyword">import</span> org.codehaus.xfire.XFireRuntimeException;
+<span class="code-keyword">import</span> org.codehaus.xfire.aegis.AegisBindingProvider;
+<span class="code-keyword">import</span> org.codehaus.xfire.annotations.AnnotationServiceFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.annotations.jsr181.Jsr181WebAnnotations;
+<span class="code-keyword">import</span> org.codehaus.xfire.client.XFireProxyFactory;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.Endpoint;
+<span class="code-keyword">import</span> org.codehaus.xfire.service.Service;
+<span class="code-keyword">import</span> org.codehaus.xfire.soap.AbstractSoapBinding;
+<span class="code-keyword">import</span> org.codehaus.xfire.transport.TransportManager;
+<span class="code-keyword">import</span> org.codehaus.xfire.xmlbeans.XmlBeansTypeRegistry;
+<span class="code-keyword">import</span> org.company.service.server.ServiceInterface;
+
+<span class="code-keyword">public</span> class ServiceInterface {
+
+    <span class="code-keyword">private</span> Service service;
+    <span class="code-keyword">private</span> <span class="code-keyword">static</span> XFireProxyFactory proxyFactory = <span class="code-keyword">new</span> XFireProxyFactory();
+
+    <span class="code-keyword">public</span> ServiceInterfaceClient() {
+        createService();
+        service.addEndpoint(<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, 
+</span><span class="code-quote">"ServiceInterfaceLocalPort"</span>), 
+<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, <span class="code-quote">"ServiceInterfaceLocalBinding"</span>), 
+</span><span class="code-quote">"xfire.local:<span class="code-comment">//ServiceInterface"</span>);
+</span>        service.addEndpoint(<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, 
+</span><span class="code-quote">"ServiceInterfaceHttpPort"</span>), 
+<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, 
+</span><span class="code-quote">"ServiceInterfaceHttpBinding"</span>), 
+<span class="code-quote">"http:<span class="code-comment">//localhost:8080/MyService/services/ServiceInterface"</span>);
+</span>         
+    }
+
+    <span class="code-keyword">private</span> void createService() {
+        TransportManager tm = (org.codehaus.xfire.XFireFactory.newInstance().getXFire().getTransportManager());
+        AnnotationServiceFactory asf = <span class="code-keyword">new</span> AnnotationServiceFactory(
+<span class="code-keyword">new</span> Jsr181WebAnnotations(), tm, <span class="code-keyword">new</span> AegisBindingProvider(<span class="code-keyword">new</span> XmlBeansTypeRegistry()));
+        asf.setBindingCreationEnabled(<span class="code-keyword">true</span>);
+        service = asf.create((org.company.service.server.ServiceImpl.class));
+        {
+            AbstractSoapBinding soapBinding = asf.createSoap11Binding(service, 
+<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, <span class="code-quote">"ServiceInterfaceHttpBinding"</span>), 
+</span><span class="code-quote">"http:<span class="code-comment">//schemas.xmlsoap.org/soap/http"</span>);
+</span>        }
+        {
+            AbstractSoapBinding soapBinding = asf.createSoap11Binding(service, 
+<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, 
+</span><span class="code-quote">"ServiceInterfaceLocalBinding"</span>), 
+<span class="code-quote">"urn:xfire:transport:local"</span>);
+        }
+    }
+
+    <span class="code-keyword">public</span> void addEndpoint(QName name, QName binding, <span class="code-object">String</span> address) {
+        service.addEndpoint((name), (binding), (address));
+    }
+
+    <span class="code-keyword">public</span> ServiceInterface getEndpoint(Endpoint endpoint) {	
+        <span class="code-keyword">try</span> {
+            <span class="code-keyword">return</span> ((ServiceInterface ) proxyFactory.create((endpoint).getBinding(), (endpoint).getUrl()));
+        } <span class="code-keyword">catch</span> (MalformedURLException e) {
+            <span class="code-keyword">throw</span> <span class="code-keyword">new</span> XFireRuntimeException(<span class="code-quote">"Invalid URL"</span>, e);
+        }
+    }
+
+    <span class="code-keyword">public</span> ServiceInterface getEndpoint(QName name) {
+        Endpoint endpoint = service.getEndpoint((name));
+        <span class="code-keyword">if</span> ((endpoint) == <span class="code-keyword">null</span>) {
+            <span class="code-keyword">throw</span> <span class="code-keyword">new</span> IllegalStateException(<span class="code-quote">"No such endpoint!"</span>);
+        }
+        <span class="code-keyword">return</span> getEndpoint((endpoint));
+    }
+
+    <span class="code-keyword">public</span> ServiceInterface getEndpoint() {
+        <span class="code-keyword">if</span> (service.getEndpoints().size() == 0) {
+            <span class="code-keyword">throw</span> <span class="code-keyword">new</span> IllegalStateException(<span class="code-quote">"No available endpoints!"</span>);
+        }
+        Endpoint endpoint = ((Endpoint) service.getEndpoints().iterator().next());
+        <span class="code-keyword">return</span> (<span class="code-keyword">this</span>).getEndpoint((endpoint));
+    }
+
+    <span class="code-keyword">public</span> ServiceInterface getServiceInterfaceLocalPort() {
+        <span class="code-keyword">return</span> (<span class="code-keyword">this</span>).getEndpoint(
+<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, <span class="code-quote">"ServiceInterfaceLocalPort"</span>));
+</span>    }
+
+    <span class="code-keyword">public</span> ServiceInterface getServiceInterfaceHttpPort() {
+        <span class="code-keyword">return</span> (<span class="code-keyword">this</span>).getEndpoint(
+<span class="code-keyword">new</span> QName(<span class="code-quote">"http:<span class="code-comment">//www.company.org/service/server"</span>, <span class="code-quote">"ServiceInterfaceHttpPort"</span>));
+</span>    }
+
+}</pre>
+</div></div>
+
+<table cellpadding='5' width='85%' cellspacing='8px' class='tipMacro' border="0" align='center'><colgroup><col width='24'><col></colgroup><tr><td valign='top'><img src="./icons/emoticons/check.gif" width="16" height="16" align="absmiddle" alt="" border="0"></td><td><b class="strong">Handy Hint</b><br />
+<p>For those of you who are concerned about the apparent requirement here to package your Service implementation class with a Java client JAR that you might need to send to a business partner using your web service, Dan Diephouse offered the following suggestion:</p>
+
+<p><em>You need to pass off the implementation class because according to JSR 181 the soap binding annotations need to be on the implementation class, and we need those to figure out how to send the messages. You can however make a copy of your service impl class and put "throws UnsupportedOperationException" in all the bodies though.</em></p></td></tr></table> 
+
+				    					    <br/>
+                        <div class="tabletitle">
+                            <a name="attachments">Attachments:</a>
+                        </div>
+
+                        <div class="greybox" align="left">
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/common_xsd.bmp">common_xsd.bmp</a> (image/bmp)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/common_xsd.bmp">common_xsd.bmp</a> (image/bmp)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/request_xsd.bmp">request_xsd.bmp</a> (image/bmp)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/response_xsd.bmp">response_xsd.bmp</a> (image/bmp)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/common_xsd.JPG">common_xsd.JPG</a> (image/pjpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/request_xsd.JPG">request_xsd.JPG</a> (image/pjpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/response_xsd.JPG">response_xsd.JPG</a> (image/pjpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/xmlbeans-project-logo.gif">xmlbeans-project-logo.gif</a> (image/gif)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/xsd_pic.jpg">xsd_pic.jpg</a> (image/pjpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/annotation_setup.JPG">annotation_setup.JPG</a> (image/pjpeg)
+                                <br/>
+                                                            <img src="icons/bullet_blue.gif" height="8" width="8" alt=""/>
+                                <a href="XMLBeans & Annotations Tutorial_attachments/annotation_setup_2.JPG">annotation_setup_2.JPG</a> (image/pjpeg)
+                                <br/>
+                                                    </div>
+				    
+                    			    </td>
+		    </tr>
+	    </table>
+    </body>
+</html>
